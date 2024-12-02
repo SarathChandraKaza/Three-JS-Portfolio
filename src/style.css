@@ -1,0 +1,453 @@
+/* Reset and basic styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevent scrollbars */
+  height: 100%;
+}
+
+canvas.threejs {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Load the LoomatticRegular font */
+@font-face {
+  font-family: 'LoomatticRegular';
+  src: url('C:/Three-JS-Portfolio/static/Fonts/LoomatticRegular-EaxaW.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Load the SF Pro Display Bold font */
+@font-face {
+  font-family: 'SFBold';
+  src: url('C:\Three-JS-Portfolio\static\Fonts\SF-Pro-Display-Bold.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Load the SF Pro Display Light font */
+@font-face {
+  font-family: 'SFLight';
+  src: url('C:\Three-JS-Portfolio\static\Fonts\SF-Pro-Display-Light.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Load the SF Pro Display Medium font */
+@font-face {
+  font-family: 'SFMedium';
+  src: url('C:\Three-JS-Portfolio\static\Fonts\SF-Pro-Display-Medium.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Load the SF Pro Display Regular font */
+@font-face {
+  font-family: 'SFRegular';
+  src: url('C:\Three-JS-Portfolio\static\Fonts\SF-Pro-Display-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+/* Header styling */
+.header {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 40px;
+  font-family: 'SFBold', sans-serif; /* Apply custom font for project name */
+  color: black;
+  margin: 0;
+}
+
+h2 {
+  font-size: 24px;
+  font-family: 'SFRegular', sans-serif; /* Apply custom font for date */
+  color: black;
+  margin: 0;
+}
+
+h3 {
+  font-size: 18px;
+  font-family: 'SFRegular', sans-serif; /* Apply custom font for date */
+  color: black;
+  margin: 0;
+}
+
+
+
+/* -----------------------------------------------------Planet Details--------------------------------------------------------*/
+#planet-details {
+  margin-top: 40px;
+  color: black;
+  text-align: left;
+  font-family: 'SFRegular', sans-serif;
+  font-size: 20px;
+}
+
+#project-date{
+  margin-top: 10px;
+  
+}
+
+#planet-details p, #planet-details li {
+  font-family: 'SFLight', sans-serif;
+  font-size: 20px;
+}
+
+#planet-details ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+#planet-details li {
+  margin: 5px 0;
+}
+
+/* -----------------------------------------------------Carousel--------------------------------------------------------*/
+.image-gallery {
+  position: relative;
+  width: 80%;
+  height: 300px;
+  margin: 20px auto;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  background-color: black;
+}
+
+.image-gallery img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-button {
+  background: none;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 8px;
+}
+
+.carousel-button-left {
+  left: 5px;
+}
+
+.carousel-button-right {
+  right: 5px;
+}
+
+.carousel-arrow {
+  width: 40px;  /* Adjusted the width of the arrow icon */
+  height: 40px; /* Adjusted the height of the arrow icon */
+}
+
+.carousel-button:hover 
+{
+  transform: scale(1.05);
+  background-color: rgba(0, 0, 0, 0.23);
+}
+/* === STYLES FOR CAROUSEL CONTAINER (With visual separation from text) === */
+.carousel-wrapper {
+  width: 60%;
+  margin-top: 30px; /* Space between text and carousel */
+  background-color: black; /* Background color for the wrapper */
+  padding: 20px; /* Padding around the carousel */
+  border: 2px solid rgba(255, 255, 255, 0.8); /* Border for the carousel */
+  border-radius: 8px; /* Optional: rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow */
+}
+
+.carousel-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative; /* To handle absolute positioning of buttons */
+}
+
+.carousel-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.carousel-image-wrapper {
+  width: 60%;
+  height: auto;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid rgba(255, 255, 255, 0.8); /* Border for images */
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.carousel-image {
+  width: 70%;
+  height: 50%;
+  object-fit: contain; /* Prevent image clipping */
+}
+
+/* Close and Project Link Button Styling */
+.link-button {
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 255, 0.6);
+  color: white;  /* Change Project Link to blue */
+  border: 2px solid blue;
+  font-family: 'SFRegular', sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  position: absolute;
+}
+
+.close-button{
+  padding: 10px 20px;
+  background-color: rgba(255, 0, 0, 0.6);
+  color: white;  /* Change Close Button to red to blue */
+  border: 2px solid red;
+  font-family: 'SFRegular', sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  position: absolute;
+}
+
+.link-button:hover {
+  background-color: rgba(0, 0, 255,1);
+  transform: scale(1.1);
+  color: white;
+}
+
+.close-button:hover {
+  background-color: rgba(255, 0, 0, 1);
+  transform: scale(1.1);
+  color: white;
+}
+
+.close-button {
+  top: 10px;
+  right: 10px;
+}
+
+.link-button {
+  top: 10px;
+  left: 10px;
+}
+/* UI Menu Styling */
+.ui-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  color: white;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  text-align: center;
+}
+
+.ui-content {
+  max-width: 2000px;
+  max-height: 4000px;
+  padding: 20px;
+  background-image: url('C:/Three-JS-Portfolio/static/Background/beige-background.jpg');
+  background-position: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  position: relative; /* Ensure buttons are aligned to the content */
+}
+
+/* -----------------------------------------------------Information Screen--------------------------------------------------------*/
+#ui-screen {
+  position: fixed;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  max-width: 90%;
+  background: linear-gradient(135deg, #4e54c8, #8f94fb); /* Gradient background */
+  color: #fff;
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+  line-height: 2; /* Reduced slightly to balance the increased width */
+  border-radius: 12px;
+  padding: 30px; /* Increased padding for better spacing */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  display: none;
+  z-index: 1000;
+}
+
+#ui-screen h2 {
+  font-size: 26px; /* Slightly larger font size for headings */
+  margin-bottom: 15px; /* Extra spacing for clarity */
+  color: #f9f9f9;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+#ui-screen p {
+  font-size: 18px; /* Slightly larger font for better readability */
+  color: #e0e0e0;
+  margin: 15px 0 25px; /* Increased spacing for better separation */
+}
+
+#ui-screen button {
+  margin-top: 25px; /* More space above the button */
+  padding: 12px 25px; /* Larger button for emphasis */
+  font-size: 18px;
+  font-weight: bold;
+  color: #4e54c8;
+  background: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#ui-screen button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Social Icons */
+#social-icons {
+  margin-top: 30px; /* Extra space between content and icons */
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Larger gap between icons */
+}
+
+#social-icons a {
+  display: inline-block;
+  width: 50px; /* Increased size for better visibility */
+  height: 50px;
+  transform: scale(1.1);
+  background-color: #ffffffbb;
+  border-radius: 50%;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#social-icons a:hover {
+  transform: scale(1.3); /* Slightly more pronounced hover effect */
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+#email-icon {
+  background: url('C:/Three-JS-Portfolio/static/Icons/gmail.png') center/contain no-repeat;
+}
+
+#linkedin-icon {
+  background: url('C:/Three-JS-Portfolio/static/Icons/linkedin.png') center/contain no-repeat;
+}
+
+#github-icon {
+  background: url('C:/Three-JS-Portfolio/static/Icons/github.png') center/contain no-repeat;
+}
+
+/* -----------------------------------------------------Tooltip-What is it?-------------------------------------------------------*/
+
+.tooltip {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  pointer-events: none; /* Ensure it doesn't block mouse events */
+  display: none; /* Hide by default */
+  z-index: 1000;
+}
+
+/* -----------------------------------------------------Loading screen--------------------------------------------------------*/
+
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #333333, #444444, #555555, #666666);
+  color: white;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.loader {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+}
+
+#loading-screen p {
+  margin-top: 20px;
+  font-size: 18px;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: bold;
+  color: #ffffff;
+  text-align: center;
+}
+
+/* -----------------------------------------------------Help Text--------------------------------------------------------*/
+
+#help-text {
+  position: fixed;
+  bottom: 20px; /* Adjust to fit your layout */
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+  color: white;
+  font-family: 'SFRegular', sans-serif;
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  z-index: 1000;
+  text-align: center;
+  pointer-events: none; /* Allow clicks to pass through */
+  opacity: 1; /* Ensure it's fully visible when shown */
+  animation: blink 2s infinite; /* Add blinking animation */
+}
+
+/* Define blinking animation */
+@keyframes blink {
+  0%, 100% {
+    opacity: 1; /* Fully visible */
+  }
+  50% {
+    opacity: 0.3; /* Slightly transparent */
+  }
+}
