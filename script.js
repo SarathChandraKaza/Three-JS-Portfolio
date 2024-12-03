@@ -9,12 +9,12 @@
   //#endregion
 
   //#region SOUNDS
-  let buttonClickSound = new Audio('/Sounds/SFX/button-click.mp3');
-  let iconClickSound = new Audio('/Sounds/SFX/icon-click.mp3');
-  let hoverSound = new Audio('/Sounds/SFX/hover-sound.mp3');
-  let helpPopupSound = new Audio('/Sounds/SFX/ui-popup.mp3');
-  let animationSound = new Audio('/Sounds/SFX/scroll-animation.mp3');
-  let planetClickSound = new Audio('/Sounds/SFX/planet-click.mp3');
+  let buttonClickSound = new Audio('static/Sounds/SFX/button-click.mp3');
+  let iconClickSound = new Audio('static/Sounds/SFX/icon-click.mp3');
+  let hoverSound = new Audio('static/Sounds/SFX/hover-sound.mp3');
+  let helpPopupSound = new Audio('static/Sounds/SFX/ui-popup.mp3');
+  let animationSound = new Audio('static/Sounds/SFX/scroll-animation.mp3');
+  let planetClickSound = new Audio('static/Sounds/SFX/planet-click.mp3');
 
   // Reset and play a sound
     function playSound(audio) {
@@ -54,9 +54,9 @@ manager.onLoad = () => {
 
     // Wait for preloaded images too
     preloadImages([
-        'C:/Three-JS-Portfolio/static/Icons/gmail.png',
-        'C:/Three-JS-Portfolio/static/Icons/linkedin.png',
-        'C:/Three-JS-Portfolio/static/Icons/github.png'
+        'static/Icons/gmail.png',
+        'static/Icons/linkedin.png',
+        'static/Icons/github.png'
     ])
         .then(() => {
             console.log('All images preloaded!');
@@ -92,25 +92,25 @@ manager.onLoad = () => {
   // === TEXTURE LOADER SETUP ===
   const textureLoader = new THREE.TextureLoader(manager);
   const cubeTextureLoader = new THREE.CubeTextureLoader(manager);
-  cubeTextureLoader.setPath('/textures/Purple Nebula/');
+  cubeTextureLoader.setPath('static/textures/Purple Nebula/');
   //#endregion
 
   //#region TEXTURE DEFINITIONS
   // === TEXTURE DEFINITIONS ===
-  const sunTexture = textureLoader.load("/textures/2k_sun.jpg");
+  const sunTexture = textureLoader.load("static/textures/2k_sun.jpg");
   sunTexture.colorSpace = THREE.SRGBColorSpace;
 
 
-  const mercuryTexture = textureLoader.load("/textures/2k_mercury.jpg");
+  const mercuryTexture = textureLoader.load("static/textures/2k_mercury.jpg");
   mercuryTexture.colorSpace = THREE.SRGBColorSpace;
 
-  const venusTexture = textureLoader.load("/textures/2k_venus_surface.jpg");
+  const venusTexture = textureLoader.load("static/textures/2k_venus_surface.jpg");
   venusTexture.colorSpace = THREE.SRGBColorSpace;
 
-  const earthTexture = textureLoader.load("/textures/2k_earth_daymap.jpg");
+  const earthTexture = textureLoader.load("static/textures/2k_earth_daymap.jpg");
   earthTexture.colorSpace = THREE.SRGBColorSpace;
 
-  const marsTexture = textureLoader.load("/textures/2k_mars.jpg");
+  const marsTexture = textureLoader.load("static/textures/2k_mars.jpg");
   marsTexture.colorSpace = THREE.SRGBColorSpace;
 
   // Background Skybox
@@ -197,7 +197,7 @@ const loader2 = new GLTFLoader(manager);
 let gltfObjectRanger;
 
 loader2.load(
-  '3D Models/Interstellar Ranger/scene.gltf', // Replace with the path to your GLTF model
+  'static/3D Models/Interstellar Ranger/scene.gltf', // Replace with the path to your GLTF model
   (gltf) => {
     gltfObjectRanger = gltf.scene;
 
@@ -222,7 +222,7 @@ loader2.load(
     const positionalAudio = new THREE.PositionalAudio(listener);
 
     // Load the audio file
-    audioLoader.load('/Sounds/SFX/rocket-moving.mp3', (buffer) => {
+    audioLoader.load('static/Sounds/SFX/rocket-moving.mp3', (buffer) => {
       positionalAudio.setBuffer(buffer);
       positionalAudio.setRefDistance(20); // Distance where audio volume is max
       positionalAudio.setMaxDistance(100); // Max range of the sound
@@ -429,7 +429,7 @@ const globalAudio = new THREE.Audio(listener);
 
 // Load the ambient music file
 const audioLoader = new THREE.AudioLoader();
-audioLoader.load('/Sounds/SFX/ambient-music.mp3', (buffer) => {
+audioLoader.load('static/Sounds/SFX/ambient-music.mp3', (buffer) => {
   globalAudio.setBuffer(buffer);  // Set the audio buffer
   globalAudio.setLoop(true);      // Enable looping for continuous playback
   globalAudio.setVolume(0.5);     // Adjust the volume (0.0 to 1.0)
@@ -811,7 +811,7 @@ gsap.to(camera.position, {
 // Load Font for 3D Text
 const fontLoader = new FontLoader(manager);
 let textMaterial;
-fontLoader.load('Fonts/SF Pro Display_Light.json', (font) => {
+fontLoader.load('static/Fonts/SF Pro Display_Light.json', (font) => {
   // Define text properties
   const textGeometry = new TextGeometry('An Interstellar Travel Through My Works', {
     font: font,
@@ -844,7 +844,7 @@ fontLoader.load('Fonts/SF Pro Display_Light.json', (font) => {
 
   //#region INFORMATION ICON
   const textureLoader2 = new THREE.TextureLoader();
-  const iconTexture = textureLoader2.load('/Icons/information-button.png');
+  const iconTexture = textureLoader2.load('static/Icons/information-button.png');
 
   const spriteMaterial = new THREE.SpriteMaterial({ map: iconTexture });
   let sprite = new THREE.Sprite(spriteMaterial);
