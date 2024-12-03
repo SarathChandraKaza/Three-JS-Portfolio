@@ -9,12 +9,12 @@
   //#endregion
 
   //#region SOUNDS
-  let buttonClickSound = new Audio('static/Sounds/SFX/button-click.mp3');
-  let iconClickSound = new Audio('static/Sounds/SFX/icon-click.mp3');
-  let hoverSound = new Audio('static/Sounds/SFX/hover-sound.mp3');
-  let helpPopupSound = new Audio('static/Sounds/SFX/ui-popup.mp3');
-  let animationSound = new Audio('static/Sounds/SFX/scroll-animation.mp3');
-  let planetClickSound = new Audio('static/Sounds/SFX/planet-click.mp3');
+  let buttonClickSound = new Audio('/Sounds/SFX/button-click.mp3');
+  let iconClickSound = new Audio('/Sounds/SFX/icon-click.mp3');
+  let hoverSound = new Audio('/Sounds/SFX/hover-sound.mp3');
+  let helpPopupSound = new Audio('/Sounds/SFX/ui-popup.mp3');
+  let animationSound = new Audio('/Sounds/SFX/scroll-animation.mp3');
+  let planetClickSound = new Audio('/Sounds/SFX/planet-click.mp3');
 
   // Reset and play a sound
     function playSound(audio) {
