@@ -267,7 +267,7 @@ h3 {
   max-width: 2000px;
   max-height: 4000px;
   padding: 20px;
-  background-image: url('C:/Three-JS-Portfolio/static/Background/beige-background.jpg');
+  background-image: url('/static/Background/beige-background.jpg');
   background-position: center;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
@@ -351,15 +351,15 @@ h3 {
 }
 
 #email-icon {
-  background: url('C:/Three-JS-Portfolio/static/Icons/gmail.png') center/contain no-repeat;
+  background: url('/static/Icons/gmail.png') center/contain no-repeat;
 }
 
 #linkedin-icon {
-  background: url('C:/Three-JS-Portfolio/static/Icons/linkedin.png') center/contain no-repeat;
+  background: url('/static/Icons/linkedin.png') center/contain no-repeat;
 }
 
 #github-icon {
-  background: url('C:/Three-JS-Portfolio/static/Icons/github.png') center/contain no-repeat;
+  background: url('/static/Icons/github.png') center/contain no-repeat;
 }
 
 /* -----------------------------------------------------Tooltip-What is it?-------------------------------------------------------*/
