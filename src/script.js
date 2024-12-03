@@ -197,7 +197,7 @@ const loader2 = new GLTFLoader(manager);
 let gltfObjectRanger;
 
 loader2.load(
-  '/3D Models/Interstellar Ranger/scene.gltf', // Replace with the path to your GLTF model
+  '/Three-JS-Portfolio/docs/3D Models/Interstellar Ranger/scene.gltf', // Replace with the path to your GLTF model
   (gltf) => {
     gltfObjectRanger = gltf.scene;
 
