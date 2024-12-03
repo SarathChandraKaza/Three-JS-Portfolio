@@ -54,9 +54,9 @@ manager.onLoad = () => {
 
     // Wait for preloaded images too
     preloadImages([
-        'static/Icons/gmail.png',
-        'static/Icons/linkedin.png',
-        'static/Icons/github.png'
+        '/Icons/gmail.png',
+        '/Icons/linkedin.png',
+        '/Icons/github.png'
     ])
         .then(() => {
             console.log('All images preloaded!');
@@ -92,25 +92,25 @@ manager.onLoad = () => {
   // === TEXTURE LOADER SETUP ===
   const textureLoader = new THREE.TextureLoader(manager);
   const cubeTextureLoader = new THREE.CubeTextureLoader(manager);
-  cubeTextureLoader.setPath('static/textures/Purple Nebula/');
+  cubeTextureLoader.setPath('/textures/Purple Nebula/');
   //#endregion
 
   //#region TEXTURE DEFINITIONS
   // === TEXTURE DEFINITIONS ===
-  const sunTexture = textureLoader.load("static/textures/2k_sun.jpg");
+  const sunTexture = textureLoader.load("/textures/2k_sun.jpg");
   sunTexture.colorSpace = THREE.SRGBColorSpace;
 
 
-  const mercuryTexture = textureLoader.load("static/textures/2k_mercury.jpg");
+  const mercuryTexture = textureLoader.load("/textures/2k_mercury.jpg");
   mercuryTexture.colorSpace = THREE.SRGBColorSpace;
 
-  const venusTexture = textureLoader.load("static/textures/2k_venus_surface.jpg");
+  const venusTexture = textureLoader.load("/textures/2k_venus_surface.jpg");
   venusTexture.colorSpace = THREE.SRGBColorSpace;
 
-  const earthTexture = textureLoader.load("static/textures/2k_earth_daymap.jpg");
+  const earthTexture = textureLoader.load("/textures/2k_earth_daymap.jpg");
   earthTexture.colorSpace = THREE.SRGBColorSpace;
 
-  const marsTexture = textureLoader.load("static/textures/2k_mars.jpg");
+  const marsTexture = textureLoader.load("/textures/2k_mars.jpg");
   marsTexture.colorSpace = THREE.SRGBColorSpace;
 
   // Background Skybox
@@ -197,7 +197,7 @@ const loader2 = new GLTFLoader(manager);
 let gltfObjectRanger;
 
 loader2.load(
-  'static/3D Models/Interstellar Ranger/scene.gltf', // Replace with the path to your GLTF model
+  '/3D Models/Interstellar Ranger/scene.gltf', // Replace with the path to your GLTF model
   (gltf) => {
     gltfObjectRanger = gltf.scene;
 
@@ -222,7 +222,7 @@ loader2.load(
     const positionalAudio = new THREE.PositionalAudio(listener);
 
     // Load the audio file
-    audioLoader.load('static/Sounds/SFX/rocket-moving.mp3', (buffer) => {
+    audioLoader.load('/Sounds/SFX/rocket-moving.mp3', (buffer) => {
       positionalAudio.setBuffer(buffer);
       positionalAudio.setRefDistance(20); // Distance where audio volume is max
       positionalAudio.setMaxDistance(100); // Max range of the sound
@@ -297,7 +297,7 @@ loader2.load(
         technologies: "Unity, Audacity, Adobe Premiere Pro",
         links: "https://www.youtube.com/watch?v=YZAAgqMNcSA",
         images: [
-          "static/Project-Images/Sunday/Sunday1.png",
+          "/Project-Images/Sunday/Sunday1.png",
         ],
       }
     },
@@ -313,13 +313,13 @@ loader2.load(
         technologies: "Unity, Blender, Jupyter Notebook, MS Excel",
         links: "https://github.com/SarathChandraKaza/VR-School",
         images: [
-          "static/Project-Images/VR-School/VRSchool1.png",
-          "static/Project-Images/VR-School/VRSchool2.png",
-          "static/Project-Images/VR-School/VRSchool3.png",
-          "static/Project-Images/VR-School/VRSchool4.png",
-          "static/Project-Images/VR-School/VRSchool5.png",
-          "static/Project-Images/VR-School/VRSchool6.png",
-          "static/Project-Images/VR-School/VRSchool7.png",
+          "/Project-Images/VR-School/VRSchool1.png",
+          "/Project-Images/VR-School/VRSchool2.png",
+          "/Project-Images/VR-School/VRSchool3.png",
+          "/Project-Images/VR-School/VRSchool4.png",
+          "/Project-Images/VR-School/VRSchool5.png",
+          "/Project-Images/VR-School/VRSchool6.png",
+          "/Project-Images/VR-School/VRSchool7.png",
         ],
       }
     },
@@ -335,9 +335,9 @@ loader2.load(
         technologies: "Unity, Blender, Audacity",
         links: "https://github.com/SarathChandraKaza/Dodge-Ball",
         images: [
-          "static/Project-Images/Dodge-Ball/DodgeBall1.png",
-          "static/Project-Images/Dodge-Ball/DodgeBall2.png",
-          "static/Project-Images/Dodge-Ball/DodgeBall3.png",
+          "/Project-Images/Dodge-Ball/DodgeBall1.png",
+          "/Project-Images/Dodge-Ball/DodgeBall2.png",
+          "/Project-Images/Dodge-Ball/DodgeBall3.png",
         ],
       }
     },
@@ -353,9 +353,9 @@ loader2.load(
         technologies: "Unity, WebGL",
         links: "https://github.com/SarathChandraKaza/Eating-Tom",
         images: [
-          "static/Project-Images/Eating-Tom/EatingTom1.png",
-          "static/Project-Images/Eating-Tom/EatingTom2.png",
-          "static/Project-Images/Eating-Tom/EatingTom3.png",
+          "/Project-Images/Eating-Tom/EatingTom1.png",
+          "/Project-Images/Eating-Tom/EatingTom2.png",
+          "/Project-Images/Eating-Tom/EatingTom3.png",
         ],
       }
     },
@@ -429,7 +429,7 @@ const globalAudio = new THREE.Audio(listener);
 
 // Load the ambient music file
 const audioLoader = new THREE.AudioLoader();
-audioLoader.load('static/Sounds/SFX/ambient-music.mp3', (buffer) => {
+audioLoader.load('/Sounds/SFX/ambient-music.mp3', (buffer) => {
   globalAudio.setBuffer(buffer);  // Set the audio buffer
   globalAudio.setLoop(true);      // Enable looping for continuous playback
   globalAudio.setVolume(0.5);     // Adjust the volume (0.0 to 1.0)
@@ -811,7 +811,7 @@ gsap.to(camera.position, {
 // Load Font for 3D Text
 const fontLoader = new FontLoader(manager);
 let textMaterial;
-fontLoader.load('static/Fonts/SF Pro Display_Light.json', (font) => {
+fontLoader.load('/Fonts/SF Pro Display_Light.json', (font) => {
   // Define text properties
   const textGeometry = new TextGeometry('An Interstellar Travel Through My Works', {
     font: font,
@@ -844,7 +844,7 @@ fontLoader.load('static/Fonts/SF Pro Display_Light.json', (font) => {
 
   //#region INFORMATION ICON
   const textureLoader2 = new THREE.TextureLoader();
-  const iconTexture = textureLoader2.load('static/Icons/information-button.png');
+  const iconTexture = textureLoader2.load('/Icons/information-button.png');
 
   const spriteMaterial = new THREE.SpriteMaterial({ map: iconTexture });
   let sprite = new THREE.Sprite(spriteMaterial);

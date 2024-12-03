@@ -15,7 +15,7 @@ canvas.threejs {
 /* Load the LoomatticRegular font */
 @font-face {
   font-family: 'LoomatticRegular';
-  src: url('static/Fonts/LoomatticRegular-EaxaW.ttf') format('truetype');
+  src: url('/Fonts/LoomatticRegular-EaxaW.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -23,7 +23,7 @@ canvas.threejs {
 /* Load the SF Pro Display Bold font */
 @font-face {
   font-family: 'SFBold';
-  src: url('static\Fonts\SF-Pro-Display-Bold.otf') format('opentype');
+  src: url('/Fonts/SF-Pro-Display-Bold.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
@@ -31,7 +31,7 @@ canvas.threejs {
 /* Load the SF Pro Display Light font */
 @font-face {
   font-family: 'SFLight';
-  src: url('static\Fonts\SF-Pro-Display-Light.otf') format('opentype');
+  src: url('/Fonts/SF-Pro-Display-Light.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
@@ -39,7 +39,7 @@ canvas.threejs {
 /* Load the SF Pro Display Medium font */
 @font-face {
   font-family: 'SFMedium';
-  src: url('static\Fonts\SF-Pro-Display-Medium.otf') format('opentype');
+  src: url('/Fonts/SF-Pro-Display-Medium.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
@@ -47,7 +47,7 @@ canvas.threejs {
 /* Load the SF Pro Display Regular font */
 @font-face {
   font-family: 'SFRegular';
-  src: url('static\Fonts\SF-Pro-Display-Regular.otf') format('opentype');
+  src: url('/Fonts/SF-Pro-Display-Regular.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
@@ -267,7 +267,7 @@ h3 {
   max-width: 2000px;
   max-height: 4000px;
   padding: 20px;
-  background-image: url('/static/Background/beige-background.jpg');
+  background-image: url('/Background/beige-background.jpg');
   background-position: center;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
@@ -351,15 +351,15 @@ h3 {
 }
 
 #email-icon {
-  background: url('/static/Icons/gmail.png') center/contain no-repeat;
+  background: url('/Icons/gmail.png') center/contain no-repeat;
 }
 
 #linkedin-icon {
-  background: url('/static/Icons/linkedin.png') center/contain no-repeat;
+  background: url('/Icons/linkedin.png') center/contain no-repeat;
 }
 
 #github-icon {
-  background: url('/static/Icons/github.png') center/contain no-repeat;
+  background: url('/Icons/github.png') center/contain no-repeat;
 }
 
 /* -----------------------------------------------------Tooltip-What is it?-------------------------------------------------------*/
