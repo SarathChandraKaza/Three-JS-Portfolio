@@ -9,12 +9,12 @@
   //#endregion
 
   //#region SOUNDS
-  let buttonClickSound = new Audio('/Sounds/SFX/button-click.mp3');
-  let iconClickSound = new Audio('/Sounds/SFX/icon-click.mp3');
-  let hoverSound = new Audio('/Sounds/SFX/hover-sound.mp3');
-  let helpPopupSound = new Audio('/Sounds/SFX/ui-popup.mp3');
-  let animationSound = new Audio('/Sounds/SFX/scroll-animation.mp3');
-  let planetClickSound = new Audio('/Sounds/SFX/planet-click.mp3');
+  let buttonClickSound = new Audio('/Three-JS-Portfolio/Sounds/SFX/button-click.mp3');
+  let iconClickSound = new Audio('/Three-JS-Portfolio/Sounds/SFX/icon-click.mp3');
+  let hoverSound = new Audio('/Three-JS-Portfolio/Sounds/SFX/hover-sound.mp3');
+  let helpPopupSound = new Audio('/Three-JS-Portfolio/Sounds/SFX/ui-popup.mp3');
+  let animationSound = new Audio('/Three-JS-Portfolio/Sounds/SFX/scroll-animation.mp3');
+  let planetClickSound = new Audio('/Three-JS-Portfolio/Sounds/SFX/planet-click.mp3');
 
   // Reset and play a sound
     function playSound(audio) {
@@ -54,9 +54,9 @@ manager.onLoad = () => {
 
     // Wait for preloaded images too
     preloadImages([
-        '/Icons/gmail.png',
-        '/Icons/linkedin.png',
-        '/Icons/github.png'
+        '/Three-JS-Portfolio/Icons/gmail.png',
+        '/Three-JS-Portfolio/Icons/linkedin.png',
+        '/Three-JS-Portfolio/Icons/github.png'
     ])
         .then(() => {
             console.log('All images preloaded!');
@@ -197,7 +197,7 @@ const loader2 = new GLTFLoader(manager);
 let gltfObjectRanger;
 
 loader2.load(
-  '/Three-JS-Portfolio/docs/3D Models/Interstellar Ranger/scene.gltf', // Replace with the path to your GLTF model
+  '/Three-JS-Portfolio/3D Models/Interstellar Ranger/scene.gltf', // Replace with the path to your GLTF model
   (gltf) => {
     gltfObjectRanger = gltf.scene;
 
@@ -222,7 +222,7 @@ loader2.load(
     const positionalAudio = new THREE.PositionalAudio(listener);
 
     // Load the audio file
-    audioLoader.load('/Sounds/SFX/rocket-moving.mp3', (buffer) => {
+    audioLoader.load('/Three-JS-Portfolio/Sounds/SFX/rocket-moving.mp3', (buffer) => {
       positionalAudio.setBuffer(buffer);
       positionalAudio.setRefDistance(20); // Distance where audio volume is max
       positionalAudio.setMaxDistance(100); // Max range of the sound
@@ -297,7 +297,7 @@ loader2.load(
         technologies: "Unity, Audacity, Adobe Premiere Pro",
         links: "https://www.youtube.com/watch?v=YZAAgqMNcSA",
         images: [
-          "/Project-Images/Sunday/Sunday1.png",
+          "/Three-JS-Portfolio/Project-Images/Sunday/Sunday1.png",
         ],
       }
     },
@@ -313,13 +313,13 @@ loader2.load(
         technologies: "Unity, Blender, Jupyter Notebook, MS Excel",
         links: "https://github.com/SarathChandraKaza/VR-School",
         images: [
-          "/Project-Images/VR-School/VRSchool1.png",
-          "/Project-Images/VR-School/VRSchool2.png",
-          "/Project-Images/VR-School/VRSchool3.png",
-          "/Project-Images/VR-School/VRSchool4.png",
-          "/Project-Images/VR-School/VRSchool5.png",
-          "/Project-Images/VR-School/VRSchool6.png",
-          "/Project-Images/VR-School/VRSchool7.png",
+          "/Three-JS-Portfolio/Project-Images/VR-School/VRSchool1.png",
+          "/Three-JS-Portfolio/Project-Images/VR-School/VRSchool2.png",
+          "/Three-JS-Portfolio/Project-Images/VR-School/VRSchool3.png",
+          "/Three-JS-Portfolio/Project-Images/VR-School/VRSchool4.png",
+          "/Three-JS-Portfolio/Project-Images/VR-School/VRSchool5.png",
+          "/Three-JS-Portfolio/Project-Images/VR-School/VRSchool6.png",
+          "/Three-JS-Portfolio/Project-Images/VR-School/VRSchool7.png",
         ],
       }
     },
@@ -353,9 +353,9 @@ loader2.load(
         technologies: "Unity, WebGL",
         links: "https://github.com/SarathChandraKaza/Eating-Tom",
         images: [
-          "/Project-Images/Eating-Tom/EatingTom1.png",
-          "/Project-Images/Eating-Tom/EatingTom2.png",
-          "/Project-Images/Eating-Tom/EatingTom3.png",
+          "/Three-JS-Portfolio/Project-Images/Eating-Tom/EatingTom1.png",
+          "/Three-JS-Portfolio/Project-Images/Eating-Tom/EatingTom2.png",
+          "/Three-JS-Portfolio/Project-Images/Eating-Tom/EatingTom3.png",
         ],
       }
     },
@@ -429,7 +429,7 @@ const globalAudio = new THREE.Audio(listener);
 
 // Load the ambient music file
 const audioLoader = new THREE.AudioLoader();
-audioLoader.load('/Sounds/SFX/ambient-music.mp3', (buffer) => {
+audioLoader.load('/Three-JS-Portfolio/Sounds/SFX/ambient-music.mp3', (buffer) => {
   globalAudio.setBuffer(buffer);  // Set the audio buffer
   globalAudio.setLoop(true);      // Enable looping for continuous playback
   globalAudio.setVolume(0.5);     // Adjust the volume (0.0 to 1.0)
@@ -811,7 +811,7 @@ gsap.to(camera.position, {
 // Load Font for 3D Text
 const fontLoader = new FontLoader(manager);
 let textMaterial;
-fontLoader.load('/Fonts/SF Pro Display_Light.json', (font) => {
+fontLoader.load('/Three-JS-Portfolio/Fonts/SF Pro Display_Light.json', (font) => {
   // Define text properties
   const textGeometry = new TextGeometry('An Interstellar Travel Through My Works', {
     font: font,
@@ -844,7 +844,7 @@ fontLoader.load('/Fonts/SF Pro Display_Light.json', (font) => {
 
   //#region INFORMATION ICON
   const textureLoader2 = new THREE.TextureLoader();
-  const iconTexture = textureLoader2.load('/Icons/information-button.png');
+  const iconTexture = textureLoader2.load('/Three-JS-Portfolio/Icons/information-button.png');
 
   const spriteMaterial = new THREE.SpriteMaterial({ map: iconTexture });
   let sprite = new THREE.Sprite(spriteMaterial);
