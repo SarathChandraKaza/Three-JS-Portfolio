@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarath Chandra - Portfolio</title>
+     <!-- Google Fonts link -->
+        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="/assets/index-w-nbGCc4.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-E6Y4_kEN.css">
+</head>
+<body>
+    <!-- Three.js Canvas -->
+    <canvas class="threejs"></canvas>
+   
+
+	<!-- UI Menu for Planet Interaction -->
+    <div id="ui-menu" class="ui-menu">
+        <div class="ui-content">
+            <button id="project-link-button" class="link-button">Project Link</button>
+            <button id="close-ui" class="close-button">Close</button>
+
+            <!-- Carousel Wrapper to visually separate the carousel from text -->
+            <div class="carousel-wrapper">
+                <div class="carousel-container">
+                    <button class="carousel-button-left">&lt;</button>
+                    <div class="carousel-image-wrapper">
+                        <img id="carousel-image" class="carousel-image" src="" alt="Project Image">
+                    </div>
+                    <button class="carousel-button-right">&gt;</button>
+                </div>
+            </div>
+
+            <!-- Planet Details Section -->
+            <div id="planet-details">
+                <!-- Dynamic bullet points will go here -->
+            </div>
+        </div>
+    </div>
+
+
+   <!-- Information UI Screen -->
+   <div id="ui-screen">
+    <!-- Instructions Section -->
+    <h2>Instructions</h2>
+    <p>
+        Scroll through the planets to explore different projects. <br />
+        Click on a planet to learn more about a specific project and its details.
+    </p>
+
+     <!-- Introduction Section-->
+     <h2>Introduction</h2>
+     <p>
+        Hi, I'm <span style="font-size: 1.1em; font-weight: bold;">Sarath Chandra</span>, a passionate XR developer with three years of experience creating immersive experiences using Unity and C#. I invite you to explore my works, and feel free to reach out for any further discussions.
+    </p>
+
+    <!-- Social Icons Section -->
+    <div id="social-icons">
+        <a href="mailto:workmail.sarath@gmail.com" id="email-icon" aria-label="Email"></a>
+        <a href="https://www.linkedin.com/in/sarath-chandra-b9487b220/" target="_blank" id="linkedin-icon" aria-label="LinkedIn"></a>
+        <a href="https://github.com/SarathChandraKaza" target="_blank" id="github-icon" aria-label="GitHub"></a>
+    </div>
+
+    <!-- Close Button -->
+    <button id="close-icon-ui" title="Close the UI">X</button>
+</div>
+
+    <!-- Hover Tooltip for information sprite-->
+    <div id="hoverTooltip" class="tooltip"></div>
+
+    <!--Loading screen Functionality-->
+    <div id="loading-screen">
+        <div class="loader"></div>
+        <p>Hold tight! The planets are aligning.</p>
+    </div>
+
+    <!--Help text for clicking on planet-->
+    <div id="help-text" style="display: none;">
+        Click on a planet to learn more about a specific project and its details.
+      </div>
+
+
+</body>
+</html>
