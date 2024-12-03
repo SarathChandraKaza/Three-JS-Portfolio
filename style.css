@@ -15,7 +15,7 @@ canvas.threejs {
 /* Load the LoomatticRegular font */
 @font-face {
   font-family: 'LoomatticRegular';
-  src: url('C:/Three-JS-Portfolio/static/Fonts/LoomatticRegular-EaxaW.ttf') format('truetype');
+  src: url('static/Fonts/LoomatticRegular-EaxaW.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -23,7 +23,7 @@ canvas.threejs {
 /* Load the SF Pro Display Bold font */
 @font-face {
   font-family: 'SFBold';
-  src: url('C:\Three-JS-Portfolio\static\Fonts\SF-Pro-Display-Bold.otf') format('opentype');
+  src: url('static\Fonts\SF-Pro-Display-Bold.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
@@ -31,7 +31,7 @@ canvas.threejs {
 /* Load the SF Pro Display Light font */
 @font-face {
   font-family: 'SFLight';
-  src: url('C:\Three-JS-Portfolio\static\Fonts\SF-Pro-Display-Light.otf') format('opentype');
+  src: url('static\Fonts\SF-Pro-Display-Light.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
@@ -39,7 +39,7 @@ canvas.threejs {
 /* Load the SF Pro Display Medium font */
 @font-face {
   font-family: 'SFMedium';
-  src: url('C:\Three-JS-Portfolio\static\Fonts\SF-Pro-Display-Medium.otf') format('opentype');
+  src: url('static\Fonts\SF-Pro-Display-Medium.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
@@ -47,7 +47,7 @@ canvas.threejs {
 /* Load the SF Pro Display Regular font */
 @font-face {
   font-family: 'SFRegular';
-  src: url('C:\Three-JS-Portfolio\static\Fonts\SF-Pro-Display-Regular.otf') format('opentype');
+  src: url('static\Fonts\SF-Pro-Display-Regular.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
