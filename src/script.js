@@ -92,25 +92,25 @@ manager.onLoad = () => {
   // === TEXTURE LOADER SETUP ===
   const textureLoader = new THREE.TextureLoader(manager);
   const cubeTextureLoader = new THREE.CubeTextureLoader(manager);
-  cubeTextureLoader.setPath('/textures/Purple Nebula/');
+  cubeTextureLoader.setPath('/Three-JS-Portfolio/textures/Purple Nebula/');
   //#endregion
 
   //#region TEXTURE DEFINITIONS
   // === TEXTURE DEFINITIONS ===
-  const sunTexture = textureLoader.load("/textures/2k_sun.jpg");
+  const sunTexture = textureLoader.load("/Three-JS-Portfolio/textures/2k_sun.jpg");
   sunTexture.colorSpace = THREE.SRGBColorSpace;
 
 
-  const mercuryTexture = textureLoader.load("/textures/2k_mercury.jpg");
+  const mercuryTexture = textureLoader.load("/Three-JS-Portfolio/textures/2k_mercury.jpg");
   mercuryTexture.colorSpace = THREE.SRGBColorSpace;
 
-  const venusTexture = textureLoader.load("/textures/2k_venus_surface.jpg");
+  const venusTexture = textureLoader.load("/Three-JS-Portfolio/textures/2k_venus_surface.jpg");
   venusTexture.colorSpace = THREE.SRGBColorSpace;
 
-  const earthTexture = textureLoader.load("/textures/2k_earth_daymap.jpg");
+  const earthTexture = textureLoader.load("/Three-JS-Portfolio/textures/2k_earth_daymap.jpg");
   earthTexture.colorSpace = THREE.SRGBColorSpace;
 
-  const marsTexture = textureLoader.load("/textures/2k_mars.jpg");
+  const marsTexture = textureLoader.load("/Three-JS-Portfolio/textures/2k_mars.jpg");
   marsTexture.colorSpace = THREE.SRGBColorSpace;
 
   // Background Skybox
