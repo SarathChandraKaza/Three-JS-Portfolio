@@ -689,9 +689,9 @@ gsap.to(camera.position, {
         let carouselButtonsHtml = '';
         if (projectData.images.length > 2) {
           carouselButtonsHtml = `
-            <button id="prev-image" class="carousel-button"> </button>
+            <button class="carousel-button carousel-button-left"></button>
             <div class="carousel-image-wrapper">${renderImage()}</div>
-            <button id="next-image" class="carousel-button"> </button>
+            <button class="carousel-button carousel-button-right"></button>
           `;
         } else {
           carouselButtonsHtml = `
@@ -716,24 +716,24 @@ gsap.to(camera.position, {
 
         // Attach event listeners for carousel navigation
         if (projectData.images.length > 2) {
-          document.getElementById('prev-image').addEventListener('mouseover', () =>
+          document.getElementById('.carousel-button-left').addEventListener('mouseover', () =>
           {
               // playSound(hoverSound);
           });
 
-          document.getElementById('next-image').addEventListener('mouseover', () =>
+          document.getElementById('.carousel-button-right').addEventListener('mouseover', () =>
             {
                 // playSound(hoverSound);
             });
 
-          document.getElementById('prev-image').addEventListener('click', () => 
+          document.getElementById('.carousel-button-left').addEventListener('click', () => 
             {
               playSound(iconClickSound);
             currentImageIndex = (currentImageIndex - 1 + projectData.images.length) % projectData.images.length;
             document.querySelector('.carousel-image-wrapper').innerHTML = renderImage();
           });
 
-          document.getElementById('next-image').addEventListener('click', () => 
+          document.getElementById('.carousel-button-right').addEventListener('click', () => 
             {
               playSound(iconClickSound);
             currentImageIndex = (currentImageIndex + 1) % projectData.images.length;
