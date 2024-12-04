@@ -3859,9 +3859,13 @@ void main() {
           <p><strong>Description:</strong> ${i.description}</p>
           <p><strong>Technologies:</strong> ${i.technologies}</p>
         `;let l="";i.images.length>2?l=`
-           <button id="prev-image" class="carousel-button carousel-arrow-left" alt="Previous"></button>
-           <div class="carousel-image-wrapper">${o()}</div>
-           <button id="next-image" class="carousel-button carousel-arrow-next" alt="Previous"></button>
+            <button id="prev-image" class="carousel-button">
+              <img src="/Icons/left.png" alt="Previous" class="carousel-arrow">
+            </button>
+            <div class="carousel-image-wrapper">${o()}</div>
+            <button id="next-image" class="carousel-button">
+              <img src="/Icons/right.png" alt="Next" class="carousel-arrow">
+            </button>
           `:l=`
             <div class="carousel-image-wrapper">${o()}</div>
           `,n.innerHTML=`
