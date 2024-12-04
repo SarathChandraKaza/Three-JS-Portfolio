@@ -3860,11 +3860,11 @@ void main() {
           <p><strong>Technologies:</strong> ${i.technologies}</p>
         `;let l="";i.images.length>2?l=`
             <button id="prev-image" class="carousel-button">
-              // <img src="Icons/left.png" alt="Previous" class="carousel-arrow">
+              <img src="Icons/left.png" alt="Previous" class="carousel-arrow">
             </button>
             <div class="carousel-image-wrapper">${o()}</div>
             <button id="next-image" class="carousel-button">
-              // <img src="Icons/right.png" alt="Next" class="carousel-arrow">
+              <img src="Icons/right.png" alt="Next" class="carousel-arrow">
             </button>
           `:l=`
             <div class="carousel-image-wrapper">${o()}</div>

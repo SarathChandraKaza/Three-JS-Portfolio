@@ -139,6 +139,14 @@ h3 {
   border-radius: 8px;
 }
 
+.carousel-button-left {
+  left: 5px;
+}
+
+.carousel-button-right {
+  right: 5px;
+}
+
 .carousel-arrow {
   width: 40px;  /* Adjusted the width of the arrow icon */
   height: 40px; /* Adjusted the height of the arrow icon */
@@ -172,24 +180,6 @@ h3 {
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  width: 40px; /* Set a width for the button */
-  height: 40px; /* Set a height for the button */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-size: contain; /* Ensure the image fits within the button */
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.carousel-button-left {
-  background-image: url('Icons/left.png'); /* Set the left arrow image */
-  left: 5px;
-}
-
-.carousel-button-right {
-  background-image: url('Icons/right.png'); /* Set the right arrow image */
-  right: 5px;
 }
 
 .carousel-image-wrapper {
