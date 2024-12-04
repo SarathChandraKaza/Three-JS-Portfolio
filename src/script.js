@@ -353,9 +353,9 @@ loader2.load(
         technologies: "Unity, WebGL",
         links: "https://github.com/SarathChandraKaza/Eating-Tom",
         images: [
-          "/Three-JS-Portfolio/Project-Images/Eating-Tom/EatingTom1.png",
-          "/Three-JS-Portfolio/Project-Images/Eating-Tom/EatingTom2.png",
-          "/Three-JS-Portfolio/Project-Images/Eating-Tom/EatingTom3.png",
+          "/XR-Portfolio/Project-Images/Eating-Tom/EatingTom1.png",
+          "/XR-Portfolio/Project-Images/Eating-Tom/EatingTom2.png",
+          "/XR-Portfolio/Project-Images/Eating-Tom/EatingTom3.png",
         ],
       }
     },
