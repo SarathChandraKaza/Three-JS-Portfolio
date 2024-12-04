@@ -689,15 +689,15 @@ gsap.to(camera.position, {
         let carouselButtonsHtml = '';
         if (projectData.images.length > 2) {
           carouselButtonsHtml = `
-           <button id="prev-image" class="carousel-button carousel-arrow-left" alt="Previous"></button>
-           <div class="carousel-image-wrapper">${renderImage()}</div>
-           <button id="next-image" class="carousel-button carousel-arrow-next" alt="Previous"></button>
+              <button id="prev-image" class="carousel-button carousel-arrow-left" alt="Previous"></button>
+              <div class="carousel-image-wrapper">${renderImage()}</div>
+              <button id="next-image" class="carousel-button carousel-arrow-right" alt="Next"></button>
           `;
-        } else {
+      } else {
           carouselButtonsHtml = `
-            <div class="carousel-image-wrapper">${renderImage()}</div>
+              <div class="carousel-image-wrapper">${renderImage()}</div>
           `;
-        }
+      }
 
         uiMenu.innerHTML = `
           <div class="ui-content">
@@ -716,31 +716,30 @@ gsap.to(camera.position, {
 
         // Attach event listeners for carousel navigation
         if (projectData.images.length > 2) {
-          document.getElementById('prev-image').addEventListener('mouseover', () =>
-          {
-              // playSound(hoverSound);
+          // Event listener for hover effect (optional sound effect for mouseover)
+          document.getElementById('prev-image').addEventListener('mouseover', () => {
+              // playSound(hoverSound);  // Uncomment if you have sound effects
           });
-
-          document.getElementById('next-image').addEventListener('mouseover', () =>
-            {
-                // playSound(hoverSound);
-            });
-
-          document.getElementById('prev-image').addEventListener('click', () => 
-            {
-              playSound(iconClickSound);
-            currentImageIndex = (currentImageIndex - 1 + projectData.images.length) % projectData.images.length;
-            document.querySelector('.carousel-image-wrapper').innerHTML = renderImage();
+      
+          document.getElementById('next-image').addEventListener('mouseover', () => {
+              // playSound(hoverSound);  // Uncomment if you have sound effects
           });
-
-          document.getElementById('next-image').addEventListener('click', () => 
-            {
-              playSound(iconClickSound);
-            currentImageIndex = (currentImageIndex + 1) % projectData.images.length;
-            document.querySelector('.carousel-image-wrapper').innerHTML = renderImage();
+      
+          // Event listener for 'prev-image' button click
+          document.getElementById('prev-image').addEventListener('click', () => {
+              playSound(iconClickSound);  // Play click sound (optional)
+              currentImageIndex = (currentImageIndex - 1 + projectData.images.length) % projectData.images.length;
+              document.querySelector('.carousel-image-wrapper').innerHTML = renderImage();
           });
-        }
-
+      
+          // Event listener for 'next-image' button click
+          document.getElementById('next-image').addEventListener('click', () => {
+              playSound(iconClickSound);  // Play click sound (optional)
+              currentImageIndex = (currentImageIndex + 1) % projectData.images.length;
+              document.querySelector('.carousel-image-wrapper').innerHTML = renderImage();
+          });
+      }
+      
         // Attach event listener to the project link button
         const projectLinkButton = document.getElementById('project-link');
         if (projectLinkButton) {
