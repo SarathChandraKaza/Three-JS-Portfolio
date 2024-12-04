@@ -689,13 +689,9 @@ gsap.to(camera.position, {
         let carouselButtonsHtml = '';
         if (projectData.images.length > 2) {
           carouselButtonsHtml = `
-            <button id="prev-image" class="carousel-button">
-              <img src="/Icons/left.png" alt="Previous" class="carousel-arrow">
-            </button>
-            <div class="carousel-image-wrapper">${renderImage()}</div>
-            <button id="next-image" class="carousel-button">
-              <img src="/Icons/right.png" alt="Next" class="carousel-arrow">
-            </button>
+           <button id="prev-image" class="carousel-button carousel-arrow-left" alt="Previous"></button>
+           <div class="carousel-image-wrapper">${renderImage()}</div>
+           <button id="next-image" class="carousel-button carousel-arrow-next" alt="Previous"></button>
           `;
         } else {
           carouselButtonsHtml = `
