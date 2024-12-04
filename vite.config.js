@@ -3,7 +3,7 @@ export default {
     publicDir: '../static/', // Directory for public assets
     base: '/Three-JS-Portfolio/', // Replace with your repository name
     build: {
-      outDir: '../docs', // Output directory for build files
+      outDir: '../docsnpm ', // Output directory for build files
       emptyOutDir: true, // Clears the output directory before building
     },
   };
