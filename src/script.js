@@ -733,6 +733,7 @@ gsap.to(camera.position, {
           document.getElementById('prev-image').addEventListener('click', () => 
             {
               playSound(iconClickSound);
+              console.log("Clicked on prev image");
             currentImageIndex = (currentImageIndex - 1 + projectData.images.length) % projectData.images.length;
             document.querySelector('.carousel-image-wrapper').innerHTML = renderImage();
           });
@@ -740,6 +741,7 @@ gsap.to(camera.position, {
           document.getElementById('next-image').addEventListener('click', () => 
             {
               playSound(iconClickSound);
+              console.log("Clicked on next image");
             currentImageIndex = (currentImageIndex + 1) % projectData.images.length;
             document.querySelector('.carousel-image-wrapper').innerHTML = renderImage();
           });
