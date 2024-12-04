@@ -130,14 +130,14 @@ h3 {
   object-fit: cover;
 }
 
-.carousel-button {
+/* .carousel-button {
   background: none;
   border: none;
   padding: 5px;
   cursor: pointer;
   z-index: 10;
   border-radius: 8px;
-}
+} */
 
 .carousel-arrow {
   width: 40px;  /* Adjusted the width of the arrow icon */
