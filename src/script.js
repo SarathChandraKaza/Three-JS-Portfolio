@@ -335,9 +335,9 @@ loader2.load(
         technologies: "Unity, Blender, Audacity",
         links: "https://github.com/SarathChandraKaza/Dodge-Ball",
         images: [
-          "/Project-Images/Dodge-Ball/DodgeBall1.png",
-          "/Project-Images/Dodge-Ball/DodgeBall2.png",
-          "/Project-Images/Dodge-Ball/DodgeBall3.png",
+          "/Three-JS-Portfolio/Project-Images/Dodge-Ball/DodgeBall1.png",
+          "/Three-JS-Portfolio/Project-Images/Dodge-Ball/DodgeBall2.png",
+          "/Three-JS-Portfolio/Project-Images/Dodge-Ball/DodgeBall3.png",
         ],
       }
     },
@@ -690,11 +690,11 @@ gsap.to(camera.position, {
         if (projectData.images.length > 2) {
           carouselButtonsHtml = `
             <button id="prev-image" class="carousel-button">
-              <img src="/Icons/left.png" alt="Previous" class="carousel-arrow">
+              <img src="/Three-JS-Portfolio/Icons/left.png" alt="Previous" class="carousel-arrow">
             </button>
             <div class="carousel-image-wrapper">${renderImage()}</div>
             <button id="next-image" class="carousel-button">
-              <img src="/Icons/right.png" alt="Next" class="carousel-arrow">
+              <img src="/Three-JS-Portfolio/Icons/right.png" alt="Next" class="carousel-arrow">
             </button>
           `;
         } else {
