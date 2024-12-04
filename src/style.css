@@ -183,12 +183,12 @@ h3 {
 }
 
 .carousel-button-left {
-  background-image: url('/Icons/left.png'); /* Set the left arrow image */
+  background-image: url('Icons/left.png'); /* Set the left arrow image */
   left: 5px;
 }
 
 .carousel-button-right {
-  background-image: url('/Icons/right.png'); /* Set the right arrow image */
+  background-image: url('Icons/right.png'); /* Set the right arrow image */
   right: 5px;
 }
 
