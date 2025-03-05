@@ -514,17 +514,34 @@ function resetInteractionTimer() {
 
   //#region SCROLL HANDLER
   // === SCROLL HANDLER ===
+  let isTrackPad = false;
+  let trackpadTimeout = null;
+
   const handleScroll = (event) => {
     // Only process scroll if the UI is NOT visible or already scrolling
     if (isUIVisible || isScrolling) return;
   
+    
+    const isTrackPad = Math.abs(event.deltaY) < 50;
+    
+    let scrollAmount = event.deltaY;
+    
+    if (isTrackPad) {
+      // Reverse only if using a trackpad
+      scrollAmount = -event.deltaY;
+  
+      // Prevent multiple rapid triggers from trackpad
+      if (trackpadTimeout) return;
+      trackpadTimeout = setTimeout(() => {
+        trackpadTimeout = null;
+      }, 3000);
+    }
+    
+    console.log(scrollAmount);
     isScrolling = true;
 
-
-    
-
-    if (event.deltaY < 0) {
-      // Scroll down
+    if (scrollAmount < 0) {
+      // Scroll backward - prev planet
       if (isBirdsEyeView) {
         currentPlanetIndex = 0;
         isBirdsEyeView = false;
@@ -543,7 +560,7 @@ function resetInteractionTimer() {
         hideHelpText();
       }
     } else {
-      // Scroll up
+      // Scroll forward - next planet
       if (isBirdsEyeView) 
         {
         // Stay in bird's-eye view
@@ -635,9 +652,9 @@ gsap.to(camera.position, {
   
   // Add scroll event listener
   window.addEventListener("wheel", handleScroll);
-  
 
   //#endregion
+
 
   //#region CLICK HANDLER WITH PROJECT DATA HANDLER
   // === UPDATED CLICK HANDLER TO RENDER PROJECT DATA WITH BACKGROUND IMAGE ===
