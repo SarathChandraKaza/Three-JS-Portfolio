@@ -480,7 +480,7 @@ navButtons.style.display = "none";
 console.log(window.innerWidth);
 // Function to show navigation buttons (only on mobile)
 const showNavButtons = () => {
-    if (window.innerWidth <= 2412 && navigator.maxTouchPoints > 0) 
+    if (window.innerWidth <= 768 || navigator.maxTouchPoints > 0 || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) 
       { 
         console.log("Entered mobile");// Check if it's a mobile device
         navButtons.style.display = "flex";
