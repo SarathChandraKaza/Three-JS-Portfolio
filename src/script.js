@@ -527,51 +527,60 @@ function resetInteractionTimer() {
     let scrollAmount = event.deltaY;
     
     if (isTrackPad) {
-      // Reverse only if using a trackpad
-      scrollAmount = -event.deltaY;
-  
-      // Prevent multiple rapid triggers from trackpad
+
       if (trackpadTimeout) return;
+      scrollAmount = event.deltaY;
       trackpadTimeout = setTimeout(() => {
         trackpadTimeout = null;
       }, 3000);
     }
-    
-    console.log(scrollAmount);
+  
     isScrolling = true;
-
-    if (scrollAmount < 0) {
-      // Scroll backward - prev planet
-      if (isBirdsEyeView) {
-        currentPlanetIndex = 0;
-        isBirdsEyeView = false;
-        resetInteractionTimer();
-        // Enable help text when leaving bird's-eye view
-        allowHelpText = true;
-      } else if (currentPlanetIndex < planets.length-2) 
-        {
-        currentPlanetIndex = Math.min(currentPlanetIndex+1, planets.length - 2);
-        resetInteractionTimer();
+    if((scrollAmount > 0 && scrollAmount < 5) || (scrollAmount < 0 && scrollAmount > -5))
+    {
+      return;
+    }
+    else
+    {
+      if (scrollAmount < 0) {
+        // console.log("Scrolling back", scrollAmount);
+        // Scroll backward - prev planet
+        if (isBirdsEyeView) {
+          currentPlanetIndex = 0;
+          isBirdsEyeView = false;
+          resetInteractionTimer();
+          // Enable help text when leaving bird's-eye view
+          allowHelpText = true;
+        } else if (currentPlanetIndex < planets.length-2) 
+          {
+          currentPlanetIndex = Math.min(currentPlanetIndex+1, planets.length - 2);
+          resetInteractionTimer();
+        } else {
+          // If at the last planet, transition back to bird's-eye view
+          isBirdsEyeView = true;
+           // Disable help text when entering bird's-eye view
+          allowHelpText = false;
+          hideHelpText();
+        }
       } else {
-        // If at the last planet, transition back to bird's-eye view
-        isBirdsEyeView = true;
-         // Disable help text when entering bird's-eye view
-        allowHelpText = false;
-        hideHelpText();
-      }
-    } else {
-      // Scroll forward - next planet
-      if (isBirdsEyeView) 
-        {
-        // Stay in bird's-eye view
-        isScrolling = false;
-        return;
-      } else if (currentPlanetIndex === 0) {
-        isBirdsEyeView = true;
-      } else {
-        currentPlanetIndex = Math.max(currentPlanetIndex - 1, 0);
+        // console.log("Scrolling front", scrollAmount);
+        // Scroll forward - next planet
+        if (isBirdsEyeView) 
+          {
+          // Stay in bird's-eye view
+          isScrolling = false;
+          return;
+        } else if (currentPlanetIndex === 0) {
+          isBirdsEyeView = true;
+        } else {
+          currentPlanetIndex = Math.max(currentPlanetIndex - 1, 0);
+        }
       }
     }
+        // Allow scrolling again after a small delay
+        setTimeout(() => {
+          isScrolling = false;
+      }, 3000); // Adjust debounce time if needed
   
     const selectedPlanet = isBirdsEyeView ? null : planets[currentPlanetIndex];
     const selectedPlanetMesh = isBirdsEyeView ? null : planetMeshes[currentPlanetIndex];
