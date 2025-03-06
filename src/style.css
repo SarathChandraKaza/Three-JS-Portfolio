@@ -185,7 +185,7 @@ h3 {
 
 #planet-details p, #planet-details li {
   font-family: 'SFLight', sans-serif;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 #planet-details ul {
@@ -268,12 +268,19 @@ h3 {
   cursor: pointer;
 }
 
+.carousel-button img {
+  width: 30px;
+  height: 30px;
+}
+
 .carousel-image-wrapper {
-  width: 60%;
+  width: 100%;
+  max-width: 400px;
   height: auto;
-  overflow: hidden;
-  display: flex;
+  margin: 10px auto;
+  display : flex;
   justify-content: center;
+  overflow: hidden;
   align-items: center;
   border: 2px solid rgba(255, 255, 255, 0.8); /* Border for images */
   border-radius: 8px;
@@ -281,9 +288,58 @@ h3 {
 }
 
 .carousel-image {
-  width: 70%;
-  height: 50%;
+  width: 100%;
+  height: auto;
+  max-height: 250px;
   object-fit: contain; /* Prevent image clipping */
+}
+
+/* Responsive adjustments for mobile */
+@media screen and (max-width: 768px) {
+  #ui-menu {
+      width: 95%;
+      max-width: 90%;
+      max-height: 75vh;
+      padding: 15px;
+  }
+
+  #ui-menu h1 {
+      font-size: 18px;
+  }
+
+  #ui-menu h3 {
+      font-size: 14px;
+  }
+
+  #planet-details p {
+      font-size: 14px;
+  }
+
+  .carousel-image-wrapper {
+      max-width: 300px;
+  }
+
+  .carousel-button img {
+      width: 25px;
+      height: 25px;
+  }
+}
+
+/* Even more compact layout for very small screens */
+@media screen and (max-width: 480px) {
+  #ui-menu {
+      width: 95%;
+      max-height: 70vh;
+  }
+
+  .carousel-image-wrapper {
+      max-width: 250px;
+  }
+
+  .carousel-button img {
+      width: 20px;
+      height: 20px;
+  }
 }
 
 /* Close and Project Link Button Styling */
@@ -335,30 +391,75 @@ h3 {
 /* UI Menu Styling */
 .ui-menu {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  color: white;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  background: linear-gradient(135deg, #4e54c8, #8f94fb);
+    color: white;
+    font-family: 'SFRegular', sans-serif;
+    text-align: center;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    display: none;
+    z-index: 1000;
+}
+
+/* Make text more readable on small screens */
+#ui-menu h1 {
+  font-size: 22px;
+  margin-bottom: 5px;
+}
+
+#ui-menu h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
 }
 
 .ui-content {
-  max-width: 2000px;
-  max-height: 4000px;
+  width: 100%;
+  max-width: 600px; /* Prevent it from being too wide */
+  max-height: 80vh; /* Prevent excessive height */
   padding: 20px;
   background-image: url('/Background/beige-background.jpg');
+  background-size: cover; /* Ensures the image stretches */
+  background-repeat: no-repeat; /* Prevents tiling */
   background-position: center;
+  background-attachment: fixed; /* Keeps background in place */
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-  position: relative; /* Ensure buttons are aligned to the content */
+  position: relative;
+  overflow-y: auto; /* Enables scrolling if content overflows */
 }
+
+
+/* Make buttons flexible */
+#ui-menu .link-button, #ui-menu .close-button {
+  font-size: 16px;
+  padding: 8px 12px;
+  margin: 8px 0;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#ui-menu .link-button:hover, #ui-menu .close-button:hover {
+  transform: scale(1.05);
+}
+
+/* Responsive carousel container */
+.carousel-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+
 
 /* -----------------------------------------------------Information Screen--------------------------------------------------------*/
 #ui-screen {
