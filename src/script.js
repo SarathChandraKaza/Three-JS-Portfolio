@@ -470,6 +470,25 @@ audioLoader.load('/Three-JS-Portfolio/Sounds/SFX/ambient-music.mp3', (buffer) =>
   //#endregion
 
   //#region SCROLL AND INTERACTION SETUP
+
+  // Get references to elements
+const startButton = document.getElementById("close-icon-ui"); // "Start" button
+const navButtons = document.querySelector(".navigation-buttons");
+
+// Ensure the buttons are hidden initially
+navButtons.style.display = "none";
+
+// Function to show navigation buttons (only on mobile)
+const showNavButtons = () => {
+    if (window.innerWidth <= 768) { // Check if it's a mobile device
+        navButtons.style.display = "flex";
+    }
+};
+
+// Attach event listener to "Start" button
+startButton.addEventListener("click", () => {
+  showNavButtons(); // Show buttons when clicked
+});
   // === SCROLL AND INTERACTION VARIABLES ===
   let currentPlanetIndex = 0;
   let isBirdsEyeView = true;
