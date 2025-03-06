@@ -718,6 +718,7 @@ gsap.to(camera.position, {
 
   if (intersects.length > 0) 
     {
+    navButtons.style.display = "none";
     const planet = intersects[0].object.userData;
     clearTimeout(interactionTimer); // Clear the existing timer
     hideHelpText(); //Hide the help
@@ -830,6 +831,7 @@ gsap.to(camera.position, {
         if (closeButton) {
           closeButton.removeEventListener('click', closeUIHandler);
           closeButton.addEventListener('click', closeUIHandler);
+          closeButton.addEventListener('click', () => {showNavButtons();});
           closeButton.addEventListener('mouseover', () => {playSound(hoverSound);});
         } else {
           console.error("Close button not found!");
