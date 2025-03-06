@@ -477,10 +477,12 @@ const navButtons = document.querySelector(".navigation-buttons");
 
 // Ensure the buttons are hidden initially
 navButtons.style.display = "none";
-
+console.log(window.innerWidth);
 // Function to show navigation buttons (only on mobile)
 const showNavButtons = () => {
-    if (window.innerWidth <= 768) { // Check if it's a mobile device
+    if (window.innerWidth <= 2412 && navigator.maxTouchPoints > 0) 
+      { 
+        console.log("Entered mobile");// Check if it's a mobile device
         navButtons.style.display = "flex";
     }
 };

@@ -110,7 +110,7 @@ h3 {
 }
 
 /* Show buttons only on mobile devices (max-width: 768px) */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 2412px) {
   .navigation-buttons {
       display: flex;
       position: fixed;
@@ -289,7 +289,7 @@ h3 {
 }
 
 /* Responsive adjustments for mobile */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 2412px) {
   #ui-menu {
       width: 95%;
       max-width: 90%;
@@ -514,7 +514,7 @@ h3 {
 }
 
 /* Adjust font size & layout on smaller screens */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 2412px) {
   #ui-screen {
       width: 90%;
       max-width: 95%;
@@ -589,7 +589,7 @@ h3 {
 }
 
 /* Responsive Social Icons */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 2412px) {
   #social-icons {
       margin-top: 5%;
       gap: 8px; /* Reduce space between icons */
