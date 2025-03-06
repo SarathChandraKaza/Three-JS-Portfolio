@@ -457,6 +457,10 @@ audioLoader.load('/Three-JS-Portfolio/Sounds/SFX/ambient-music.mp3', (buffer) =>
   controls.enableZoom = false; // Disable zooming in OrbitControls
   controls.mouseButtons.RIGHT = THREE.MOUSE.NO_MODIFIER;
   controls.mouseButtons.LEFT = THREE.MOUSE.NO_MODIFIER;
+
+  // Disable OrbitControls movement
+  controls.enableRotate = false; // Disable camera rotation
+  controls.enablePan = false;    // Disable panning
   //#endregion
 
   //#region RAYCASTER SETUP
@@ -516,6 +520,20 @@ function resetInteractionTimer() {
   // === SCROLL HANDLER ===
   let isTrackPad = false;
   let trackpadTimeout = null;
+
+  // Get reference to the buttons
+  const nextButton = document.getElementById("next-project");
+  const prevButton = document.getElementById("prev-project");
+
+  // Function to trigger existing scroll logic
+  const triggerScroll = (deltaY) => {
+      handleScroll({ deltaY }); // Simulate a scroll event
+  };
+
+  // Attach event listeners
+  nextButton.addEventListener("click", () => triggerScroll(-100)); // Scroll forward
+  prevButton.addEventListener("click", () => triggerScroll(100));  // Scroll backward
+
 
   const handleScroll = (event) => {
     // Only process scroll if the UI is NOT visible or already scrolling
