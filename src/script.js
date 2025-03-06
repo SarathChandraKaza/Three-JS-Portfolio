@@ -432,7 +432,7 @@ const audioLoader = new THREE.AudioLoader();
 audioLoader.load('/Three-JS-Portfolio/Sounds/SFX/ambient-music.mp3', (buffer) => {
   globalAudio.setBuffer(buffer);  // Set the audio buffer
   globalAudio.setLoop(true);      // Enable looping for continuous playback
-  globalAudio.setVolume(0.5);     // Adjust the volume (0.0 to 1.0)
+  globalAudio.setVolume(0);     // Adjust the volume (0.0 to 1.0)
   
   // Wait for a user gesture (click or any other interaction) before starting audio
   window.addEventListener('click', () => {
