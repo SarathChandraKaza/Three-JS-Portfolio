@@ -104,6 +104,8 @@ h3 {
   }
 }
 
+
+
 /* Hide navigation buttons by default */
 .navigation-buttons {
   display: none;
@@ -114,10 +116,10 @@ h3 {
   .navigation-buttons {
       display: flex;
       position: fixed;
-      bottom: 10px;
+      bottom: 40px;
       left:50%;
       transform: translateX(-50%);
-      width: 90%;
+      width: 75%;
       justify-content: space-between;
       z-index: 1000;
   }
@@ -125,8 +127,8 @@ h3 {
 
 .nav-button {
   flex: 1; /* Make buttons expand */
-  max-width: 35%; /* Prevents them from being too wide */
-  padding: 10px 15px;
+  max-width: 25%; /* Prevents them from being too wide */
+  padding: 15px 15px;
   font-size: 16px;
   font-family: 'SFRegular', sans-serif;
   text-align: center;
@@ -167,6 +169,8 @@ h3 {
       visibility: visible;
   }
 }
+
+
 
 
 /* -----------------------------------------------------Planet Details--------------------------------------------------------*/
@@ -269,7 +273,7 @@ h3 {
 
 .carousel-image-wrapper {
   width: 100%;
-  max-width: 400px;
+  max-width: 800px;
   height: auto;
   margin: 10px auto;
   display : flex;
@@ -288,11 +292,34 @@ h3 {
   object-fit: contain; /* Prevent image clipping */
 }
 
-/* Responsive adjustments for mobile */
-@media screen and (max-width: 2412px) {
+/* Styles for laptops and PCs */
+@media screen and (min-width: 1024px) and (orientation: landscape) {
   #ui-menu {
-      width: 95%;
-      max-width: 90%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    max-width: 50%;
+    max-height: 80vh;
+    overflow-y: auto;
+    background: linear-gradient(135deg, #4e54c8, #8f94fb);
+      color: white;
+      font-family: 'SFRegular', sans-serif;
+      text-align: center;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      display: none;
+      z-index: 1000;
+  }
+}
+
+/* Responsive adjustments for mobile */
+@media screen and (max-width: 2412px) and (orientation: landscape) {
+  #ui-menu {
+      width: 30%;
+      max-width: 30%;
       max-height: 75vh;
       padding: 15px;
   }
@@ -326,12 +353,14 @@ h3 {
 /* Even more compact layout for very small screens */
 @media screen and (max-width: 480px) {
   #ui-menu {
-      width: 95%;
-      max-height: 70vh;
-  }
+    width: 50%;
+    max-width: 50%;
+    max-height: 75vh;
+    padding: 15px;
+}
 
   .carousel-image-wrapper {
-      max-width: 250px;
+      max-width: 300px;
   }
 
   .carousel-button img {
@@ -387,13 +416,13 @@ h3 {
   left: 10px;
 }
 /* UI Menu Styling */
-.ui-menu {
+/* .ui-menu {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 85%;
-  max-width: 600px;
+  width: 50%;
+  max-width: 50%;
   max-height: 80vh;
   overflow-y: auto;
   background: linear-gradient(135deg, #4e54c8, #8f94fb);
@@ -405,7 +434,7 @@ h3 {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     display: none;
     z-index: 1000;
-}
+} */
 
 /* Make text more readable on small screens */
 #ui-menu h1 {
@@ -420,7 +449,7 @@ h3 {
 
 .ui-content {
   width: 100%;
-  max-width: 600px; /* Prevent it from being too wide */
+  max-width: 700px; /* Prevent it from being too wide */
   max-height: 80vh; /* Prevent excessive height */
   padding: 20px;
   background-image: url('/Background/beige-background.jpg');
@@ -465,8 +494,8 @@ h3 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80%;
-  max-width: 500px;
+  width: 60%;
+  max-width: 600px;
   max-height: 80vh;
   overflow-y: auto;
   background: linear-gradient(135deg, #4e54c8, #8f94fb); /* Gradient background */
@@ -516,9 +545,9 @@ h3 {
 /* Adjust font size & layout on smaller screens */
 @media screen and (max-width: 2412px) {
   #ui-screen {
-      width: 90%;
-      max-width: 95%;
-      max-height: 75vh;
+      width: 70%;
+      max-width: 75%;
+      max-height: 70vh;
       padding: 15px;
       font-size: 14px;
   }
@@ -566,7 +595,7 @@ h3 {
 
 /* Social Icons */
 #social-icons {
-  margin-top: 20px; /* Extra space between content and icons */
+  margin-top: 15px; /* Extra space between content and icons */
   display: flex;
   justify-content: center;
   gap: 12px; /* Larger gap between icons */
@@ -591,7 +620,7 @@ h3 {
 /* Responsive Social Icons */
 @media screen and (max-width: 2412px) {
   #social-icons {
-      margin-top: 5%;
+      margin-top: 3%;
       gap: 8px; /* Reduce space between icons */
   }
 

@@ -149,48 +149,6 @@ const backgroundCubemap = cubeTextureLoader.load([
   scene.add(sun);
   //#endregion
 
-  // //#region SPACESHIP - ENDURANCE CREATION
-  // // ===SPACESHIP - ENDURANCE CREATION
-  //  const loader = new GLTFLoader(manager);
-  //  let gltfObjectEndurance;
-
-  //  loader.load(
-  //    '3D Models/Spaceship/scene.gltf', // Replace with the path to your GLTF model
-  //    (gltf) => {
-  //      gltfObjectEndurance = gltf.scene;
-       
-  //      // Set scale
-  //      gltfObjectEndurance.scale.set(0.125, 0.125, 0.125);
-       
-  //      // Set position
-  //      gltfObjectEndurance.position.set(50, 60, 0);
-   
-  //      // Rotate the object by 90 degrees on the Y-axis (to the left)
-  //      gltfObjectEndurance.rotation.z = -Math.PI / 16; // 90 degrees in radians
-  //      gltfObjectEndurance.rotation.y = Math.PI / 16; 
-
-  //         // Create an AxesHelper for the GLTFObject
-  //     const axesHelper = new THREE.AxesHelper(10); // Size of axes helper, adjust as needed
-      
-  //     // Position the axes helper at the center of the GLTF object
-  //     axesHelper.position.copy(gltfObjectEndurance.position);  // Copy position of GLTFObject
-      
-  //     // Optionally, adjust the helper's rotation to match the GLTFObject's rotation
-  //     axesHelper.rotation.copy(gltfObjectEndurance.rotation);  // Copy rotation of GLTFObject
-      
-  //     // Add the axes helper to the scene
-  //     // scene.add(axesHelper);
-
-  //      const gltfWorldPosition = new THREE.Vector3();
-  //      gltfObjectEndurance.getWorldPosition(gltfWorldPosition);
-  //     console.log('GLTF Object world position:', gltfWorldPosition);
-
-  //      // Add the model to the scene
-  //      scene.add(gltfObjectEndurance);
-  //    },
-  //  );
-  //  //#endregion
-
   //#region SPACESHIP - RANGER CREATION
    // === RANGER CREATION
 const loader2 = new GLTFLoader(manager);
@@ -240,47 +198,6 @@ loader2.load(
 );
 
   //#endregion
-
-  //#region TARS - CREATION
-  // const loader3 = new GLTFLoader(manager);
-  //  let gltfObjectTARS;
-  //  let pointLightTARS;
-  //  loader3.load(
-  //    '3D Models/CASE Interstellar/scene.gltf', // Replace with the path to your GLTF model
-  //    (gltf) => {
-  //     gltfObjectTARS = gltf.scene;
-       
-  //      // Set scale
-  //      gltfObjectTARS.scale.set(50, 50, 50);
-       
-  //      // Set position
-  //      gltfObjectTARS.position.set(-50,-125, 75);
-   
-  //      // Rotate the object by 90 degrees on the Y-axis (to the left)
-  //     // gltfObjectTARS.rotation.x = Math.PI; // 90 degrees in radians
-  //     // gltfObjectTARS.rotation.y = -Math.PI;      
-  //     // gltfObjectTARS.rotation.z = Math.PI;
-
-  //         // Create an AxesHelper for the GLTFObject
-  //     const axesHelper = new THREE.AxesHelper(10); // Size of axes helper, adjust as needed
-      
-  //     // Position the axes helper at the center of the GLTF object
-  //     axesHelper.position.copy(gltfObjectTARS.position);  // Copy position of GLTFObject
-      
-  //     // Optionally, adjust the helper's rotation to match the GLTFObject's rotation
-  //     axesHelper.rotation.copy(gltfObjectTARS.rotation);  // Copy rotation of GLTFObject
-      
-  //     // Add the axes helper to the scene
-  //     // scene.add(axesHelper);
-
-  //      const gltfWorldPosition = new THREE.Vector3();
-  //      gltfObjectTARS.getWorldPosition(gltfWorldPosition);
-  //     console.log('GLTF Object world position:', gltfWorldPosition);
-
-  //      // Add the model to the scene
-  //      scene.add(gltfObjectTARS);
-  //    },
-  //  );
 
   //#region PLANET DATA WITH PROJECT DATA
   // === PLANET DATA WITH PROJECT DATA ===
@@ -482,7 +399,7 @@ console.log(window.innerWidth);
 const showNavButtons = () => {
     if (window.innerWidth <= 768 || navigator.maxTouchPoints > 0 || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) 
       { 
-        console.log("Entered mobile");// Check if it's a mobile device
+        // console.log("Entered mobile");// Check if it's a mobile device
         navButtons.style.display = "flex";
     }
 };
@@ -881,10 +798,14 @@ gsap.to(camera.position, {
 const fontLoader = new FontLoader(manager);
 let textMaterial;
 fontLoader.load('/Three-JS-Portfolio/Fonts/SF Pro Display_Light.json', (font) => {
+
+  // Determine font size based on screen width
+  const fontSize = window.innerWidth <= 768 ? 8 : 4; // Larger font for mobile
+
   // Define text properties
   const textGeometry = new TextGeometry('An Interstellar Travel Through My Works', {
     font: font,
-    size: 4, // Text size
+    size: fontSize, // Text size
     depth: 1, // Text depth
     curveSegments: 25, // Number of curve segments
     bevelEnabled: true, // Bevel enabled
@@ -920,7 +841,7 @@ fontLoader.load('/Three-JS-Portfolio/Fonts/SF Pro Display_Light.json', (font) =>
 
   // Position the sprite relative to the camera
   sprite.scale.set(7.5, 7.5, 7.5); // Adjust the size of the icon
-  sprite.position.set(-160,-120, -5); // Place 5 units in front of the camera
+  sprite.position.set(-195,-120, -5); // Place 5 units in front of the camera
   scene.add(sprite);
 
 
