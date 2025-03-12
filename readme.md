@@ -17,3 +17,11 @@ To start the development server, run the following command:
 npm run dev
 ```
 This will start the server and open your default browser to your localhost. The site will reload automatically as you make changes to your code.
+
+### Building the project
+To build the project, run the following command:
+
+``` bash
+npm run build
+```
+This will build the project and create bundled css, js and html files inside docs folder. After those are pushed into github, then deploy the latest version in github pages.
