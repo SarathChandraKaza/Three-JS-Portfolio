@@ -682,7 +682,7 @@ gsap.to(camera.position, {
       onComplete: () => {
         const uiMenu = document.getElementById("ui-menu");
         const projectData = planet.projectData;
-
+        console.log('Showing projects data');
         let currentImageIndex = 0;
 
         const renderImage = () => {
