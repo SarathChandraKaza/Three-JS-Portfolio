@@ -6,6 +6,9 @@
   import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'; // Import FontLoader
   import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
   import gsap from 'gsap';
+  if (import.meta.env.MODE === 'development') {
+    import('eruda').then(eruda => eruda.default.init());
+}
   //#endregion
 
   //#region SOUNDS
