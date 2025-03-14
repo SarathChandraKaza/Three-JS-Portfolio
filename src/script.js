@@ -30,26 +30,27 @@
   //#endregion
 
   //#region PRE-LOAD IMAGES
-  const imageCache = {}; // Global cache for images
+  const imageCache = {};
 
-  function preloadImages(imageUrls) {
-      return Promise.all(
-          imageUrls.map((url) =>
-              new Promise((resolve, reject) => {
-                  const img = new Image();
-                  img.src = url;
-                  img.onload = () => {
-                      imageCache[url] = img; // Store the preloaded image in the cache
-                      resolve();
-                  };
-                  img.onerror = (err) => {
-                      console.error("Failed to preload image:", url, err);
-                      reject(err);
-                  };
-              })
-          )
-      );
-  }
+function preloadImages(imageUrls) {
+    return Promise.all(
+        imageUrls.map((url) =>
+            new Promise((resolve, reject) => {
+                const img = new Image();
+                img.src = url;
+                img.onload = () => {
+                    imageCache[url] = img; // Cache image
+                    resolve();
+                };
+                img.onerror = (err) => {
+                    console.error(`Failed to preload image: ${url}`, err);
+                    reject(err);
+                };
+            })
+        )
+    );
+}
+
 
   //#endregion
 
@@ -58,8 +59,16 @@
   
 
 const manager = new THREE.LoadingManager();
+let assetsStartTime, assetsEndTime, imagesStartTime, imagesEndTime;
+
+assetsStartTime = performance.now();
+
 manager.onLoad = () => {
+  assetsEndTime = performance.now();
     console.log('Three.js assets loaded!');
+    console.log(`All assets preloaded in ${(assetsEndTime - assetsStartTime) / 1000} seconds!`);
+        // Capture start time for image preloading
+        imagesStartTime = performance.now();
 
     // Wait for preloaded images too
     preloadImages([
@@ -69,34 +78,14 @@ manager.onLoad = () => {
         '/Three-JS-Portfolio/Icons/github.png',
         '/Three-JS-Portfolio/Icons/left.png',
         '/Three-JS-Portfolio/Icons/right.png',
-        '/Three-JS-Portfolio/Background/beige-background.png',
-        '/Three-JS-Portfolio/Background/white-background.png',
-        
-        // Sunday (Mars)
-        '/Three-JS-Portfolio/Project-Images/Sunday/Sunday1.png',
-
-        // VR School (Earth)
-        '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool1.png',
-        '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool2.png',
-        '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool3.png',
-        '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool4.png',
-        '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool5.png',
-        '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool6.png',
-        '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool7.png',
-
-        // Dodge Ball (Venus)
-        '/Three-JS-Portfolio/Project-Images/Dodge-Ball/DodgeBall1.png',
-        '/Three-JS-Portfolio/Project-Images/Dodge-Ball/DodgeBall2.png',
-        '/Three-JS-Portfolio/Project-Images/Dodge-Ball/DodgeBall3.png',
-
-        // Eating Tom (Mercury)
-        '/Three-JS-Portfolio/Project-Images/Eating-Tom/EatingTom1.png',
-        '/Three-JS-Portfolio/Project-Images/Eating-Tom/EatingTom2.png',
-        '/Three-JS-Portfolio/Project-Images/Eating-Tom/EatingTom3.png'
+        '/Three-JS-Portfolio/Background/beige-background.jpg',
 
     ])
         .then(() => {
             console.log('All images preloaded!');
+            imagesEndTime = performance.now();
+            console.log(`All images preloaded in ${(imagesEndTime - imagesStartTime) / 1000} seconds!`);
+            console.log(`Total loading time (assets + images): ${(imagesEndTime - assetsStartTime) / 1000} seconds`);
             hideLoadingScreen(); // Hide the loading screen when everything is done
         })
         .catch((error) => {
@@ -104,8 +93,6 @@ manager.onLoad = () => {
             hideLoadingScreen(); // Still hide the loading screen to avoid blocking UI
         });
 };
-
-
 
   // Function to hide the loading screen
   function hideLoadingScreen() {
@@ -679,7 +666,10 @@ gsap.to(camera.position, {
     clearTimeout(interactionTimer); // Clear the existing timer
     hideHelpText(); //Hide the help
     playSound(planetClickSound);
-    // Zoom into the selected planet and display UI
+
+    preloadImages(planet.projectData.images).then( () => {
+
+      // Zoom into the selected planet and display UI
     gsap.to(camera.position, {
       x: planet.distance + 10,
       y: 3,
@@ -798,7 +788,9 @@ gsap.to(camera.position, {
           console.error("Close button not found!");
         }
       }
-    });
+    })
+    }
+    );
   }
 };
 
