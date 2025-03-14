@@ -65,7 +65,6 @@ const manager = new THREE.LoadingManager();
 let assetsStartTime, assetsEndTime, imagesStartTime, imagesEndTime;
 
 assetsStartTime = performance.now();
-
 manager.onLoad = () => {
   assetsEndTime = performance.now();
     console.log('Three.js assets loaded!');
@@ -836,13 +835,17 @@ const fontLoader = new FontLoader(manager);
 let textMaterial;
 fontLoader.load('/Three-JS-Portfolio/Fonts/SF Pro Display_Light.json', (font) => {
 
-  // Determine font size based on screen width
-  const fontSize = window.innerWidth <= 768 ? 8 : 4; // Larger font for mobile
 
-  // Define text properties
-  const textGeometry = new TextGeometry('An Interstellar Travel Through My Works', {
+  console.log("Inner width: " +  window.innerWidth);
+  console.log("Inner height: " +  window.innerHeight);
+
+  if(window.innerWidth <= 768)
+  {
+    //Mobile
+    // Define text properties
+  const textGeometry = new TextGeometry('An Interstellar Travel', {
     font: font,
-    size: fontSize, // Text size
+    size: 3, // Text size
     depth: 1, // Text depth
     curveSegments: 25, // Number of curve segments
     bevelEnabled: true, // Bevel enabled
@@ -851,32 +854,69 @@ fontLoader.load('/Three-JS-Portfolio/Fonts/SF Pro Display_Light.json', (font) =>
     bevelSegments: 5 // Bevel segments
   });
 
-  // Define material for text
-  textMaterial = new THREE.MeshStandardMaterial({
-    color: 0x00ffcc, // Text color
-    emissive: 0x005f5f, // Slight emissive effect
-  });
 
-  // Create the text mesh
-  const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+    const textGeometry2 = new TextGeometry('Through My Works', {
+      font: font,
+      size: 3, // Text size
+      depth: 1, // Text depth
+      curveSegments: 25, // Number of curve segments
+      bevelEnabled: true, // Bevel enabled
+      bevelThickness: 0.5, // Thickness of the bevel
+      bevelSize: 0.25, // Bevel size
+      bevelSegments: 5 // Bevel segments
+    });
 
-  console.log("Inner width: " +  window.innerWidth);
-  console.log("Inner height: " +  window.innerHeight);
 
-  if(window.innerWidth <= 1394)
-  {
-    //Mobile
-    textMesh.position.set(-60,47.5,-10); // Adjust the position as needed
-    textMesh.rotation.set(-43.5, 0, 0); // Add rotation for better viewing
-  }
-  else
-  {
-    textMesh.position.set(-45,47.5,-10); // Adjust the position as needed
-    textMesh.rotation.set(-44.5, 0, 0); // Add rotation for better viewing
-  }
+          // Define material for text
+      textMaterial = new THREE.MeshStandardMaterial({
+      color: 0x00ffcc, // Text color
+      emissive: 0x005f5f, // Slight emissive effect
+    });
+  
+    // Create the text mesh
+    const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+    const textMesh2 = new THREE.Mesh(textGeometry2, textMaterial);
+
+    textMesh.position.set(-17,50.5,-10); // Adjust the position as needed
+    textMesh.rotation.set(-44.5,0, 0); // Add rotation for better viewing
+
+    textMesh2.position.set(-17,44,-10); // Adjust the position as needed
+    textMesh2.rotation.set(-44.5, 0, 0); // Add rotation for better viewing
 
   // Add the text to the scene
   scene.add(textMesh);
+  scene.add(textMesh2);
+  }
+  else
+  {
+    // Define text properties
+  const textGeometry = new TextGeometry('An Interstellar Travel Through My Works', {
+    font: font,
+    size: 4, // Text size
+    depth: 1, // Text depth
+    curveSegments: 25, // Number of curve segments
+    bevelEnabled: true, // Bevel enabled
+    bevelThickness: 0.5, // Thickness of the bevel
+    bevelSize: 0.25, // Bevel size
+    bevelSegments: 5 // Bevel segments
+  });
+
+    textMesh.position.set(-45,47.5,-10); // Adjust the position as needed
+    textMesh.rotation.set(-44.5, 0, 0); // Add rotation for better viewing
+
+        // Define material for text
+        textMaterial = new THREE.MeshStandardMaterial({
+          color: 0x00ffcc, // Text color
+          emissive: 0x005f5f, // Slight emissive effect
+        });
+      
+        // Create the text mesh
+        const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+    
+      // Add the text to the scene
+      scene.add(textMesh);
+  }
+
 });
 //#endregion
 

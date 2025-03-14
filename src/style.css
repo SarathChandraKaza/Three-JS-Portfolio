@@ -83,7 +83,7 @@ h3 {
 
 /* ----------------------------------------------------Mobile Controls -----------------------------------------------------*/
 
-/* Force Landscape Mode */
+/* Force Landscape Mode
 @media screen and (orientation: portrait) {
   body::before {
     content: "Please rotate your device for the best experience.";
@@ -100,9 +100,8 @@ h3 {
     z-index: 9999;
   }
   canvas.threejs {
-    display: none; /* Hide the 3D scene */
-  }
-}
+    display: none; 
+    } */
 
 
 
@@ -145,14 +144,11 @@ h3 {
   transform: scale(1.05);
 }
 
-/* Hide everything if in portrait mode */
+/* Hide everything if in portrait mode
 @media screen and (orientation: portrait) {
-  /* Hide the entire body content */
   body {
       visibility: hidden;
   }
-
-  /* Show only the rotate message */
   body::before {
       content: "Please rotate your device for the best experience.";
       position: fixed;
@@ -168,7 +164,7 @@ h3 {
       z-index: 9999;
       visibility: visible;
   }
-}
+} */
 
 
 
@@ -316,7 +312,7 @@ h3 {
 }
 
 /* Responsive adjustments for mobile */
-@media screen and (max-width: 2412px) and (orientation: landscape) {
+@media screen and (max-width: 2412px){
   #ui-menu {
       width: 30%;
       max-width: 30%;
