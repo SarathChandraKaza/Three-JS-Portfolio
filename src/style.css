@@ -500,6 +500,42 @@ h3 {
 
 /* Adjust font size & layout on smaller screens */
 @media screen and (max-width: 980px) {
+  #ui-screen 
+  {
+    width: 70%;
+    height: 57%;
+    top: 50.5%;
+    max-width: 75%;
+    max-height: 70vh;
+    padding: 15px;
+    font-size: 14px;
+  }
+
+  #ui-screen h2 {
+      margin-top: 10px;
+      font-size: 48px; /* Reduce heading size */
+      margin-bottom: 30px;
+  }
+
+  #ui-screen p {
+      font-size: 35px;
+      margin-bottom: 30px;
+  }
+
+  #close-icon-ui {
+      font-size: 14px;
+      padding: 6px 12px;
+  }
+
+  #ui-screen button {
+    margin-top: 75px; /* More space above the button */
+    font-size:30px;
+    padding: 12px 24px;
+  }
+ 
+}
+
+@media screen and (max-width: 360px) {
   #ui-screen {
       width: 70%;
       top: 50.5%;
@@ -527,8 +563,10 @@ h3 {
   #ui-screen button {
     font-size:14px;
     padding: 6px 12px;
+    margin-top: 15px;
   }
 }
+
 
 /* Close button adjustments */
 #close-icon-ui {
@@ -576,6 +614,26 @@ h3 {
 
 /* Responsive Social Icons */
 @media screen and (max-width: 980px) {
+  #social-icons {
+    margin-top: 40px; /* Extra space between content and icons */
+    display: flex;
+    justify-content: center;
+    gap: 60px; /* Larger gap between icons */
+  }
+
+  #social-icons a {
+    display: inline-block;
+    width: 90px; /* Increased size for better visibility */
+    height: 90px;
+    transform: scale(1.1);
+    background-color: #ffffffbb;
+    border-radius: 50%;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+}
+
+@media screen and (max-width: 360px) {
   #social-icons {
     margin-top: 20px; /* Extra space between content and icons */
     display: flex;
