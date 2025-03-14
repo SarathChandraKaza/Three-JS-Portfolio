@@ -30,23 +30,32 @@
   //#endregion
 
   //#region PRE-LOAD IMAGES
+  const imageCache = {}; // Global cache for images
+
   function preloadImages(imageUrls) {
-    return Promise.all(
-        imageUrls.map(
-            (url) =>
-                new Promise((resolve, reject) => {
-                    const img = new Image();
-                    img.src = url;
-                    img.onload = resolve; // Resolve the promise when the image is loaded
-                    img.onerror = reject; // Reject the promise on error
-                })
-        )
-    );
-}
+      return Promise.all(
+          imageUrls.map((url) =>
+              new Promise((resolve, reject) => {
+                  const img = new Image();
+                  img.src = url;
+                  img.onload = () => {
+                      imageCache[url] = img; // Store the preloaded image in the cache
+                      resolve();
+                  };
+                  img.onerror = (err) => {
+                      console.error("Failed to preload image:", url, err);
+                      reject(err);
+                  };
+              })
+          )
+      );
+  }
 
   //#endregion
 
   //#region LOADING SCREEN
+
+  
 
 const manager = new THREE.LoadingManager();
 manager.onLoad = () => {
@@ -54,9 +63,37 @@ manager.onLoad = () => {
 
     // Wait for preloaded images too
     preloadImages([
+        // Icons
         '/Three-JS-Portfolio/Icons/gmail.png',
         '/Three-JS-Portfolio/Icons/linkedin.png',
-        '/Three-JS-Portfolio/Icons/github.png'
+        '/Three-JS-Portfolio/Icons/github.png',
+        '/Three-JS-Portfolio/Icons/left.png',
+        '/Three-JS-Portfolio/Icons/right.png',
+        '/Three-JS-Portfolio/Background/beige-background.png',
+        '/Three-JS-Portfolio/Background/white-background.png',
+        
+        // Sunday (Mars)
+        '/Three-JS-Portfolio/Project-Images/Sunday/Sunday1.png',
+
+        // VR School (Earth)
+        '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool1.png',
+        '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool2.png',
+        '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool3.png',
+        '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool4.png',
+        '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool5.png',
+        '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool6.png',
+        '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool7.png',
+
+        // Dodge Ball (Venus)
+        '/Three-JS-Portfolio/Project-Images/Dodge-Ball/DodgeBall1.png',
+        '/Three-JS-Portfolio/Project-Images/Dodge-Ball/DodgeBall2.png',
+        '/Three-JS-Portfolio/Project-Images/Dodge-Ball/DodgeBall3.png',
+
+        // Eating Tom (Mercury)
+        '/Three-JS-Portfolio/Project-Images/Eating-Tom/EatingTom1.png',
+        '/Three-JS-Portfolio/Project-Images/Eating-Tom/EatingTom2.png',
+        '/Three-JS-Portfolio/Project-Images/Eating-Tom/EatingTom3.png'
+
     ])
         .then(() => {
             console.log('All images preloaded!');
@@ -659,11 +696,16 @@ gsap.to(camera.position, {
         let currentImageIndex = 0;
 
         const renderImage = () => {
-          const imageUrl = `${projectData.images[currentImageIndex]}`;
-          console.log('Loading image from:', imageUrl);  // Check if this is the correct URL
-          return `<img src="${imageUrl}" alt="Project Image" class="carousel-image">`;
-        };
-
+          const imageUrl = projectData.images[currentImageIndex];
+          
+          if (imageCache[imageUrl]) {
+              console.log(`Using cached image: ${imageUrl}`);
+              return `<img src="${imageCache[imageUrl].src}" alt="Project Image" class="carousel-image">`;
+          } else {
+              console.warn(`Image not in cache, loading normally: ${imageUrl}`);
+              return `<img src="${imageUrl}" alt="Project Image" class="carousel-image">`;
+          }
+      };
         const bulletPointsHtml = `
           <p><strong>Description:</strong> ${projectData.description}</p>
           <p><strong>Technologies:</strong> ${projectData.technologies}</p>
