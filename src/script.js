@@ -837,7 +837,7 @@ gsap.to(camera.position, {
 
   const textMesh = new Text();
 
-  if(window.innerWidth <= 768)
+  if(window.innerWidth <= 980)
   {
     //Mobile
     textMesh.text = `An Interstellar Travel
