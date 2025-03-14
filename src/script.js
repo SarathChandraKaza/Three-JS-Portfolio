@@ -6,6 +6,7 @@
   import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'; // Import FontLoader
   import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
   import gsap from 'gsap';
+  import { Text } from 'troika-three-text';
   if (import.meta.env.MODE === 'development') {
     import('eruda').then(eruda => eruda.default.init());
 }
@@ -60,7 +61,7 @@ function preloadImages(imageUrls) {
   //#region LOADING SCREEN
 
   
-
+// hideLoadingScreen();
 const manager = new THREE.LoadingManager();
 let assetsStartTime, assetsEndTime, imagesStartTime, imagesEndTime;
 
@@ -830,94 +831,48 @@ gsap.to(camera.position, {
 
   //#region 3D TEXT OF MY PROJECTS
 // === 3D TEXT IN BACKGROUND ===
-// Load Font for 3D Text
-const fontLoader = new FontLoader(manager);
-let textMaterial;
-fontLoader.load('/Three-JS-Portfolio/Fonts/SF Pro Display_Light.json', (font) => {
-
 
   console.log("Inner width: " +  window.innerWidth);
   console.log("Inner height: " +  window.innerHeight);
 
+  const textMesh = new Text();
+
   if(window.innerWidth <= 768)
   {
     //Mobile
-    // Define text properties
-  const textGeometry = new TextGeometry('An Interstellar Travel', {
-    font: font,
-    size: 3, // Text size
-    depth: 1, // Text depth
-    curveSegments: 25, // Number of curve segments
-    bevelEnabled: true, // Bevel enabled
-    bevelThickness: 0.5, // Thickness of the bevel
-    bevelSize: 0.25, // Bevel size
-    bevelSegments: 5 // Bevel segments
-  });
-
-
-    const textGeometry2 = new TextGeometry('Through My Works', {
-      font: font,
-      size: 3, // Text size
-      depth: 1, // Text depth
-      curveSegments: 25, // Number of curve segments
-      bevelEnabled: true, // Bevel enabled
-      bevelThickness: 0.5, // Thickness of the bevel
-      bevelSize: 0.25, // Bevel size
-      bevelSegments: 5 // Bevel segments
-    });
-
-
-          // Define material for text
-      textMaterial = new THREE.MeshStandardMaterial({
-      color: 0x00ffcc, // Text color
-      emissive: 0x005f5f, // Slight emissive effect
-    });
-  
-    // Create the text mesh
-    const textMesh = new THREE.Mesh(textGeometry, textMaterial);
-    const textMesh2 = new THREE.Mesh(textGeometry2, textMaterial);
-
-    textMesh.position.set(-17,50.5,-10); // Adjust the position as needed
-    textMesh.rotation.set(-44.5,0, 0); // Add rotation for better viewing
-
-    textMesh2.position.set(-17,44,-10); // Adjust the position as needed
-    textMesh2.rotation.set(-44.5, 0, 0); // Add rotation for better viewing
-
-  // Add the text to the scene
-  scene.add(textMesh);
-  scene.add(textMesh2);
+    textMesh.text = `An Interstellar Travel
+    Through My Works`;    
+    textMesh.font = '/Three-JS-Portfolio/Fonts/SF-Pro-Display-Bold.otf';
+    textMesh.fontSize = 5; // Same as size in TextGeometry
+    textMesh.depth = 5; // Extruded depth
+    textMesh.color = 0x00ffcc; // White text
+    textMesh.emissive = 0x005f5f;
+    textMesh.letterSpacing = 0; // Adjust this for spacing
+    textMesh.anchorX = 'center'; // Align center
+    textMesh.anchorY = 'top-cap';
+    textMesh.position.set(0,54,-10); // Adjust the position as needed
+    textMesh.rotation.set(-44.7, 0, 0); // Add rotation for better viewing
+    textMesh.sync();
+    scene.add(textMesh);
   }
   else
   {
-    // Define text properties
-  const textGeometry = new TextGeometry('An Interstellar Travel Through My Works', {
-    font: font,
-    size: 4, // Text size
-    depth: 1, // Text depth
-    curveSegments: 25, // Number of curve segments
-    bevelEnabled: true, // Bevel enabled
-    bevelThickness: 0.5, // Thickness of the bevel
-    bevelSize: 0.25, // Bevel size
-    bevelSegments: 5 // Bevel segments
-  });
-
-    textMesh.position.set(-45,47.5,-10); // Adjust the position as needed
-    textMesh.rotation.set(-44.5, 0, 0); // Add rotation for better viewing
-
-        // Define material for text
-        textMaterial = new THREE.MeshStandardMaterial({
-          color: 0x00ffcc, // Text color
-          emissive: 0x005f5f, // Slight emissive effect
-        });
-      
-        // Create the text mesh
-        const textMesh = new THREE.Mesh(textGeometry, textMaterial);
-    
-      // Add the text to the scene
-      scene.add(textMesh);
+   // PC
+    textMesh.text = `An Interstellar Travel Through My Works`;    
+    textMesh.font = '/Three-JS-Portfolio/Fonts/SF-Pro-Display-Bold.otf';
+    textMesh.fontSize = 7; // Same as size in TextGeometry
+    textMesh.depth = 5; // Extruded depth
+    textMesh.color = 0x00ffcc; // White text
+    textMesh.emissive = 0x005f5f;
+    textMesh.letterSpacing = 0; // Adjust this for spacing
+    textMesh.anchorX = 'center'; // Align center
+    textMesh.anchorY = 'top-cap';
+    textMesh.position.set(0,51.5,-10); // Adjust the position as needed
+    textMesh.rotation.set(-44.7, 0, 0); // Add rotation for better viewing
+    textMesh.sync();
+    scene.add(textMesh);
   }
 
-});
 //#endregion
 
   //#region INFORMATION ICON
@@ -1055,23 +1010,6 @@ fontLoader.load('/Three-JS-Portfolio/Fonts/SF Pro Display_Light.json', (font) =>
       planetMesh.rotation.y += 0.009;
     });
 
-  //   // Make sprite always in front of the camera
-  //   sprite.position.set(
-  //     camera.position.x -90,
-  //     camera.position.y -90 ,
-  //     camera.position.z -145
-  // );
-
-  //   // If the TARS object exists, make it face the camera
-  // if (gltfObjectTARS) {
-  //     gltfObjectTARS.lookAt(camera.position); // Make TARS face the camera
-  //   }
-
-  //   // Check if gltfObjectEndurance is loaded and then apply rotation
-  //   if (gltfObjectEndurance) {
-  //     gltfObjectEndurance.rotation.x += 0.0005; // Rotate Endurance
-  // }
-
       // Check if gltfObjectRanger is loaded and then apply movement
     if (gltfObjectRanger) {
       // Move Ranger to the right along the X axis
@@ -1118,7 +1056,7 @@ fontLoader.load('/Three-JS-Portfolio/Fonts/SF Pro Display_Light.json', (font) =>
         gltfObjectRanger.position.x = -150; // Abrupt shift to -150
       }
 
-      if (gltfObjectRanger.position.x >= -100 && gltfObjectRanger.position.x <= 50) {
+      if (gltfObjectRanger.position.x >= -140 && gltfObjectRanger.position.x <= 70) {
         // Change the color of the text when the Ranger is in front
 
         // Normalize the position of the Ranger to a value between 0 and 1
@@ -1153,13 +1091,13 @@ fontLoader.load('/Three-JS-Portfolio/Fonts/SF Pro Display_Light.json', (font) =>
 
           // Set the text color using the interpolated value
           const newColor = lerpColor(currentColor, nextColor, colorT);
-          textMaterial.color.set(newColor);
+          textMesh.color = newColor;
         } else {
           console.error('Invalid color indices:', validIndex, validNextIndex);
         }
       } else {
         // Reset the color when the Ranger is not in front
-        textMaterial.color.set(0x00ffcc); // Original text color
+        textMesh.color = (0x00ffcc); // Original text color
       }
     }
 
