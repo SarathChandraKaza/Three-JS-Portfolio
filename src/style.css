@@ -127,7 +127,7 @@ h3 {
 
 .nav-button {
   flex: 1; /* Make buttons expand */
-  max-width: 25%; /* Prevents them from being too wide */
+  max-width: 15%; /* Prevents them from being too wide */
   padding: 15px 15px;
   font-size: 16px;
   font-family: 'SFRegular', sans-serif;

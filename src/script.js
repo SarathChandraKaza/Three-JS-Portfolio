@@ -866,8 +866,8 @@ fontLoader.load('/Three-JS-Portfolio/Fonts/SF Pro Display_Light.json', (font) =>
   if(window.innerWidth <= 1394)
   {
     //Mobile
-    textMesh.position.set(-25,47.5,-10); // Adjust the position as needed
-    textMesh.rotation.set(-46, 0, 0); // Add rotation for better viewing
+    textMesh.position.set(-60,47.5,-10); // Adjust the position as needed
+    textMesh.rotation.set(-43.5, 0, 0); // Add rotation for better viewing
   }
   else
   {
