@@ -210,7 +210,7 @@ loader2.load(
       positionalAudio.setMaxDistance(100); // Max range of the sound
       positionalAudio.setLoop(true); // Enable looping
       positionalAudio.setVolume(1); // Adjust the volume
-      positionalAudio.play(); // Play the audio
+      positionalAudio.play();
     });
 
     // Attach the positional audio to the Ranger object
