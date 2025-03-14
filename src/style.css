@@ -110,25 +110,55 @@ h3 {
   display: none;
 }
 
-/* Show buttons only on mobile devices (max-width: 768px) */
+/* Show buttons only on mobile devices */
 @media screen and (max-width: 980px) {
   .navigation-buttons {
       display: flex;
       position: fixed;
-      bottom: 40px;
+      bottom: 125px;
       left:50%;
       transform: translateX(-50%);
-      width: 75%;
+      width: 80%;
       justify-content: space-between;
       z-index: 1000;
   }
+
+  .nav-button {
+    flex: 1; /* Make buttons expand */
+    max-width: 40%; /* Prevents them from being too wide */
+    max-height: 40%;
+    padding: 15px 15px;
+    font-size: 16px;
+    font-family: 'SFRegular', sans-serif;
+    text-align: center;
+    background: rgba(0, 0, 255, 0.7);
+    color: white;
+    border: 2px solid blue;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+
+}
+
+@media screen and (max-width: 360px) {
+  .navigation-buttons {
+    display: flex;
+    position: fixed;
+    bottom: 120px;
+    left:50%;
+    transform: translateX(-50%);
+    width: 80%;
+    justify-content: space-between;
+    z-index: 1000;
 }
 
 .nav-button {
   flex: 1; /* Make buttons expand */
-  max-width: 15%; /* Prevents them from being too wide */
-  padding: 15px 15px;
-  font-size: 16px;
+  max-width: 40%; /* Prevents them from being too wide */
+  max-height: 25%;
+  padding: 15px 7.5px;
+  font-size: 11px;
   font-family: 'SFRegular', sans-serif;
   text-align: center;
   background: rgba(0, 0, 255, 0.7);
@@ -138,6 +168,10 @@ h3 {
   cursor: pointer;
   transition: 0.3s ease;
 }
+}
+
+
+
 
 .nav-button:hover {
   background: rgba(0, 0, 255, 1);
