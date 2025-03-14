@@ -839,11 +839,13 @@ gsap.to(camera.position, {
 
   if(window.innerWidth <= 980)
   {
+    console.log('Mobile 3d text');
     //Mobile
     textMesh.text = `An Interstellar Travel
-    Through My Works`;    
+    Through My Works`;   
+    textMesh.maxWidth = window.innerWidth * 0.2; 
     textMesh.font = '/Three-JS-Portfolio/Fonts/SF-Pro-Display-Bold.otf';
-    textMesh.fontSize = 5; // Same as size in TextGeometry
+    textMesh.fontSize = Math.min(window.innerWidth * 0.08, 4)
     textMesh.depth = 5; // Extruded depth
     textMesh.color = 0x00ffcc; // White text
     textMesh.emissive = 0x005f5f;
@@ -858,9 +860,11 @@ gsap.to(camera.position, {
   else
   {
    // PC
+   console.log('PC 3d text');
     textMesh.text = `An Interstellar Travel Through My Works`;    
     textMesh.font = '/Three-JS-Portfolio/Fonts/SF-Pro-Display-Bold.otf';
-    textMesh.fontSize = 7; // Same as size in TextGeometry
+    textMesh.maxWidth = window.innerWidth * 0.9; 
+    textMesh.fontSize = Math.min(window.innerWidth * 0.08, 7)
     textMesh.depth = 5; // Extruded depth
     textMesh.color = 0x00ffcc; // White text
     textMesh.emissive = 0x005f5f;
