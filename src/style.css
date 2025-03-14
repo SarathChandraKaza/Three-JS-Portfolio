@@ -502,12 +502,12 @@ h3 {
 @media screen and (max-width: 980px) {
   #ui-screen 
   {
-    width: 90%;
+    width: 80%;
     /* height: 65%; */
     top: 50.5%;
     max-width: 75%;
     /* max-height: 95vh; */
-    padding: 80px;
+    padding: 70px;
     font-size: 14px;
   }
 
