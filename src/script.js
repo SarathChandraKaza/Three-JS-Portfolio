@@ -860,9 +860,20 @@ fontLoader.load('/Three-JS-Portfolio/Fonts/SF Pro Display_Light.json', (font) =>
   // Create the text mesh
   const textMesh = new THREE.Mesh(textGeometry, textMaterial);
 
-  // Position the text in the background
-  textMesh.position.set(-45,47.5,-10); // Adjust the position as needed
-  textMesh.rotation.set(-44.5, 0, 0); // Add rotation for better viewing
+  console.log("Inner width: " +  window.innerWidth);
+  console.log("Inner height: " +  window.innerHeight);
+
+  if(window.innerWidth <= 1394)
+  {
+    //Mobile
+    textMesh.position.set(-55,47.5,-10); // Adjust the position as needed
+    textMesh.rotation.set(-45, 0, 0); // Add rotation for better viewing
+  }
+  else
+  {
+    textMesh.position.set(-45,47.5,-10); // Adjust the position as needed
+    textMesh.rotation.set(-44.5, 0, 0); // Add rotation for better viewing
+  }
 
   // Add the text to the scene
   scene.add(textMesh);
