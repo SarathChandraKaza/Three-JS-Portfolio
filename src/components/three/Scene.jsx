@@ -241,7 +241,7 @@ const Scene = () => {
     if (introScreenClosed && !showProjectUI) {
       inactivityTimer.current = setTimeout(() => {
         setShowHelpText(true);
-      }, 10000); // Show after 30 seconds of inactivity
+      }, 30000); // Show after 30 seconds of inactivity
     }
   };
 
