@@ -12,52 +12,50 @@ import * as THREE from 'three';
 const CameraController = ({ hasScrolled, showInfoScreen, setHasScrolled, setIsLastPlanetClickable }) => {
   const { camera } = useThree();
   const isAnimating = useRef(false);
-  const currentPlanetIndex = useRef(0);
-  const isBirdsEyeView = useRef(true);
+  const currentPlanetIndex = useRef(0); // Start at first planet (index 0)
+  const isBirdsEyeView = useRef(true); // Start in birds-eye view
 
   useEffect(() => {
     const handleWheel = (event) => {
-      // Only process scroll if the UI is NOT visible or already scrolling
       if (showInfoScreen || isAnimating.current) return;
 
       const scrollAmount = event.deltaY;
-
-      if((scrollAmount > 0 && scrollAmount < 5) || (scrollAmount < 0 && scrollAmount > -5)) {
-        return;
-      }
+      if ((scrollAmount > 0 && scrollAmount < 5) || (scrollAmount < 0 && scrollAmount > -5)) return;
 
       isAnimating.current = true;
 
-      if (scrollAmount < 0) {
-        // Scroll backward - prev planet
+      if (scrollAmount < 0) { // Scrolling backward
         if (isBirdsEyeView.current) {
-          currentPlanetIndex.current = 0;
+          // From birds-eye view, go to Mars
           isBirdsEyeView.current = false;
-          setHasScrolled(true);
-        } else if (currentPlanetIndex.current < 3) {
-          currentPlanetIndex.current = Math.min(currentPlanetIndex.current + 1, 3);
-        } else {
+          currentPlanetIndex.current = 4; // Mars
+          setIsLastPlanetClickable(true);
+        } else if (currentPlanetIndex.current > 1) { // If not at Mercury
+          currentPlanetIndex.current--;
+          setIsLastPlanetClickable(false);
+        } else if (currentPlanetIndex.current === 1) { // At Mercury, go to birds-eye view
           isBirdsEyeView.current = true;
           setIsLastPlanetClickable(false);
         }
-      } else {
-        // Scroll forward - next planet
+      } else { // Scrolling forward
         if (isBirdsEyeView.current) {
+          // Do nothing when scrolling forward in birds-eye view
           isAnimating.current = false;
           return;
-        } else if (currentPlanetIndex.current === 0) {
-          isBirdsEyeView.current = true;
-          setIsLastPlanetClickable(false);
-        } else {
-          currentPlanetIndex.current = Math.max(currentPlanetIndex.current - 1, 0);
+        } else if (currentPlanetIndex.current < 4) { // If not at Mars
+          currentPlanetIndex.current++;
+          setIsLastPlanetClickable(currentPlanetIndex.current === 4);
         }
       }
 
+      // Calculate planet position based on index
+      const planetDistance = (currentPlanetIndex.current) * 25; // 25 units between each planet
+
       // Set new camera position
       const newPosition = isBirdsEyeView.current
-        ? { x: 0, y: 200, z: 200 } // Bird's-eye view position
+        ? { x: 0, y: 150, z: 150 } // Bird's-eye view position
         : {
-            x: 100 + 10, // Mars position + offset
+            x: planetDistance + 10, // Planet position + offset
             y: 0,
             z: 0
           };
@@ -65,7 +63,7 @@ const CameraController = ({ hasScrolled, showInfoScreen, setHasScrolled, setIsLa
       // GSAP-style animation
       const startPos = camera.position.clone();
       const startTime = Date.now();
-      const duration = 1500; // 1.5 seconds
+      const duration = 1500;
 
       const animate = () => {
         const now = Date.now();
@@ -83,7 +81,7 @@ const CameraController = ({ hasScrolled, showInfoScreen, setHasScrolled, setIsLa
 
         const target = isBirdsEyeView.current
           ? new THREE.Vector3(0, 0, 0)
-          : new THREE.Vector3(100, 0, 0); // Look at Mars position
+          : new THREE.Vector3(planetDistance, 0, 0);
         
         camera.lookAt(target);
 
@@ -91,15 +89,11 @@ const CameraController = ({ hasScrolled, showInfoScreen, setHasScrolled, setIsLa
           requestAnimationFrame(animate);
         } else {
           isAnimating.current = false;
-          if (!isBirdsEyeView.current) {
-            setIsLastPlanetClickable(true);
-          }
         }
       };
 
       animate();
 
-      // Allow scrolling again after animation duration
       setTimeout(() => {
         isAnimating.current = false;
       }, 3000);
