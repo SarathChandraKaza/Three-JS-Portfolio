@@ -189,6 +189,9 @@ const Scene = () => {
   const inactivityTimer = useRef(null);
   const lastInteractionTime = useRef(Date.now());
 
+  // Add sound effects
+  const [iconClickSound] = useState(() => new Audio('/Three-JS-Portfolio/Sounds/SFX/icon-click.mp3'));
+
   useEffect(() => {
     // Check if it's a mobile device
     const checkMobile = () => {
@@ -278,6 +281,22 @@ const Scene = () => {
     }
   }, [introScreenClosed, showProjectUI]);
 
+  // Update handleImageNavigation to include sound
+  const handleImageNavigation = (direction) => {
+    if (!currentProject || !currentProject.images) return;
+    
+    // Play click sound
+    iconClickSound.currentTime = 0;
+    iconClickSound.play().catch(err => console.warn('Audio play error:', err));
+    
+    const totalImages = currentProject.images.length;
+    if (direction === 'next') {
+      setCurrentImageIndex((prev) => (prev + 1) % totalImages);
+    } else {
+      setCurrentImageIndex((prev) => (prev - 1 + totalImages) % totalImages);
+    }
+  };
+
   return (
     <>
       <Canvas
@@ -356,21 +375,27 @@ const Scene = () => {
                 <div className="showcase-image">
                   <img 
                     src={currentProject.images[currentImageIndex]} 
-                    alt={`${currentProject.projectName} showcase`}
+                    alt={`${currentProject.projectName} showcase ${currentImageIndex + 1}`}
+                    style={{ maxWidth: '100%', height: 'auto' }}
                   />
                   {currentProject.images.length > 1 && (
                     <div className="showcase-controls">
                       <button 
                         className="showcase-nav prev"
                         onClick={() => handleImageNavigation('prev')}
+                        aria-label="Previous image"
                       >
-                        ‹
+                        <img src="Icons/left.png" alt="Previous" />
                       </button>
+                      <div className="showcase-indicator">
+                        {currentImageIndex + 1} / {currentProject.images.length}
+                      </div>
                       <button 
                         className="showcase-nav next"
                         onClick={() => handleImageNavigation('next')}
+                        aria-label="Next image"
                       >
-                        ›
+                        <img src="Icons/right.png" alt="Next" />
                       </button>
                     </div>
                   )}
