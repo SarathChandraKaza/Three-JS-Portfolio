@@ -1,10 +1,22 @@
-export default {
-    root: 'src/', // Source directory for the Vite project
-    publicDir: '../static/', // Directory for public assets
-    base: '/Three-JS-Portfolio/', // Replace with your repository name
-    build: {
-      outDir: '../docs', // Output directory for build files
-      emptyOutDir: true, // Clears the output directory before building
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import path from 'path'
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    port: 3000,
+    open: true
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
     },
-  };
+  },
+  base: './',
+  build: {
+    outDir: 'dist',
+    emptyOutDir: true,
+  },
+})
   
