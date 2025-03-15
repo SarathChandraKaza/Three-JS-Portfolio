@@ -444,7 +444,7 @@ const Scene = () => {
       )}
 
       {/* Mobile Navigation Buttons */}
-      {showMobileNav && introScreenClosed && !isInfoScreenVisible && (
+      {showMobileNav && introScreenClosed && !isInfoScreenVisible && !showProjectUI && (
         <div className="navigation-buttons">
           <button 
             className="nav-button"
