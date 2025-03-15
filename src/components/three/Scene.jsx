@@ -111,46 +111,15 @@ const CameraController = ({ hasScrolled, showInfoScreen, setHasScrolled, setFocu
 
 const Scene = () => {
   const [showInfoIcon, setShowInfoIcon] = useState(false);
-  const [showInfoScreen, setShowInfoScreen] = useState(true);
-  const [isInitialScreen, setIsInitialScreen] = useState(true);
   const [hasScrolled, setHasScrolled] = useState(false);
   const [focusedPlanetIndex, setFocusedPlanetIndex] = useState(null);
 
   // Function to handle info icon click
   const handleInfoClick = () => {
-    setShowInfoScreen(true);
+    // Dispatch a custom event that App.jsx will listen for
+    const event = new CustomEvent('toggleIntroduction', { detail: { show: true } });
+    window.dispatchEvent(event);
     setShowInfoIcon(false);
-    setIsInitialScreen(false);
-  };
-
-  // Function to handle Start/Close button click in info screen
-  const handleInfoScreenButton = () => {
-    setShowInfoScreen(false);
-    setShowInfoIcon(true);
-    setIsInitialScreen(false);
-  };
-
-  // Add a camera logger component
-  const CameraLogger = () => {
-    const { camera } = useThree();
-    
-    useEffect(() => {
-      if (!showInfoScreen) {
-        console.log('Initial Camera Position:', {
-          x: camera.position.x,
-          y: camera.position.y,
-          z: camera.position.z
-        });
-      }
-    }, [showInfoScreen, camera]);
-
-    return null;
-  };
-
-  // Function to determine button text
-  const getButtonText = () => {
-    if (isInitialScreen) return "Start!";
-    return "Close";
   };
 
   const handlePlanetClick = (planet, index) => {
@@ -159,6 +128,15 @@ const Scene = () => {
       // Add your planet click handling logic here
     }
   };
+
+  // Listen for the introduction close event
+  useEffect(() => {
+    const handleIntroClose = () => {
+      setShowInfoIcon(true);
+    };
+    window.addEventListener('introductionClosed', handleIntroClose);
+    return () => window.removeEventListener('introductionClosed', handleIntroClose);
+  }, []);
 
   return (
     <>
@@ -172,10 +150,9 @@ const Scene = () => {
         style={{ width: '100vw', height: '100vh' }}
       >
         <Suspense fallback={null}>
-          <CameraLogger />
           <CameraController 
             hasScrolled={hasScrolled}
-            showInfoScreen={showInfoScreen}
+            showInfoScreen={false}
             setHasScrolled={setHasScrolled}
             setFocusedPlanetIndex={setFocusedPlanetIndex}
           />
@@ -248,37 +225,6 @@ const Scene = () => {
           />
         </div>
       )}
-
-      {/* Info Screen UI */}
-      <div id="ui-screen" style={{ display: showInfoScreen ? 'block' : 'none' }}>
-        <h2>Instructions</h2>
-        <p>
-          Scroll forward once to focus on the last planet. <br />
-          Click on the focused planet to learn more about the project.
-        </p>
-
-        <h2>Introduction</h2>
-        <p>
-          Hi, I'm <span style={{ fontSize: '1.1em', fontWeight: 'bold' }}>Sarath Chandra</span>,
-          a passionate XR developer with three years of experience creating immersive experiences
-          using Unity and C#. I invite you to explore my works, and feel free to reach out for
-          any further discussions.
-        </p>
-
-        <div id="social-icons">
-          <a href="mailto:workmail.sarath@gmail.com" id="email-icon" aria-label="Email"></a>
-          <a href="https://www.linkedin.com/in/sarath-chandra-b9487b220/" target="_blank" id="linkedin-icon" aria-label="LinkedIn"></a>
-          <a href="https://github.com/SarathChandraKaza" target="_blank" id="github-icon" aria-label="GitHub"></a>
-        </div>
-
-        <button 
-          id="close-icon-ui" 
-          title="Close the UI"
-          onClick={handleInfoScreenButton}
-        >
-          {getButtonText()}
-        </button>
-      </div>
 
       <div id="hoverTooltip" className="tooltip"></div>
     </>

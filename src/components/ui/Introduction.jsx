@@ -38,7 +38,7 @@ const Introduction = ({ onClose }) => {
       </div>
 
       <button id="close-icon-ui" onClick={onClose}>
-        Start!
+        Explore
       </button>
     </div>
   );
