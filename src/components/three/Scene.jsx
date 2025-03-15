@@ -453,7 +453,13 @@ const Scene = () => {
       '/Three-JS-Portfolio/Project-Images/Dodge-Ball/DodgeBall3.png',
       '/Three-JS-Portfolio/Project-Images/Eating-Tom/EatingTom1.png',
       '/Three-JS-Portfolio/Project-Images/Eating-Tom/EatingTom2.png',
-      '/Three-JS-Portfolio/Project-Images/Eating-Tom/EatingTom3.png'
+      '/Three-JS-Portfolio/Project-Images/Eating-Tom/EatingTom3.png',
+      '/Three-JS-Portfolio/textures/Purple Nebula/PurpleNebulaSkybox_right1.png',
+      '/Three-JS-Portfolio/textures/Purple Nebula/PurpleNebulaSkybox_left2.png',
+      '/Three-JS-Portfolio/textures/Purple Nebula/PurpleNebulaSkybox_top3.png',
+      '/Three-JS-Portfolio/textures/Purple Nebula/PurpleNebulaSkybox_bottom4.png',
+      '/Three-JS-Portfolio/textures/Purple Nebula/PurpleNebulaSkybox_front5.png',
+      '/Three-JS-Portfolio/textures/Purple Nebula/PurpleNebulaSkybox_back6.png'
     ],
     audio: [
       '/Three-JS-Portfolio/Sounds/SFX/button-click.mp3',
