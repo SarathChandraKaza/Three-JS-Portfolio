@@ -25,6 +25,7 @@ const Ranger = () => {
       position={[-150, 80, 0]}
       rotation={[0, -Math.PI / 2, 0]} // 90 degrees rotation on Y axis
       scale={[1, 1, 1]}
+      name="ranger"
     />
   );
 };

@@ -6,6 +6,9 @@ import * as THREE from 'three';
 const Text3DComponent = () => {
   const textRef = useRef();
   const [isMobile, setIsMobile] = useState(false);
+  const baseColor = new THREE.Color(0x00ffcc);
+  const glowColor = new THREE.Color(0xff3366);
+  
   const gradientColors = [
     new THREE.Color(0x00ffcc),  // Light Cyan
     new THREE.Color(0xff0000),  // Red
@@ -14,6 +17,17 @@ const Text3DComponent = () => {
     new THREE.Color(0x800080),  // Purple
     new THREE.Color(0x00ff00),  // Green
     new THREE.Color(0xffa500),  // Orange
+    new THREE.Color(0x800000),  // Maroon
+    new THREE.Color(0x000000),  // Black
+    new THREE.Color(0xffffff),  // White
+    new THREE.Color(0x8a2be2),  // Blue Violet
+    new THREE.Color(0x5f9ea0),  // Cadet Blue
+    new THREE.Color(0x808000),  // Olive
+    new THREE.Color(0xa52a2a),  // Brown
+    new THREE.Color(0x7fff00),  // Chartreuse
+    new THREE.Color(0x6495ed),  // Cornflower Blue
+    new THREE.Color(0xdc143c),  // Crimson
+    new THREE.Color(0x00bfff),  // Deep Sky Blue
   ];
 
   useEffect(() => {
@@ -26,23 +40,48 @@ const Text3DComponent = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  // Function to interpolate between colors with safety checks
+  const lerpColor = (color1, color2, t) => {
+    // If either color is undefined, return the default color
+    if (!color1 || !color2) {
+      console.warn('Invalid colors in lerpColor:', color1, color2);
+      return baseColor;
+    }
+
+    // Ensure t is between 0 and 1
+    const clampedT = Math.max(0, Math.min(1, t));
+
+    return new THREE.Color(
+      color1.r * (1 - clampedT) + color2.r * clampedT,
+      color1.g * (1 - clampedT) + color2.g * clampedT,
+      color1.b * (1 - clampedT) + color2.b * clampedT
+    );
+  };
+
   useFrame(({ clock }) => {
-    if (textRef.current) {
-      const time = clock.getElapsedTime();
-      const colorIndex = Math.floor(time * 0.5) % gradientColors.length;
-      const nextColorIndex = (colorIndex + 1) % gradientColors.length;
-      const mixRatio = (time * 0.5) % 1;
+    if (!textRef.current?.material) return;
+
+    // Find the Ranger in the scene
+    const ranger = textRef.current.parent.parent.getObjectByName('ranger');
+    const rangerX = ranger?.position.x || 0;
+
+    // Check if Ranger is in front of text
+    if (rangerX >= -30 && rangerX <= 30) {
+      // Calculate pulse based on time
+      const pulse = Math.sin(clock.getElapsedTime() * 3) * 0.5 + 0.5;
       
-      const currentColor = gradientColors[colorIndex];
-      const nextColor = gradientColors[nextColorIndex];
+      // Interpolate between base color and glow color
+      const color = baseColor.clone().lerp(glowColor, pulse);
       
-      const interpolatedColor = new THREE.Color(
-        currentColor.r * (1 - mixRatio) + nextColor.r * mixRatio,
-        currentColor.g * (1 - mixRatio) + nextColor.g * mixRatio,
-        currentColor.b * (1 - mixRatio) + nextColor.b * mixRatio
-      );
-      
-      textRef.current.material.color = interpolatedColor;
+      // Update material properties
+      textRef.current.material.color = color;
+      textRef.current.material.emissiveIntensity = pulse * 2;
+      textRef.current.material.emissive = color;
+    } else {
+      // Reset to default state
+      textRef.current.material.color = baseColor;
+      textRef.current.material.emissiveIntensity = 0.5;
+      textRef.current.material.emissive = new THREE.Color(0x005f5f);
     }
   });
 
@@ -56,7 +95,7 @@ const Text3DComponent = () => {
         letterSpacing={0.02}
         textAlign="center"
         font="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGKYAZFhjQ.ttf"
-        color={0x00ffcc}
+        color={baseColor}
         anchorX="center"
         anchorY="middle"
       >
@@ -64,7 +103,7 @@ const Text3DComponent = () => {
         <meshStandardMaterial
           metalness={0.8}
           roughness={0.2}
-          emissive={0x005f5f}
+          emissive={new THREE.Color(0x005f5f)}
           emissiveIntensity={0.5}
         />
       </Text>
