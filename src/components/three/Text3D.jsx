@@ -66,7 +66,7 @@ const Text3DComponent = () => {
     const rangerX = ranger?.position.x || 0;
 
     // Check if Ranger is in front of text
-    if (rangerX >= -30 && rangerX <= 30) {
+    if (rangerX >= -60 && rangerX <= 60) {
       // Calculate pulse based on time
       const pulse = Math.sin(clock.getElapsedTime() * 3) * 0.5 + 0.5;
       
