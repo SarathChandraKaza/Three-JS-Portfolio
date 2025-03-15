@@ -79,8 +79,10 @@
 
     <!--Loading screen Functionality-->
     <div id="loading-screen">
-        <div class="loader"></div>
-        <p>Hold tight! The planets are aligning.</p>
+        <div class="loading-content">
+            <p id="loading-progress">0%</p>
+            <p id="loading-text" style="font-style: italic;">"Cooper. It's not possible!"</p>
+        </div>
     </div>
 
     <!--Help text for clicking on planet-->
@@ -89,38 +91,47 @@
     </div>
 
     <script>
-        // Preload audio files
-        const buttonClickSound = new Audio('/Three-JS-Portfolio/Sounds/SFX/button-click.mp3');
-        const iconClickSound = new Audio('/Three-JS-Portfolio/Sounds/SFX/icon-click.mp3');
+        console.log('🚀 Initializing page...');
+        
+        // Function to update loading progress display
+        window.updateLoadingDisplay = function(progress) {
+            console.log(`📊 Updating loading display: ${progress}%`);
+            const progressElement = document.getElementById('loading-progress');
+            const loadingText = document.getElementById('loading-text');
+            
+            if (progressElement) {
+                progressElement.textContent = `${Math.round(progress)}%`;
+                console.log('✅ Progress display updated');
+            } else {
+                console.error('❌ Progress element not found!');
+            }
+            
+            // Update loading text based on progress
+            if (loadingText) {
+                if (progress < 25) {
+                    loadingText.textContent = '"Cooper. It\'s not possible!"';
+                } else if (progress < 50) {
+                    loadingText.textContent = '"No...It is necessary"';
+                } else if (progress < 75) {
+                    loadingText.textContent = '"This is no time for caution"';
+                } else {
+                    loadingText.textContent = '"Docking successfully accomplished."';
+                }
+                console.log(`✅ Loading text updated: ${loadingText.textContent}`);
+            } else {
+                console.error('❌ Loading text element not found!');
+            }
+        };
 
-        // Add loading event listeners
-        buttonClickSound.addEventListener('canplaythrough', () => {
-            console.log('✅ Button click sound loaded successfully');
-        });
-        iconClickSound.addEventListener('canplaythrough', () => {
-            console.log('✅ Icon click sound loaded successfully');
-        });
-
-        // Add error listeners
-        buttonClickSound.addEventListener('error', (e) => {
-            console.error('❌ Error loading button click sound:', e.target.error);
-            console.error('Source:', buttonClickSound.src);
-        });
-        iconClickSound.addEventListener('error', (e) => {
-            console.error('❌ Error loading icon click sound:', e.target.error);
-            console.error('Source:', iconClickSound.src);
-        });
-
+        // Function to play sounds with logging
         function playSound(type) {
-            const audio = type === 'icon' ? iconClickSound : buttonClickSound;
+            console.log(`🎵 Attempting to play sound: ${type}`);
+            const audio = type === 'icon' ? window.iconClickSound : window.buttonClickSound;
             const soundName = type === 'icon' ? 'Icon Click Sound' : 'Button Click Sound';
             
-            console.log(`🎵 Attempting to play: ${soundName}`);
-            console.log(`📂 Sound file path: ${audio.src}`);
-            
-            // Check if the audio is actually loaded
-            if (audio.readyState < 2) { // HAVE_CURRENT_DATA
-                console.warn(`⚠️ Warning: ${soundName} not fully loaded yet (ReadyState: ${audio.readyState})`);
+            if (!audio || audio.readyState < 2) {
+                console.warn(`⚠️ Warning: ${soundName} not fully loaded yet`);
+                return;
             }
 
             audio.currentTime = 0;
@@ -129,11 +140,12 @@
                     console.log(`✅ Successfully playing: ${soundName}`);
                 })
                 .catch(err => {
-                    console.error(`❌ Failed to play ${soundName}:`);
-                    console.error('Error:', err);
-                    console.error('Audio source:', audio.src);
-                    console.error('Audio ready state:', audio.readyState);
-                    console.error('Audio network state:', audio.networkState);
+                    console.error(`❌ Failed to play ${soundName}:`, err);
+                    console.error('Audio state:', {
+                        readyState: audio.readyState,
+                        paused: audio.paused,
+                        src: audio.src
+                    });
                 });
         }
 
@@ -157,6 +169,8 @@
                     console.log('🖱️ Explore/Enter button clicked');
                     playSound('button');
                 });
+            } else {
+                console.error('❌ Close button not found!');
             }
             
             console.log('✅ Sound event listeners setup complete');

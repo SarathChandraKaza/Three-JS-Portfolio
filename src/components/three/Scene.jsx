@@ -5,9 +5,11 @@ import Planet from './Planet';
 import Skybox from './Skybox';
 import Text3DComponent from './Text3D';
 import Ranger from './Ranger';
+import LoadingScreen from '../LoadingScreen';
 import { planets } from '../../data/planetData';
 import * as THREE from 'three';
 import gsap from 'gsap';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 // Sound Effects
 const buttonClickSound = new Audio('/Sounds/SFX/button-click.mp3');
@@ -224,6 +226,7 @@ const PlanetInteraction = ({ planet, index, focusedPlanetIndex, setCurrentProjec
 };
 
 const Scene = () => {
+  // 1. All useState hooks
   const [showInfoIcon, setShowInfoIcon] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
   const [focusedPlanetIndex, setFocusedPlanetIndex] = useState(null);
@@ -234,11 +237,23 @@ const Scene = () => {
   const [currentProject, setCurrentProject] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showHelpText, setShowHelpText] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadingProgress, setLoadingProgress] = useState(0);
+
+  // 2. All useRef hooks
+  const loadingState = useRef({
+    totalAssets: 0,
+    loadedAssets: 0,
+    startTime: Date.now(),
+    errors: [],
+    loadedFiles: new Set()
+  });
   const inactivityTimer = useRef(null);
   const lastInteractionTime = useRef(Date.now());
 
+  // 3. All useEffect hooks
+  // Mobile check effect
   useEffect(() => {
-    // Check if it's a mobile device
     const checkMobile = () => {
       const isMobile = window.innerWidth <= 980 || 
                       navigator.maxTouchPoints > 0 || 
@@ -250,6 +265,217 @@ const Scene = () => {
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+  // Asset preloading effect
+  useEffect(() => {
+    console.log('🔄 Initial loading state:', isLoading);
+    const manager = new THREE.LoadingManager();
+    const textureLoader = new THREE.TextureLoader(manager);
+    const audioLoader = new THREE.AudioLoader(manager);
+    const gltfLoader = new GLTFLoader(manager);
+    
+    loadingState.current.totalAssets = 
+      assetUrls.images.length + 
+      assetUrls.audio.length + 
+      assetUrls.textures.length + 
+      assetUrls.models.length;
+
+    console.log('📦 Total assets to load:', loadingState.current.totalAssets);
+
+    manager.onProgress = (url, itemsLoaded, itemsTotal) => {
+      const progress = (itemsLoaded / itemsTotal) * 100;
+      setLoadingProgress(progress);
+      console.log(`📊 Loading progress: ${progress.toFixed(1)}% (${itemsLoaded}/${itemsTotal})`);
+    };
+
+    manager.onLoad = () => {
+      const loadTime = (Date.now() - loadingState.current.startTime) / 1000;
+      console.log(`✨ All assets loaded in ${loadTime.toFixed(2)} seconds!`);
+      console.log('🔄 Setting loading state to false');
+      setIsLoading(false);
+    };
+
+    manager.onError = (url) => {
+      console.error(`❌ Error loading asset: ${url}`);
+      loadingState.current.errors.push(url);
+    };
+
+    const preloadAssets = async () => {
+      console.log('🚀 Starting asset preload...');
+      
+      try {
+        await Promise.all([
+          ...assetUrls.images.map(url => 
+            new Promise((resolve, reject) => {
+              const img = new Image();
+              img.onload = () => {
+                loadingState.current.loadedFiles.add(url);
+                resolve(url);
+              };
+              img.onerror = reject;
+              img.src = url;
+            })
+          ),
+          ...assetUrls.audio.map(url =>
+            new Promise((resolve, reject) => {
+              audioLoader.load(url, 
+                (buffer) => {
+                  loadingState.current.loadedFiles.add(url);
+                  resolve(url);
+                },
+                null,
+                reject
+              );
+            })
+          ),
+          ...assetUrls.textures.map(url =>
+            new Promise((resolve, reject) => {
+              textureLoader.load(url,
+                (texture) => {
+                  texture.colorSpace = THREE.SRGBColorSpace;
+                  loadingState.current.loadedFiles.add(url);
+                  resolve(url);
+                },
+                null,
+                reject
+              );
+            })
+          ),
+          ...assetUrls.models.map(url =>
+            new Promise((resolve, reject) => {
+              gltfLoader.load(url,
+                (gltf) => {
+                  loadingState.current.loadedFiles.add(url);
+                  resolve(url);
+                },
+                null,
+                reject
+              );
+            })
+          )
+        ]);
+        console.log('✅ All assets preloaded successfully');
+      } catch (error) {
+        console.error('❌ Error during asset preloading:', error);
+      }
+    };
+
+    preloadAssets();
+  }, []);
+
+  // Introduction close effect
+  useEffect(() => {
+    const handleIntroClose = () => {
+      setShowInfoIcon(true);
+      setIntroScreenClosed(true);
+      setIsInfoScreenVisible(false);
+    };
+
+    const exploreButton = document.getElementById('close-icon-ui');
+    const socialIcons = document.querySelectorAll('#social-icons a');
+
+    if (exploreButton) {
+      exploreButton.addEventListener('click', () => playSound(buttonClickSound));
+      exploreButton.addEventListener('mouseover', () => playSound(hoverSound));
+    }
+
+    socialIcons.forEach(icon => {
+      icon.addEventListener('click', () => playSound(buttonClickSound));
+      icon.addEventListener('mouseover', () => playSound(hoverSound));
+    });
+
+    window.addEventListener('introductionClosed', handleIntroClose);
+    return () => {
+      window.removeEventListener('introductionClosed', handleIntroClose);
+      if (exploreButton) {
+        exploreButton.removeEventListener('click', () => playSound(buttonClickSound));
+        exploreButton.removeEventListener('mouseover', () => playSound(hoverSound));
+      }
+      socialIcons.forEach(icon => {
+        icon.removeEventListener('click', () => playSound(buttonClickSound));
+        icon.removeEventListener('mouseover', () => playSound(hoverSound));
+      });
+    };
+  }, []);
+
+  // User interaction effect
+  useEffect(() => {
+    const handleInteraction = () => {
+      setShowHelpText(false);
+      resetInactivityTimer();
+    };
+
+    window.addEventListener('mousemove', handleInteraction);
+    window.addEventListener('click', handleInteraction);
+    window.addEventListener('wheel', handleInteraction);
+    window.addEventListener('keydown', handleInteraction);
+    window.addEventListener('touchstart', handleInteraction);
+
+    return () => {
+      window.removeEventListener('mousemove', handleInteraction);
+      window.removeEventListener('click', handleInteraction);
+      window.removeEventListener('wheel', handleInteraction);
+      window.removeEventListener('keydown', handleInteraction);
+      window.removeEventListener('touchstart', handleInteraction);
+      if (inactivityTimer.current) {
+        clearTimeout(inactivityTimer.current);
+      }
+    };
+  }, [introScreenClosed, showProjectUI]);
+
+  // Inactivity timer effect
+  useEffect(() => {
+    if (introScreenClosed && !showProjectUI) {
+      resetInactivityTimer();
+    }
+  }, [introScreenClosed, showProjectUI]);
+
+  // Asset URLs
+  const assetUrls = {
+    images: [
+      '/Three-JS-Portfolio/Icons/gmail.png',
+      '/Three-JS-Portfolio/Icons/linkedin.png',
+      '/Three-JS-Portfolio/Icons/github.png',
+      '/Three-JS-Portfolio/Icons/left.png',
+      '/Three-JS-Portfolio/Icons/right.png',
+      '/Three-JS-Portfolio/Icons/information-button.png',
+      '/Three-JS-Portfolio/Background/beige-background.jpg',
+      '/Three-JS-Portfolio/Project-Images/Sunday/Sunday1.png',
+      '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool1.png',
+      '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool2.png',
+      '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool3.png',
+      '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool4.png',
+      '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool5.png',
+      '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool6.png',
+      '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool7.png',
+      '/Three-JS-Portfolio/Project-Images/Dodge-Ball/DodgeBall1.png',
+      '/Three-JS-Portfolio/Project-Images/Dodge-Ball/DodgeBall2.png',
+      '/Three-JS-Portfolio/Project-Images/Dodge-Ball/DodgeBall3.png',
+      '/Three-JS-Portfolio/Project-Images/Eating-Tom/EatingTom1.png',
+      '/Three-JS-Portfolio/Project-Images/Eating-Tom/EatingTom2.png',
+      '/Three-JS-Portfolio/Project-Images/Eating-Tom/EatingTom3.png'
+    ],
+    audio: [
+      '/Three-JS-Portfolio/Sounds/SFX/button-click.mp3',
+      '/Three-JS-Portfolio/Sounds/SFX/icon-click.mp3',
+      '/Three-JS-Portfolio/Sounds/SFX/hover-sound.mp3',
+      '/Three-JS-Portfolio/Sounds/SFX/ui-popup.mp3',
+      '/Three-JS-Portfolio/Sounds/SFX/scroll-animation.mp3',
+      '/Three-JS-Portfolio/Sounds/SFX/planet-click.mp3',
+      '/Three-JS-Portfolio/Sounds/SFX/ambient-music.mp3',
+      '/Three-JS-Portfolio/Sounds/SFX/rocket-moving.mp3'
+    ],
+    textures: [
+      '/Three-JS-Portfolio/textures/2k_sun.jpg',
+      '/Three-JS-Portfolio/textures/2k_mercury.jpg',
+      '/Three-JS-Portfolio/textures/2k_venus_surface.jpg',
+      '/Three-JS-Portfolio/textures/2k_earth_daymap.jpg',
+      '/Three-JS-Portfolio/textures/2k_mars.jpg'
+    ],
+    models: [
+      '/Three-JS-Portfolio/3D Models/Interstellar Ranger/scene.gltf'
+    ]
+  };
 
   // Function to simulate scroll events for mobile navigation
   const simulateScroll = (direction) => {
@@ -275,45 +501,6 @@ const Scene = () => {
     setIsInfoScreenVisible(true);
   };
 
-  // Listen for the introduction close event
-  useEffect(() => {
-    const handleIntroClose = () => {
-      setShowInfoIcon(true);
-      setIntroScreenClosed(true);
-      setIsInfoScreenVisible(false);
-    };
-
-    // Add event listeners for the explore button and social icons
-    const exploreButton = document.getElementById('close-icon-ui');
-    const socialIcons = document.querySelectorAll('#social-icons a');
-
-    if (exploreButton) {
-      exploreButton.addEventListener('click', () => playSound(buttonClickSound));
-      exploreButton.addEventListener('mouseover', () => playSound(hoverSound));
-    }
-
-    // Add event listeners to each social icon
-    socialIcons.forEach(icon => {
-      icon.addEventListener('click', () => playSound(buttonClickSound));
-      icon.addEventListener('mouseover', () => playSound(hoverSound));
-    });
-
-    window.addEventListener('introductionClosed', handleIntroClose);
-    return () => {
-      window.removeEventListener('introductionClosed', handleIntroClose);
-      // Clean up explore button listeners
-      if (exploreButton) {
-        exploreButton.removeEventListener('click', () => playSound(buttonClickSound));
-        exploreButton.removeEventListener('mouseover', () => playSound(hoverSound));
-      }
-      // Clean up social icon listeners
-      socialIcons.forEach(icon => {
-        icon.removeEventListener('click', () => playSound(buttonClickSound));
-        icon.removeEventListener('mouseover', () => playSound(hoverSound));
-      });
-    };
-  }, []);
-
   const resetInactivityTimer = () => {
     lastInteractionTime.current = Date.now();
     if (inactivityTimer.current) {
@@ -326,39 +513,6 @@ const Scene = () => {
       }, 30000); // Show after 30 seconds of inactivity
     }
   };
-
-  // Add event listeners for user interaction
-  useEffect(() => {
-    const handleInteraction = () => {
-      setShowHelpText(false);
-      resetInactivityTimer();
-    };
-
-    // Track various user interactions
-    window.addEventListener('mousemove', handleInteraction);
-    window.addEventListener('click', handleInteraction);
-    window.addEventListener('wheel', handleInteraction);
-    window.addEventListener('keydown', handleInteraction);
-    window.addEventListener('touchstart', handleInteraction);
-
-    return () => {
-      window.removeEventListener('mousemove', handleInteraction);
-      window.removeEventListener('click', handleInteraction);
-      window.removeEventListener('wheel', handleInteraction);
-      window.removeEventListener('keydown', handleInteraction);
-      window.removeEventListener('touchstart', handleInteraction);
-      if (inactivityTimer.current) {
-        clearTimeout(inactivityTimer.current);
-      }
-    };
-  }, [introScreenClosed, showProjectUI]);
-
-  // Start inactivity timer when intro screen is closed
-  useEffect(() => {
-    if (introScreenClosed && !showProjectUI) {
-      resetInactivityTimer();
-    }
-  }, [introScreenClosed, showProjectUI]);
 
   // Update handleImageNavigation to include sound
   const handleImageNavigation = (direction) => {
@@ -376,218 +530,224 @@ const Scene = () => {
 
   return (
     <>
-      <Canvas
-        camera={{ 
-          position: [0, 200, 200],
-          fov: 40,
-          near: 0.1,
-          far: 1000
-        }}
-        style={{ width: '100vw', height: '100vh' }}
-      >
-        <Suspense fallback={null}>
-          <CameraController 
-            hasScrolled={hasScrolled}
-            showInfoScreen={false}
-            setHasScrolled={setHasScrolled}
-            setFocusedPlanetIndex={setFocusedPlanetIndex}
-            isInfoScreenVisible={isInfoScreenVisible}
-            showProjectUI={showProjectUI}
-          />
-          <Skybox />
-          <OrbitControls 
-            enableZoom={false}
-            enableRotate={false}
-            enablePan={false}
-          />
-          <ambientLight intensity={0.6} />
-          <pointLight position={[0, 0, 0]} intensity={2000} color="#ffffff" />
-          <directionalLight 
-            position={[100, 100, 100]} 
-            intensity={0.5}
-            castShadow
-          />
-          
-          <Text3DComponent />
-          <Ranger />
-          
-          {planets.map((planet, index) => (
-            <PlanetInteraction
-              key={planet.name}
-              planet={planet}
-              index={index}
-              focusedPlanetIndex={focusedPlanetIndex}
-              setCurrentProject={setCurrentProject}
-              setCurrentImageIndex={setCurrentImageIndex}
-              setShowProjectUI={setShowProjectUI}
-            />
-          ))}
-        </Suspense>
-      </Canvas>
+      {isLoading ? (
+        <LoadingScreen progress={loadingProgress} />
+      ) : (
+        <>
+          <Canvas
+            camera={{ 
+              position: [0, 200, 200],
+              fov: 40,
+              near: 0.1,
+              far: 1000
+            }}
+            style={{ width: '100vw', height: '100vh' }}
+          >
+            <Suspense fallback={null}>
+              <CameraController 
+                hasScrolled={hasScrolled}
+                showInfoScreen={false}
+                setHasScrolled={setHasScrolled}
+                setFocusedPlanetIndex={setFocusedPlanetIndex}
+                isInfoScreenVisible={isInfoScreenVisible}
+                showProjectUI={showProjectUI}
+              />
+              <Skybox />
+              <OrbitControls 
+                enableZoom={false}
+                enableRotate={false}
+                enablePan={false}
+              />
+              <ambientLight intensity={0.6} />
+              <pointLight position={[0, 0, 0]} intensity={2000} color="#ffffff" />
+              <directionalLight 
+                position={[100, 100, 100]} 
+                intensity={0.5}
+                castShadow
+              />
+              
+              <Text3DComponent />
+              <Ranger />
+              
+              {planets.map((planet, index) => (
+                <PlanetInteraction
+                  key={planet.name}
+                  planet={planet}
+                  index={index}
+                  focusedPlanetIndex={focusedPlanetIndex}
+                  setCurrentProject={setCurrentProject}
+                  setCurrentImageIndex={setCurrentImageIndex}
+                  setShowProjectUI={setShowProjectUI}
+                />
+              ))}
+            </Suspense>
+          </Canvas>
 
-      {/* Project Details UI */}
-      {showProjectUI && currentProject && (
-        <div className="project-panel">
-          <div className="project-content">
-            <div className="project-header">
-              <h1>{currentProject.projectName}</h1>
-              <div className="header-actions">
-                <button 
-                  className="action-button primary"
-                  onClick={() => {
-                    playSound(buttonClickSound);
-                    window.open(currentProject.links, '_blank');
-                  }}
-                  onMouseEnter={() => playSound(hoverSound)}
-                >
-                  View Project
-                </button>
-                <button 
-                  className="action-button"
-                  onClick={() => {
-                    playSound(buttonClickSound);
-                    window.closeProjectUI();
-                  }}
-                  onMouseEnter={() => playSound(hoverSound)}
-                >
-                  ✕
-                </button>
-              </div>
-            </div>
+          {/* Project Details UI */}
+          {showProjectUI && currentProject && (
+            <div className="project-panel">
+              <div className="project-content">
+                <div className="project-header">
+                  <h1>{currentProject.projectName}</h1>
+                  <div className="header-actions">
+                    <button 
+                      className="action-button primary"
+                      onClick={() => {
+                        playSound(buttonClickSound);
+                        window.open(currentProject.links, '_blank');
+                      }}
+                      onMouseEnter={() => playSound(hoverSound)}
+                    >
+                      View Project
+                    </button>
+                    <button 
+                      className="action-button"
+                      onClick={() => {
+                        playSound(buttonClickSound);
+                        window.closeProjectUI();
+                      }}
+                      onMouseEnter={() => playSound(hoverSound)}
+                    >
+                      ✕
+                    </button>
+                  </div>
+                </div>
 
-            <div className="project-body">
-              <div className="project-showcase">
-                <div className="showcase-image">
-                  <img 
-                    src={currentProject.images[currentImageIndex]} 
-                    alt={`${currentProject.projectName} showcase ${currentImageIndex + 1}`}
-                    style={{ maxWidth: '100%', height: 'auto' }}
-                  />
-                  {currentProject.images.length > 1 && (
-                    <div className="showcase-controls">
-                      <button 
-                        className="showcase-nav prev"
-                        onClick={() => handleImageNavigation('prev')}
-                        onMouseEnter={() => playSound(hoverSound)}
-                        aria-label="Previous image"
-                      >
-                        <img src="/Icons/left.png" alt="Previous" />
-                      </button>
-                      <div className="showcase-indicator">
-                        {currentImageIndex + 1} / {currentProject.images.length}
-                      </div>
-                      <button 
-                        className="showcase-nav next"
-                        onClick={() => handleImageNavigation('next')}
-                        onMouseEnter={() => playSound(hoverSound)}
-                        aria-label="Next image"
-                      >
-                        <img src="/Icons/right.png" alt="Next" />
-                      </button>
+                <div className="project-body">
+                  <div className="project-showcase">
+                    <div className="showcase-image">
+                      <img 
+                        src={currentProject.images[currentImageIndex]} 
+                        alt={`${currentProject.projectName} showcase ${currentImageIndex + 1}`}
+                        style={{ maxWidth: '100%', height: 'auto' }}
+                      />
+                      {currentProject.images.length > 1 && (
+                        <div className="showcase-controls">
+                          <button 
+                            className="showcase-nav prev"
+                            onClick={() => handleImageNavigation('prev')}
+                            onMouseEnter={() => playSound(hoverSound)}
+                            aria-label="Previous image"
+                          >
+                            <img src="/Icons/left.png" alt="Previous" />
+                          </button>
+                          <div className="showcase-indicator">
+                            {currentImageIndex + 1} / {currentProject.images.length}
+                          </div>
+                          <button 
+                            className="showcase-nav next"
+                            onClick={() => handleImageNavigation('next')}
+                            onMouseEnter={() => playSound(hoverSound)}
+                            aria-label="Next image"
+                          >
+                            <img src="/Icons/right.png" alt="Next" />
+                          </button>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-              </div>
+                  </div>
 
-              <div className="project-details">
-                <div className="detail-section">
-                  <span className="detail-label">Timeline</span>
-                  <span className="detail-value">{currentProject.time}</span>
-                </div>
-                
-                <div className="detail-section">
-                  <span className="detail-label">Description</span>
-                  <p className="detail-value">{currentProject.description}</p>
-                </div>
+                  <div className="project-details">
+                    <div className="detail-section">
+                      <span className="detail-label">Timeline</span>
+                      <span className="detail-value">{currentProject.time}</span>
+                    </div>
+                    
+                    <div className="detail-section">
+                      <span className="detail-label">Description</span>
+                      <p className="detail-value">{currentProject.description}</p>
+                    </div>
 
-                <div className="detail-section">
-                  <span className="detail-label">Technologies</span>
-                  <div className="tech-stack">
-                    {currentProject.technologies.split(', ').map((tech, index) => (
-                      <span key={index} className="tech-item">{tech}</span>
-                    ))}
+                    <div className="detail-section">
+                      <span className="detail-label">Technologies</span>
+                      <div className="tech-stack">
+                        {currentProject.technologies.split(', ').map((tech, index) => (
+                          <span key={index} className="tech-item">{tech}</span>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* Info Icon Overlay */}
-      {showInfoIcon && !showProjectUI && (
-        <div 
-          style={{
-            position: 'fixed',
-            top: '20px',
-            left: '20px',
-            zIndex: 1000,
-            cursor: 'pointer',
-            transition: 'transform 0.3s ease',
-            padding: '3px',
-            background: 'rgba(255, 255, 255, 0.88)',
-            borderRadius: '50%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            backdropFilter: 'blur(5px)',
-            boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)'
-          }}
-          onClick={handleInfoClick}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'scale(1.1)';
-            document.body.style.cursor = 'pointer';
-            playSound(hoverSound);
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'scale(1)';
-            document.body.style.cursor = 'default';
-          }}
-        >
-          <img 
-            src="/Icons/information-button.png" 
-            alt="Information"
-            style={{
-              width: window.innerWidth <= 360 ? '18px' : window.innerWidth <= 980 ? '20px' : '24px',
-              height: 'auto',
-              opacity: 0.8
-            }}
-          />
-        </div>
-      )}
-
-      {/* Mobile Navigation Buttons */}
-      {showMobileNav && introScreenClosed && !isInfoScreenVisible && !showProjectUI && (
-        <div className="navigation-buttons">
-          <button 
-            className="nav-button"
-            onClick={() => simulateScroll('prev')}
-            onMouseEnter={() => playSound(hoverSound)}
-          >
-            Previous Project
-          </button>
-          <button 
-            className="nav-button"
-            onClick={() => simulateScroll('next')}
-            onMouseEnter={() => playSound(hoverSound)}
-          >
-            Next Project
-          </button>
-        </div>
-      )}
-
-      {/* Help Text Overlay */}
-      {introScreenClosed && (
-        <div className={`help-text-overlay ${showHelpText ? 'visible' : ''}`}>
-          {showMobileNav ? (
-            "Use the Previous/Next buttons to navigate between projects"
-          ) : (
-            "Scroll up/down to navigate between projects"
           )}
-        </div>
-      )}
 
-      <div id="hoverTooltip" className="tooltip"></div>
+          {/* Info Icon Overlay */}
+          {showInfoIcon && !showProjectUI && (
+            <div 
+              style={{
+                position: 'fixed',
+                top: '20px',
+                left: '20px',
+                zIndex: 1000,
+                cursor: 'pointer',
+                transition: 'transform 0.3s ease',
+                padding: '3px',
+                background: 'rgba(255, 255, 255, 0.88)',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backdropFilter: 'blur(5px)',
+                boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)'
+              }}
+              onClick={handleInfoClick}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'scale(1.1)';
+                document.body.style.cursor = 'pointer';
+                playSound(hoverSound);
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'scale(1)';
+                document.body.style.cursor = 'default';
+              }}
+            >
+              <img 
+                src="/Icons/information-button.png" 
+                alt="Information"
+                style={{
+                  width: window.innerWidth <= 360 ? '18px' : window.innerWidth <= 980 ? '20px' : '24px',
+                  height: 'auto',
+                  opacity: 0.8
+                }}
+              />
+            </div>
+          )}
+
+          {/* Mobile Navigation Buttons */}
+          {showMobileNav && introScreenClosed && !isInfoScreenVisible && !showProjectUI && (
+            <div className="navigation-buttons">
+              <button 
+                className="nav-button"
+                onClick={() => simulateScroll('prev')}
+                onMouseEnter={() => playSound(hoverSound)}
+              >
+                Previous Project
+              </button>
+              <button 
+                className="nav-button"
+                onClick={() => simulateScroll('next')}
+                onMouseEnter={() => playSound(hoverSound)}
+              >
+                Next Project
+              </button>
+            </div>
+          )}
+
+          {/* Help Text Overlay */}
+          {introScreenClosed && (
+            <div className={`help-text-overlay ${showHelpText ? 'visible' : ''}`}>
+              {showMobileNav ? (
+                "Use the Previous/Next buttons to navigate between projects"
+              ) : (
+                "Scroll up/down to navigate between projects"
+              )}
+            </div>
+          )}
+
+          <div id="hoverTooltip" className="tooltip"></div>
+        </>
+      )}
     </>
   );
 };
