@@ -62,7 +62,7 @@ const CameraController = ({ hasScrolled, showInfoScreen, setHasScrolled, setFocu
       const newPosition = isBirdsEyeView.current
         ? { x: 0, y: 200, z: 200 } // Bird's-eye view position
         : {
-            x: planetDistance + 10, // Planet position + offset
+            x: planetDistance + 25, // Planet position + offset
             y: 0,
             z: 0
           };
