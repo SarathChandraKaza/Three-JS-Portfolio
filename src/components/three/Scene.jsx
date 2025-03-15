@@ -9,6 +9,52 @@ import { planets } from '../../data/planetData';
 import * as THREE from 'three';
 import gsap from 'gsap';
 
+// Sound Effects
+const buttonClickSound = new Audio('/Sounds/SFX/button-click.mp3');
+const iconClickSound = new Audio('/Sounds/SFX/icon-click.mp3');
+const hoverSound = new Audio('/Sounds/SFX/hover-sound.mp3');
+const planetClickSound = new Audio('/Sounds/SFX/planet-click.mp3');
+
+// Function to play sound with logging
+const playSound = (audio) => {
+  const audioName = {
+    [buttonClickSound]: 'Button Click Sound',
+    [iconClickSound]: 'Icon Click Sound',
+    [hoverSound]: 'Hover Sound',
+    [planetClickSound]: 'Planet Click Sound'
+  }[audio] || 'Unknown Sound';
+
+  console.log(`Attempting to play: ${audioName} from path: ${audio.src}`);
+  
+  // Check if the audio file is actually loaded
+  if (audio.readyState === 0) {
+    console.warn(`⚠️ Audio file not loaded yet: ${audioName}`);
+    return;
+  }
+  
+  audio.currentTime = 0;
+  audio.play()
+    .then(() => {
+      console.log(`✅ Successfully playing: ${audioName}`);
+    })
+    .catch(err => {
+      console.error(`❌ Error playing ${audioName}:`, err);
+      console.error('Audio source:', audio.src);
+      console.error('Audio ready state:', audio.readyState);
+    });
+};
+
+// Add event listeners to track when audio files are loaded
+[buttonClickSound, iconClickSound, hoverSound, planetClickSound].forEach(audio => {
+  audio.addEventListener('canplaythrough', () => {
+    console.log(`🎵 Audio file loaded successfully: ${audio.src}`);
+  });
+  
+  audio.addEventListener('error', (e) => {
+    console.error(`❌ Error loading audio file ${audio.src}:`, e.target.error);
+  });
+});
+
 // Create a separate component for camera animation
 const CameraController = ({ hasScrolled, showInfoScreen, setHasScrolled, setFocusedPlanetIndex, isInfoScreenVisible, showProjectUI }) => {
   const { camera } = useThree();
@@ -118,6 +164,7 @@ const PlanetInteraction = ({ planet, index, focusedPlanetIndex, setCurrentProjec
   const { camera } = useThree();
 
   const closeProjectUI = () => {
+    playSound(buttonClickSound);
     setShowProjectUI(false);
     setCurrentProject(null);
     
@@ -125,8 +172,8 @@ const PlanetInteraction = ({ planet, index, focusedPlanetIndex, setCurrentProjec
     const planetDistance = index * 25;
     gsap.to(camera.position, {
       x: camera.position.x+10,
-        y: 0,
-        z: 0,
+      y: 0,
+      z: 0,
       duration: 1.5,
       ease: "power2.inOut",
       onUpdate: () => {
@@ -144,13 +191,14 @@ const PlanetInteraction = ({ planet, index, focusedPlanetIndex, setCurrentProjec
 
   const handleClick = () => {
     if (index === focusedPlanetIndex && index !== 4) {
-  
+      playSound(planetClickSound);
+      
       // Only move camera slightly up
       const planetDistance = index * 25;
       gsap.to(camera.position, {
-        x: camera.position.x-10, // Keep current x position
-        y: 7.5, // Just a small push up
-        z: 0, // Keep current z position
+        x: camera.position.x-10,
+        y: 7.5,
+        z: 0,
         duration: 1.5,
         ease: "power2.inOut",
         onUpdate: () => {
@@ -189,9 +237,6 @@ const Scene = () => {
   const inactivityTimer = useRef(null);
   const lastInteractionTime = useRef(Date.now());
 
-  // Add sound effects
-  const [iconClickSound] = useState(() => new Audio('/Three-JS-Portfolio/Sounds/SFX/icon-click.mp3'));
-
   useEffect(() => {
     // Check if it's a mobile device
     const checkMobile = () => {
@@ -206,22 +251,28 @@ const Scene = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Function to handle info icon click
-  const handleInfoClick = () => {
-    const event = new CustomEvent('toggleIntroduction', { detail: { show: true } });
-    window.dispatchEvent(event);
-    setShowInfoIcon(false);
-    setIsInfoScreenVisible(true);
-  };
-
   // Function to simulate scroll events for mobile navigation
   const simulateScroll = (direction) => {
+    // Play button click sound
+    playSound(buttonClickSound);
+    
     // Create a synthetic wheel event
     const event = new WheelEvent('wheel', {
       deltaY: direction === 'next' ? -100 : 100, // next = backward scroll, prev = forward scroll
       bubbles: true
     });
     window.dispatchEvent(event);
+  };
+
+  // Function to handle info icon click
+  const handleInfoClick = () => {
+    // Play button click sound
+    playSound(buttonClickSound);
+    
+    const event = new CustomEvent('toggleIntroduction', { detail: { show: true } });
+    window.dispatchEvent(event);
+    setShowInfoIcon(false);
+    setIsInfoScreenVisible(true);
   };
 
   // Listen for the introduction close event
@@ -231,8 +282,36 @@ const Scene = () => {
       setIntroScreenClosed(true);
       setIsInfoScreenVisible(false);
     };
+
+    // Add event listeners for the explore button and social icons
+    const exploreButton = document.getElementById('close-icon-ui');
+    const socialIcons = document.querySelectorAll('#social-icons a');
+
+    if (exploreButton) {
+      exploreButton.addEventListener('click', () => playSound(buttonClickSound));
+      exploreButton.addEventListener('mouseover', () => playSound(hoverSound));
+    }
+
+    // Add event listeners to each social icon
+    socialIcons.forEach(icon => {
+      icon.addEventListener('click', () => playSound(buttonClickSound));
+      icon.addEventListener('mouseover', () => playSound(hoverSound));
+    });
+
     window.addEventListener('introductionClosed', handleIntroClose);
-    return () => window.removeEventListener('introductionClosed', handleIntroClose);
+    return () => {
+      window.removeEventListener('introductionClosed', handleIntroClose);
+      // Clean up explore button listeners
+      if (exploreButton) {
+        exploreButton.removeEventListener('click', () => playSound(buttonClickSound));
+        exploreButton.removeEventListener('mouseover', () => playSound(hoverSound));
+      }
+      // Clean up social icon listeners
+      socialIcons.forEach(icon => {
+        icon.removeEventListener('click', () => playSound(buttonClickSound));
+        icon.removeEventListener('mouseover', () => playSound(hoverSound));
+      });
+    };
   }, []);
 
   const resetInactivityTimer = () => {
@@ -285,9 +364,7 @@ const Scene = () => {
   const handleImageNavigation = (direction) => {
     if (!currentProject || !currentProject.images) return;
     
-    // Play click sound
-    iconClickSound.currentTime = 0;
-    iconClickSound.play().catch(err => console.warn('Audio play error:', err));
+    playSound(iconClickSound);
     
     const totalImages = currentProject.images.length;
     if (direction === 'next') {
@@ -357,13 +434,21 @@ const Scene = () => {
               <div className="header-actions">
                 <button 
                   className="action-button primary"
-                  onClick={() => window.open(currentProject.links, '_blank')}
+                  onClick={() => {
+                    playSound(buttonClickSound);
+                    window.open(currentProject.links, '_blank');
+                  }}
+                  onMouseEnter={() => playSound(hoverSound)}
                 >
                   View Project
                 </button>
                 <button 
                   className="action-button"
-                  onClick={() => window.closeProjectUI()}
+                  onClick={() => {
+                    playSound(buttonClickSound);
+                    window.closeProjectUI();
+                  }}
+                  onMouseEnter={() => playSound(hoverSound)}
                 >
                   ✕
                 </button>
@@ -383,6 +468,7 @@ const Scene = () => {
                       <button 
                         className="showcase-nav prev"
                         onClick={() => handleImageNavigation('prev')}
+                        onMouseEnter={() => playSound(hoverSound)}
                         aria-label="Previous image"
                       >
                         <img src="/Icons/left.png" alt="Previous" />
@@ -393,6 +479,7 @@ const Scene = () => {
                       <button 
                         className="showcase-nav next"
                         onClick={() => handleImageNavigation('next')}
+                        onMouseEnter={() => playSound(hoverSound)}
                         aria-label="Next image"
                       >
                         <img src="/Icons/right.png" alt="Next" />
@@ -450,6 +537,7 @@ const Scene = () => {
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'scale(1.1)';
             document.body.style.cursor = 'pointer';
+            playSound(hoverSound);
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.transform = 'scale(1)';
@@ -474,12 +562,14 @@ const Scene = () => {
           <button 
             className="nav-button"
             onClick={() => simulateScroll('prev')}
+            onMouseEnter={() => playSound(hoverSound)}
           >
             Previous Project
           </button>
           <button 
             className="nav-button"
             onClick={() => simulateScroll('next')}
+            onMouseEnter={() => playSound(hoverSound)}
           >
             Next Project
           </button>

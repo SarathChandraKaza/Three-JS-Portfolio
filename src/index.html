@@ -71,7 +71,7 @@
     </div>
 
     <!-- Close Button -->
-    <button id="close-icon-ui" title="Close the UI">X</button>
+    <button id="close-icon-ui" title="Close the UI">Enter</button>
 </div>
 
     <!-- Hover Tooltip for information sprite-->
@@ -86,8 +86,82 @@
     <!--Help text for clicking on planet-->
     <div id="help-text" style="display: none;">
         Click on a planet to learn more about a specific project and its details.
-      </div>
+    </div>
 
+    <script>
+        // Preload audio files
+        const buttonClickSound = new Audio('/Three-JS-Portfolio/Sounds/SFX/button-click.mp3');
+        const iconClickSound = new Audio('/Three-JS-Portfolio/Sounds/SFX/icon-click.mp3');
+
+        // Add loading event listeners
+        buttonClickSound.addEventListener('canplaythrough', () => {
+            console.log('✅ Button click sound loaded successfully');
+        });
+        iconClickSound.addEventListener('canplaythrough', () => {
+            console.log('✅ Icon click sound loaded successfully');
+        });
+
+        // Add error listeners
+        buttonClickSound.addEventListener('error', (e) => {
+            console.error('❌ Error loading button click sound:', e.target.error);
+            console.error('Source:', buttonClickSound.src);
+        });
+        iconClickSound.addEventListener('error', (e) => {
+            console.error('❌ Error loading icon click sound:', e.target.error);
+            console.error('Source:', iconClickSound.src);
+        });
+
+        function playSound(type) {
+            const audio = type === 'icon' ? iconClickSound : buttonClickSound;
+            const soundName = type === 'icon' ? 'Icon Click Sound' : 'Button Click Sound';
+            
+            console.log(`🎵 Attempting to play: ${soundName}`);
+            console.log(`📂 Sound file path: ${audio.src}`);
+            
+            // Check if the audio is actually loaded
+            if (audio.readyState < 2) { // HAVE_CURRENT_DATA
+                console.warn(`⚠️ Warning: ${soundName} not fully loaded yet (ReadyState: ${audio.readyState})`);
+            }
+
+            audio.currentTime = 0;
+            audio.play()
+                .then(() => {
+                    console.log(`✅ Successfully playing: ${soundName}`);
+                })
+                .catch(err => {
+                    console.error(`❌ Failed to play ${soundName}:`);
+                    console.error('Error:', err);
+                    console.error('Audio source:', audio.src);
+                    console.error('Audio ready state:', audio.readyState);
+                    console.error('Audio network state:', audio.networkState);
+                });
+        }
+
+        // Add event listeners after DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🎵 Setting up sound event listeners...');
+            
+            // Add click listeners to social icons
+            const socialIcons = document.querySelectorAll('#social-icons a');
+            socialIcons.forEach(icon => {
+                icon.addEventListener('click', () => {
+                    console.log(`🖱️ Social icon clicked: ${icon.id}`);
+                    playSound('icon');
+                });
+            });
+
+            // Add click listener to explore/enter button
+            const closeButton = document.getElementById('close-icon-ui');
+            if (closeButton) {
+                closeButton.addEventListener('click', () => {
+                    console.log('🖱️ Explore/Enter button clicked');
+                    playSound('button');
+                });
+            }
+            
+            console.log('✅ Sound event listeners setup complete');
+        });
+    </script>
 
     <script type="module" src="./script.js"></script>
 </body>

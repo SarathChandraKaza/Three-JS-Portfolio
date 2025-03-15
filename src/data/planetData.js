@@ -11,7 +11,7 @@ export const planets = [
       technologies: "Unity, Audacity, Adobe Premiere Pro",
       links: "https://www.youtube.com/watch?v=YZAAgqMNcSA",
       images: [
-        "Project-Images/Sunday/Sunday1.png",
+        "/Project-Images/Sunday/Sunday1.png",
       ],
     }
   },
@@ -27,13 +27,13 @@ export const planets = [
       technologies: "Unity, Blender, Jupyter Notebook, MS Excel",
       links: "https://github.com/SarathChandraKaza/VR-School",
       images: [
-        "Project-Images/VR-School/VRSchool1.png",
-        "Project-Images/VR-School/VRSchool2.png",
-        "Project-Images/VR-School/VRSchool3.png",
-        "Project-Images/VR-School/VRSchool4.png",
-        "Project-Images/VR-School/VRSchool5.png",
-        "Project-Images/VR-School/VRSchool6.png",
-        "Project-Images/VR-School/VRSchool7.png",
+        "/Project-Images/VR-School/VRSchool1.png",
+        "/Project-Images/VR-School/VRSchool2.png",
+        "/Project-Images/VR-School/VRSchool3.png",
+        "/Project-Images/VR-School/VRSchool4.png",
+        "/Project-Images/VR-School/VRSchool5.png",
+        "/Project-Images/VR-School/VRSchool6.png",
+        "/Project-Images/VR-School/VRSchool7.png"
       ],
     }
   },
@@ -49,9 +49,9 @@ export const planets = [
       technologies: "Unity, Blender, Audacity",
       links: "https://github.com/SarathChandraKaza/Dodge-Ball",
       images: [
-        "Project-Images/Dodge-Ball/DodgeBall1.png",
-        "Project-Images/Dodge-Ball/DodgeBall2.png",
-        "Project-Images/Dodge-Ball/DodgeBall3.png",
+        "/Project-Images/Dodge-Ball/DodgeBall1.png",
+        "/Project-Images/Dodge-Ball/DodgeBall2.png",
+        "/Project-Images/Dodge-Ball/DodgeBall3.png"
       ],
     }
   },
@@ -67,9 +67,9 @@ export const planets = [
       technologies: "Unity, WebGL",
       links: "https://github.com/SarathChandraKaza/Eating-Tom",
       images: [
-        "Project-Images/Eating-Tom/EatingTom1.png",
-        "Project-Images/Eating-Tom/EatingTom2.png",
-        "Project-Images/Eating-Tom/EatingTom3.png",
+        "/Project-Images/Eating-Tom/EatingTom1.png",
+        "/Project-Images/Eating-Tom/EatingTom2.png",
+        "/Project-Images/Eating-Tom/EatingTom3.png"
       ],
     }
   },
