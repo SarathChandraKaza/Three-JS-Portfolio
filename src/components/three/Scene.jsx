@@ -9,13 +9,17 @@ import { planets } from '../../data/planetData';
 import * as THREE from 'three';
 
 // Create a separate component for camera animation
-const CameraController = ({ hasScrolled, showInfoScreen, setHasScrolled, setFocusedPlanetIndex }) => {
+const CameraController = ({ hasScrolled, showInfoScreen, setHasScrolled, setFocusedPlanetIndex, isInfoScreenVisible }) => {
   const { camera } = useThree();
   const isAnimating = useRef(false);
   const currentPlanetIndex = useRef(0); // Start at first planet (index 0)
   const isBirdsEyeView = useRef(true); // Start in birds-eye view
 
   useEffect(() => {
+    if (isInfoScreenVisible) {
+      return; // Don't add wheel listener if info screen is visible
+    }
+
     const handleWheel = (event) => {
       if (showInfoScreen || isAnimating.current) return;
 
@@ -104,7 +108,7 @@ const CameraController = ({ hasScrolled, showInfoScreen, setHasScrolled, setFocu
 
     window.addEventListener('wheel', handleWheel);
     return () => window.removeEventListener('wheel', handleWheel);
-  }, [showInfoScreen, camera, setHasScrolled]);
+  }, [showInfoScreen, camera, setHasScrolled, setFocusedPlanetIndex, isInfoScreenVisible]);
 
   return null;
 };
@@ -113,19 +117,45 @@ const Scene = () => {
   const [showInfoIcon, setShowInfoIcon] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
   const [focusedPlanetIndex, setFocusedPlanetIndex] = useState(null);
+  const [showMobileNav, setShowMobileNav] = useState(false);
+  const [introScreenClosed, setIntroScreenClosed] = useState(false);
+  const [isInfoScreenVisible, setIsInfoScreenVisible] = useState(true);
+
+  useEffect(() => {
+    // Check if it's a mobile device
+    const checkMobile = () => {
+      const isMobile = window.innerWidth <= 980 || 
+                      navigator.maxTouchPoints > 0 || 
+                      /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+      setShowMobileNav(isMobile);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Function to handle info icon click
   const handleInfoClick = () => {
-    // Dispatch a custom event that App.jsx will listen for
     const event = new CustomEvent('toggleIntroduction', { detail: { show: true } });
     window.dispatchEvent(event);
     setShowInfoIcon(false);
+    setIsInfoScreenVisible(true);
+  };
+
+  // Function to simulate scroll events for mobile navigation
+  const simulateScroll = (direction) => {
+    // Create a synthetic wheel event
+    const event = new WheelEvent('wheel', {
+      deltaY: direction === 'next' ? -100 : 100, // next = backward scroll, prev = forward scroll
+      bubbles: true
+    });
+    window.dispatchEvent(event);
   };
 
   const handlePlanetClick = (planet, index) => {
-    if (index === focusedPlanetIndex && index !== 4) { // Don't allow clicking Sun (index 4)
+    if (index === focusedPlanetIndex && index !== 4) {
       console.log(`Selected planet: ${planet.name}`);
-      // Add your planet click handling logic here
     }
   };
 
@@ -133,6 +163,8 @@ const Scene = () => {
   useEffect(() => {
     const handleIntroClose = () => {
       setShowInfoIcon(true);
+      setIntroScreenClosed(true);
+      setIsInfoScreenVisible(false);
     };
     window.addEventListener('introductionClosed', handleIntroClose);
     return () => window.removeEventListener('introductionClosed', handleIntroClose);
@@ -155,6 +187,7 @@ const Scene = () => {
             showInfoScreen={false}
             setHasScrolled={setHasScrolled}
             setFocusedPlanetIndex={setFocusedPlanetIndex}
+            isInfoScreenVisible={isInfoScreenVisible}
           />
           <Skybox />
           <OrbitControls 
@@ -178,7 +211,7 @@ const Scene = () => {
               key={planet.name}
               {...planet}
               onClick={() => handlePlanetClick(planet, index)}
-              isClickable={index === focusedPlanetIndex && index !== 4} // Don't make Sun clickable
+              isClickable={index === focusedPlanetIndex && index !== 4}
               index={index}
             />
           ))}
@@ -190,7 +223,7 @@ const Scene = () => {
         <div 
           style={{
             position: 'fixed',
-            bottom: '20px',
+            top: '20px',
             left: '20px',
             zIndex: 1000,
             cursor: 'pointer',
@@ -223,6 +256,24 @@ const Scene = () => {
               opacity: 0.8
             }}
           />
+        </div>
+      )}
+
+      {/* Mobile Navigation Buttons */}
+      {showMobileNav && introScreenClosed && !isInfoScreenVisible && (
+        <div className="navigation-buttons">
+          <button 
+            className="nav-button"
+            onClick={() => simulateScroll('prev')}
+          >
+            Previous Project
+          </button>
+          <button 
+            className="nav-button"
+            onClick={() => simulateScroll('next')}
+          >
+            Next Project
+          </button>
         </div>
       )}
 
