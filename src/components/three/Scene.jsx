@@ -3,6 +3,8 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import Planet from './Planet';
 import Skybox from './Skybox';
+import Text3DComponent from './Text3D';
+import Ranger from './Ranger';
 import { planets } from '../../data/planetData';
 
 const Scene = () => {
@@ -34,6 +36,12 @@ const Scene = () => {
           intensity={0.5}
           castShadow
         />
+        
+        {/* 3D Text */}
+        <Text3DComponent />
+
+        {/* Ranger Spaceship */}
+        <Ranger />
         
         {/* Render all planets */}
         {planets.map((planet) => (
