@@ -385,7 +385,7 @@ const Scene = () => {
                         onClick={() => handleImageNavigation('prev')}
                         aria-label="Previous image"
                       >
-                        <img src="Icons/left.png" alt="Previous" />
+                        <img src="/Icons/left.png" alt="Previous" />
                       </button>
                       <div className="showcase-indicator">
                         {currentImageIndex + 1} / {currentProject.images.length}
@@ -395,7 +395,7 @@ const Scene = () => {
                         onClick={() => handleImageNavigation('next')}
                         aria-label="Next image"
                       >
-                        <img src="Icons/right.png" alt="Next" />
+                        <img src="/Icons/right.png" alt="Next" />
                       </button>
                     </div>
                   )}
