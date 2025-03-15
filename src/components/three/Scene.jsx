@@ -10,19 +10,19 @@ import * as THREE from 'three';
 import gsap from 'gsap';
 
 // Create a separate component for camera animation
-const CameraController = ({ hasScrolled, showInfoScreen, setHasScrolled, setFocusedPlanetIndex, isInfoScreenVisible }) => {
+const CameraController = ({ hasScrolled, showInfoScreen, setHasScrolled, setFocusedPlanetIndex, isInfoScreenVisible, showProjectUI }) => {
   const { camera } = useThree();
   const isAnimating = useRef(false);
   const currentPlanetIndex = useRef(0); // Start at first planet (index 0)
   const isBirdsEyeView = useRef(true); // Start in birds-eye view
 
   useEffect(() => {
-    if (isInfoScreenVisible) {
-      return; // Don't add wheel listener if info screen is visible
+    if (isInfoScreenVisible || showProjectUI) {
+      return; // Don't add wheel listener if info screen or project UI is visible
     }
 
     const handleWheel = (event) => {
-      if (showInfoScreen || isAnimating.current) return;
+      if (showInfoScreen || isAnimating.current || showProjectUI) return;
 
       const scrollAmount = event.deltaY;
       if ((scrollAmount > 0 && scrollAmount < 5) || (scrollAmount < 0 && scrollAmount > -5)) return;
@@ -109,7 +109,7 @@ const CameraController = ({ hasScrolled, showInfoScreen, setHasScrolled, setFocu
 
     window.addEventListener('wheel', handleWheel);
     return () => window.removeEventListener('wheel', handleWheel);
-  }, [showInfoScreen, camera, setHasScrolled, setFocusedPlanetIndex, isInfoScreenVisible]);
+  }, [showInfoScreen, camera, setHasScrolled, setFocusedPlanetIndex, isInfoScreenVisible, showProjectUI]);
 
   return null;
 };
@@ -124,13 +124,13 @@ const PlanetInteraction = ({ planet, index, focusedPlanetIndex, setCurrentProjec
     // Reset camera to original viewing position
     const planetDistance = index * 25;
     gsap.to(camera.position, {
-      x: planetDistance + 25,
-      y: 0, // Return to original height
-      z: 0, // Return to original z position
+      x: camera.position.x+10,
+        y: 0,
+        z: 0,
       duration: 1.5,
       ease: "power2.inOut",
       onUpdate: () => {
-        camera.lookAt(new THREE.Vector3(planetDistance, 0, 0));
+        camera.lookAt(new THREE.Vector3(camera.position.x, 0, 0));
       }
     });
   };
@@ -296,6 +296,7 @@ const Scene = () => {
             setHasScrolled={setHasScrolled}
             setFocusedPlanetIndex={setFocusedPlanetIndex}
             isInfoScreenVisible={isInfoScreenVisible}
+            showProjectUI={showProjectUI}
           />
           <Skybox />
           <OrbitControls 
@@ -330,53 +331,71 @@ const Scene = () => {
 
       {/* Project Details UI */}
       {showProjectUI && currentProject && (
-        <div id="ui-menu">
-          <div className="ui-content">
-            <button 
-              className="link-button"
-              onClick={() => window.open(currentProject.links, '_blank')}
-            >
-              Project Link
-            </button>
-            <button 
-              className="close-button"
-              onClick={() => window.closeProjectUI()}
-            >
-              Close
-            </button>
-
-            <div className="project-info">
+        <div className="project-panel">
+          <div className="project-content">
+            <div className="project-header">
               <h1>{currentProject.projectName}</h1>
-              <h3>{currentProject.time}</h3>
-              <div id="planet-details">
-                <p><strong>Description:</strong> {currentProject.description}</p>
-                <p><strong>Technologies:</strong> {currentProject.technologies}</p>
+              <div className="header-actions">
+                <button 
+                  className="action-button primary"
+                  onClick={() => window.open(currentProject.links, '_blank')}
+                >
+                  View Project
+                </button>
+                <button 
+                  className="action-button"
+                  onClick={() => window.closeProjectUI()}
+                >
+                  ✕
+                </button>
               </div>
+            </div>
 
-              <div className="carousel-container">
-                {currentProject.images.length > 1 && (
-                  <button 
-                    className="carousel-button"
-                    onClick={() => handleImageNavigation('prev')}
-                  >
-                    <img src="/Icons/left.png" alt="Previous" className="carousel-arrow" />
-                  </button>
-                )}
-                <div className="carousel-image-wrapper">
+            <div className="project-body">
+              <div className="project-showcase">
+                <div className="showcase-image">
                   <img 
                     src={currentProject.images[currentImageIndex]} 
-                    alt="Project Image" 
-                    className="carousel-image"
+                    alt={`${currentProject.projectName} showcase`}
                   />
+                  {currentProject.images.length > 1 && (
+                    <div className="showcase-controls">
+                      <button 
+                        className="showcase-nav prev"
+                        onClick={() => handleImageNavigation('prev')}
+                      >
+                        ‹
+                      </button>
+                      <button 
+                        className="showcase-nav next"
+                        onClick={() => handleImageNavigation('next')}
+                      >
+                        ›
+                      </button>
+                    </div>
+                  )}
                 </div>
-                {currentProject.images.length > 1 && (
-                  <button 
-                    className="carousel-button"
-                    onClick={() => handleImageNavigation('next')}
-                  >
-                    <img src="/Icons/right.png" alt="Next" className="carousel-arrow" />
-                  </button>
-                )}
+              </div>
+
+              <div className="project-details">
+                <div className="detail-section">
+                  <span className="detail-label">Timeline</span>
+                  <span className="detail-value">{currentProject.time}</span>
+                </div>
+                
+                <div className="detail-section">
+                  <span className="detail-label">Description</span>
+                  <p className="detail-value">{currentProject.description}</p>
+                </div>
+
+                <div className="detail-section">
+                  <span className="detail-label">Technologies</span>
+                  <div className="tech-stack">
+                    {currentProject.technologies.split(', ').map((tech, index) => (
+                      <span key={index} className="tech-item">{tech}</span>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -384,7 +403,7 @@ const Scene = () => {
       )}
 
       {/* Info Icon Overlay */}
-      {showInfoIcon && (
+      {showInfoIcon && !showProjectUI && (
         <div 
           style={{
             position: 'fixed',
