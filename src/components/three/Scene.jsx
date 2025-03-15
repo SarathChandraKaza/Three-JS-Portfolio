@@ -9,7 +9,7 @@ import { planets } from '../../data/planetData';
 import * as THREE from 'three';
 
 // Create a separate component for camera animation
-const CameraController = ({ hasScrolled, showInfoScreen, setHasScrolled, setIsLastPlanetClickable }) => {
+const CameraController = ({ hasScrolled, showInfoScreen, setHasScrolled, setFocusedPlanetIndex }) => {
   const { camera } = useThree();
   const isAnimating = useRef(false);
   const currentPlanetIndex = useRef(0); // Start at first planet (index 0)
@@ -29,13 +29,13 @@ const CameraController = ({ hasScrolled, showInfoScreen, setHasScrolled, setIsLa
           // From birds-eye view, go to Mars
           isBirdsEyeView.current = false;
           currentPlanetIndex.current = 4; // Mars
-          setIsLastPlanetClickable(true);
+          setFocusedPlanetIndex(0); // Mars is index 0 in the planets array
         } else if (currentPlanetIndex.current > 1) { // If not at Mercury
           currentPlanetIndex.current--;
-          setIsLastPlanetClickable(false);
+          setFocusedPlanetIndex(4 - currentPlanetIndex.current); // Convert to array index
         } else if (currentPlanetIndex.current === 1) { // At Mercury, go to birds-eye view
           isBirdsEyeView.current = true;
-          setIsLastPlanetClickable(false);
+          setFocusedPlanetIndex(null);
         }
       } else { // Scrolling forward
         if (isBirdsEyeView.current) {
@@ -44,10 +44,10 @@ const CameraController = ({ hasScrolled, showInfoScreen, setHasScrolled, setIsLa
           return;
         } else if (currentPlanetIndex.current === 4) { // At Mars, go to birds-eye view
           isBirdsEyeView.current = true;
-          setIsLastPlanetClickable(false);
+          setFocusedPlanetIndex(null);
         } else if (currentPlanetIndex.current < 4) { // If not at Mars
           currentPlanetIndex.current++;
-          setIsLastPlanetClickable(currentPlanetIndex.current === 4);
+          setFocusedPlanetIndex(4 - currentPlanetIndex.current); // Convert to array index
         }
       }
 
@@ -104,7 +104,7 @@ const CameraController = ({ hasScrolled, showInfoScreen, setHasScrolled, setIsLa
 
     window.addEventListener('wheel', handleWheel);
     return () => window.removeEventListener('wheel', handleWheel);
-  }, [showInfoScreen, camera, setHasScrolled, setIsLastPlanetClickable]);
+  }, [showInfoScreen, camera, setHasScrolled]);
 
   return null;
 };
@@ -114,7 +114,7 @@ const Scene = () => {
   const [showInfoScreen, setShowInfoScreen] = useState(true);
   const [isInitialScreen, setIsInitialScreen] = useState(true);
   const [hasScrolled, setHasScrolled] = useState(false);
-  const [isLastPlanetClickable, setIsLastPlanetClickable] = useState(false);
+  const [focusedPlanetIndex, setFocusedPlanetIndex] = useState(null);
 
   // Function to handle info icon click
   const handleInfoClick = () => {
@@ -153,10 +153,11 @@ const Scene = () => {
     return "Close";
   };
 
-  const handlePlanetClick = (planet) => {
-    if (!isLastPlanetClickable || planet !== planets[planets.length - 1]) return;
-    console.log(`Clicked on ${planet.name}`);
-    // Add your planet click handling logic here
+  const handlePlanetClick = (planet, index) => {
+    if (index === focusedPlanetIndex && index !== 4) { // Don't allow clicking Sun (index 4)
+      console.log(`Selected planet: ${planet.name}`);
+      // Add your planet click handling logic here
+    }
   };
 
   return (
@@ -176,7 +177,7 @@ const Scene = () => {
             hasScrolled={hasScrolled}
             showInfoScreen={showInfoScreen}
             setHasScrolled={setHasScrolled}
-            setIsLastPlanetClickable={setIsLastPlanetClickable}
+            setFocusedPlanetIndex={setFocusedPlanetIndex}
           />
           <Skybox />
           <OrbitControls 
@@ -199,8 +200,8 @@ const Scene = () => {
             <Planet 
               key={planet.name}
               {...planet}
-              onClick={() => handlePlanetClick(planet)}
-              isClickable={isLastPlanetClickable && index === planets.length - 1}
+              onClick={() => handlePlanetClick(planet, index)}
+              isClickable={index === focusedPlanetIndex && index !== 4} // Don't make Sun clickable
               index={index}
             />
           ))}

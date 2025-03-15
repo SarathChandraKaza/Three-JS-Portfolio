@@ -1,11 +1,22 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 
-const Planet = ({ name, radius = 1, distance = 0, texturePath, onClick, material = "standard" }) => {
+const Planet = ({ name, radius = 1, distance = 0, texturePath, onClick, material = "standard", isClickable, index }) => {
   const meshRef = useRef();
   const texture = useTexture(texturePath);
+
+  const [hovered, setHovered] = useState(false);
+
+  useEffect(() => {
+    if (isClickable) {
+      document.body.style.cursor = hovered ? 'pointer' : 'default';
+    }
+    return () => {
+      document.body.style.cursor = 'default';
+    };
+  }, [hovered, isClickable]);
 
   // Initial position - all planets in a straight line along X-axis
   const position = [distance, 0, 0];
@@ -31,12 +42,8 @@ const Planet = ({ name, radius = 1, distance = 0, texturePath, onClick, material
       ref={meshRef}
       position={position}
       onClick={onClick}
-      onPointerOver={(e) => {
-        document.body.style.cursor = 'pointer';
-      }}
-      onPointerOut={(e) => {
-        document.body.style.cursor = 'auto';
-      }}
+      onPointerOver={() => isClickable && setHovered(true)}
+      onPointerOut={() => isClickable && setHovered(false)}
     >
       <sphereGeometry args={[radius, 32, 32]} />
       {material === "basic" ? (
