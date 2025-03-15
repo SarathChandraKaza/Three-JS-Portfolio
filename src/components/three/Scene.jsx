@@ -7,6 +7,7 @@ import Text3DComponent from './Text3D';
 import Ranger from './Ranger';
 import { planets } from '../../data/planetData';
 import * as THREE from 'three';
+import gsap from 'gsap';
 
 // Create a separate component for camera animation
 const CameraController = ({ hasScrolled, showInfoScreen, setHasScrolled, setFocusedPlanetIndex, isInfoScreenVisible }) => {
@@ -113,6 +114,67 @@ const CameraController = ({ hasScrolled, showInfoScreen, setHasScrolled, setFocu
   return null;
 };
 
+const PlanetInteraction = ({ planet, index, focusedPlanetIndex, setCurrentProject, setCurrentImageIndex, setShowProjectUI }) => {
+  const { camera } = useThree();
+
+  const closeProjectUI = () => {
+    setShowProjectUI(false);
+    setCurrentProject(null);
+    
+    // Reset camera to original viewing position
+    const planetDistance = index * 25;
+    gsap.to(camera.position, {
+      x: planetDistance + 25,
+      y: 0, // Return to original height
+      z: 0, // Return to original z position
+      duration: 1.5,
+      ease: "power2.inOut",
+      onUpdate: () => {
+        camera.lookAt(new THREE.Vector3(planetDistance, 0, 0));
+      }
+    });
+  };
+
+  useEffect(() => {
+    window.closeProjectUI = closeProjectUI;
+    return () => {
+      delete window.closeProjectUI;
+    };
+  }, []);
+
+  const handleClick = () => {
+    if (index === focusedPlanetIndex && index !== 4) {
+  
+      // Only move camera slightly up
+      const planetDistance = index * 25;
+      gsap.to(camera.position, {
+        x: camera.position.x-10, // Keep current x position
+        y: 7.5, // Just a small push up
+        z: 0, // Keep current z position
+        duration: 1.5,
+        ease: "power2.inOut",
+        onUpdate: () => {
+          camera.lookAt(new THREE.Vector3(camera.position.x, 0, 0));
+        },
+        onComplete: () => {
+          setCurrentProject(planet.projectData);
+          setCurrentImageIndex(0);
+          setShowProjectUI(true);
+        }
+      });
+    }
+  };
+
+  return (
+    <Planet 
+      {...planet}
+      onClick={handleClick}
+      isClickable={index === focusedPlanetIndex && index !== 4}
+      index={index}
+    />
+  );
+};
+
 const Scene = () => {
   const [showInfoIcon, setShowInfoIcon] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
@@ -120,6 +182,9 @@ const Scene = () => {
   const [showMobileNav, setShowMobileNav] = useState(false);
   const [introScreenClosed, setIntroScreenClosed] = useState(false);
   const [isInfoScreenVisible, setIsInfoScreenVisible] = useState(true);
+  const [showProjectUI, setShowProjectUI] = useState(false);
+  const [currentProject, setCurrentProject] = useState(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     // Check if it's a mobile device
@@ -151,12 +216,6 @@ const Scene = () => {
       bubbles: true
     });
     window.dispatchEvent(event);
-  };
-
-  const handlePlanetClick = (planet, index) => {
-    if (index === focusedPlanetIndex && index !== 4) {
-      console.log(`Selected planet: ${planet.name}`);
-    }
   };
 
   // Listen for the introduction close event
@@ -207,16 +266,73 @@ const Scene = () => {
           <Ranger />
           
           {planets.map((planet, index) => (
-            <Planet 
+            <PlanetInteraction
               key={planet.name}
-              {...planet}
-              onClick={() => handlePlanetClick(planet, index)}
-              isClickable={index === focusedPlanetIndex && index !== 4}
+              planet={planet}
               index={index}
+              focusedPlanetIndex={focusedPlanetIndex}
+              setCurrentProject={setCurrentProject}
+              setCurrentImageIndex={setCurrentImageIndex}
+              setShowProjectUI={setShowProjectUI}
             />
           ))}
         </Suspense>
       </Canvas>
+
+      {/* Project Details UI */}
+      {showProjectUI && currentProject && (
+        <div id="ui-menu">
+          <div className="ui-content">
+            <button 
+              className="link-button"
+              onClick={() => window.open(currentProject.links, '_blank')}
+            >
+              Project Link
+            </button>
+            <button 
+              className="close-button"
+              onClick={() => window.closeProjectUI()}
+            >
+              Close
+            </button>
+
+            <div className="project-info">
+              <h1>{currentProject.projectName}</h1>
+              <h3>{currentProject.time}</h3>
+              <div id="planet-details">
+                <p><strong>Description:</strong> {currentProject.description}</p>
+                <p><strong>Technologies:</strong> {currentProject.technologies}</p>
+              </div>
+
+              <div className="carousel-container">
+                {currentProject.images.length > 1 && (
+                  <button 
+                    className="carousel-button"
+                    onClick={() => handleImageNavigation('prev')}
+                  >
+                    <img src="/Icons/left.png" alt="Previous" className="carousel-arrow" />
+                  </button>
+                )}
+                <div className="carousel-image-wrapper">
+                  <img 
+                    src={currentProject.images[currentImageIndex]} 
+                    alt="Project Image" 
+                    className="carousel-image"
+                  />
+                </div>
+                {currentProject.images.length > 1 && (
+                  <button 
+                    className="carousel-button"
+                    onClick={() => handleImageNavigation('next')}
+                  >
+                    <img src="/Icons/right.png" alt="Next" className="carousel-arrow" />
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Info Icon Overlay */}
       {showInfoIcon && (
