@@ -42,6 +42,9 @@ const CameraController = ({ hasScrolled, showInfoScreen, setHasScrolled, setIsLa
           // Do nothing when scrolling forward in birds-eye view
           isAnimating.current = false;
           return;
+        } else if (currentPlanetIndex.current === 4) { // At Mars, go to birds-eye view
+          isBirdsEyeView.current = true;
+          setIsLastPlanetClickable(false);
         } else if (currentPlanetIndex.current < 4) { // If not at Mars
           currentPlanetIndex.current++;
           setIsLastPlanetClickable(currentPlanetIndex.current === 4);
@@ -53,7 +56,7 @@ const CameraController = ({ hasScrolled, showInfoScreen, setHasScrolled, setIsLa
 
       // Set new camera position
       const newPosition = isBirdsEyeView.current
-        ? { x: 0, y: 150, z: 150 } // Bird's-eye view position
+        ? { x: 0, y: 200, z: 200 } // Bird's-eye view position
         : {
             x: planetDistance + 10, // Planet position + offset
             y: 0,
