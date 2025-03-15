@@ -330,4 +330,53 @@
     padding: 12px 15px;
     font-size: 11px;
   }
+}
+
+.help-text-overlay {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.85);
+  color: #4e54c8;
+  padding: 9px 18px;
+  border-radius: 9px;
+  font-family: 'SFBold', sans-serif;
+  font-size: 11px;
+  z-index: 1000;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(78, 84, 200, 0.3);
+  letter-spacing: 0.3px;
+}
+
+.help-text-overlay.visible {
+  opacity: 1;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@media screen and (max-width: 980px) {
+  .help-text-overlay {
+    font-size: 10px;
+    padding: 7px 15px;
+    width: 48%;
+    max-width: 240px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .help-text-overlay {
+    font-size: 8px;
+    padding: 6px 12px;
+    width: 54%;
+  }
 } 

@@ -185,6 +185,9 @@ const Scene = () => {
   const [showProjectUI, setShowProjectUI] = useState(false);
   const [currentProject, setCurrentProject] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [showHelpText, setShowHelpText] = useState(false);
+  const inactivityTimer = useRef(null);
+  const lastInteractionTime = useRef(Date.now());
 
   useEffect(() => {
     // Check if it's a mobile device
@@ -228,6 +231,52 @@ const Scene = () => {
     window.addEventListener('introductionClosed', handleIntroClose);
     return () => window.removeEventListener('introductionClosed', handleIntroClose);
   }, []);
+
+  const resetInactivityTimer = () => {
+    lastInteractionTime.current = Date.now();
+    if (inactivityTimer.current) {
+      clearTimeout(inactivityTimer.current);
+    }
+    
+    if (introScreenClosed && !showProjectUI) {
+      inactivityTimer.current = setTimeout(() => {
+        setShowHelpText(true);
+      }, 10000); // Show after 30 seconds of inactivity
+    }
+  };
+
+  // Add event listeners for user interaction
+  useEffect(() => {
+    const handleInteraction = () => {
+      setShowHelpText(false);
+      resetInactivityTimer();
+    };
+
+    // Track various user interactions
+    window.addEventListener('mousemove', handleInteraction);
+    window.addEventListener('click', handleInteraction);
+    window.addEventListener('wheel', handleInteraction);
+    window.addEventListener('keydown', handleInteraction);
+    window.addEventListener('touchstart', handleInteraction);
+
+    return () => {
+      window.removeEventListener('mousemove', handleInteraction);
+      window.removeEventListener('click', handleInteraction);
+      window.removeEventListener('wheel', handleInteraction);
+      window.removeEventListener('keydown', handleInteraction);
+      window.removeEventListener('touchstart', handleInteraction);
+      if (inactivityTimer.current) {
+        clearTimeout(inactivityTimer.current);
+      }
+    };
+  }, [introScreenClosed, showProjectUI]);
+
+  // Start inactivity timer when intro screen is closed
+  useEffect(() => {
+    if (introScreenClosed && !showProjectUI) {
+      resetInactivityTimer();
+    }
+  }, [introScreenClosed, showProjectUI]);
 
   return (
     <>
@@ -390,6 +439,17 @@ const Scene = () => {
           >
             Next Project
           </button>
+        </div>
+      )}
+
+      {/* Help Text Overlay */}
+      {introScreenClosed && (
+        <div className={`help-text-overlay ${showHelpText ? 'visible' : ''}`}>
+          {showMobileNav ? (
+            "Use the Previous/Next buttons to navigate between projects"
+          ) : (
+            "Scroll up/down to navigate between projects"
+          )}
         </div>
       )}
 
