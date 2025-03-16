@@ -13,7 +13,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  base: './',
+  base: '/Three-JS-Portfolio/',
   build: {
     outDir: 'docs',
     emptyOutDir: true,
