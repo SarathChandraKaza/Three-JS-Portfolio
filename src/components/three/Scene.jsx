@@ -400,57 +400,58 @@ const Scene = () => {
     }
   }, [introScreenClosed, showProjectUI]);
 
-  // Asset URLs
+  
   const assetUrls = {
     images: [
-      '//Icons/gmail.png',
-      '/Icons/linkedin.png',
-      '/Icons/github.png',
-      '/Icons/left.png',
-      '/Icons/right.png',
-      '/Icons/information-button.png',
-      '/Project-Images/Sunday/Sunday1.png',
-      '/Project-Images/VR-School/VRSchool1.png',
-      '/Project-Images/VR-School/VRSchool2.png',
-      '/Project-Images/VR-School/VRSchool3.png',
-      '/Project-Images/VR-School/VRSchool4.png',
-      '/Project-Images/VR-School/VRSchool5.png',
-      '/Project-Images/VR-School/VRSchool6.png',
-      '/Project-Images/VR-School/VRSchool7.png',
-      '/Project-Images/Dodge-Ball/DodgeBall1.png',
-      '/Project-Images/Dodge-Ball/DodgeBall2.png',
-      '/Project-Images/Dodge-Ball/DodgeBall3.png',
-      '/Project-Images/Eating-Tom/EatingTom1.png',
-      '/Project-Images/Eating-Tom/EatingTom2.png',
-      '/Project-Images/Eating-Tom/EatingTom3.png',
-      '/textures/Purple Nebula/PurpleNebulaSkybox_right1.png',
-      '/textures/Purple Nebula/PurpleNebulaSkybox_left2.png',
-      '/textures/Purple Nebula/PurpleNebulaSkybox_top3.png',
-      '/textures/Purple Nebula/PurpleNebulaSkybox_bottom4.png',
-      '/textures/Purple Nebula/PurpleNebulaSkybox_front5.png',
-      '/textures/Purple Nebula/PurpleNebulaSkybox_back6.png'
+      `${import.meta.env.BASE_URL}Icons/gmail.png`,
+      `${import.meta.env.BASE_URL}Icons/linkedin.png`,
+      `${import.meta.env.BASE_URL}Icons/github.png`,
+      `${import.meta.env.BASE_URL}Icons/left.png`,
+      `${import.meta.env.BASE_URL}Icons/right.png`,
+      `${import.meta.env.BASE_URL}Icons/information-button.png`,
+      `${import.meta.env.BASE_URL}Project-Images/Sunday/Sunday1.png`,
+      `${import.meta.env.BASE_URL}Project-Images/VR-School/VRSchool1.png`,
+      `${import.meta.env.BASE_URL}Project-Images/VR-School/VRSchool2.png`,
+      `${import.meta.env.BASE_URL}Project-Images/VR-School/VRSchool3.png`,
+      `${import.meta.env.BASE_URL}Project-Images/VR-School/VRSchool4.png`,
+      `${import.meta.env.BASE_URL}Project-Images/VR-School/VRSchool5.png`,
+      `${import.meta.env.BASE_URL}Project-Images/VR-School/VRSchool6.png`,
+      `${import.meta.env.BASE_URL}Project-Images/VR-School/VRSchool7.png`,
+      `${import.meta.env.BASE_URL}Project-Images/Dodge-Ball/DodgeBall1.png`,
+      `${import.meta.env.BASE_URL}Project-Images/Dodge-Ball/DodgeBall2.png`,
+      `${import.meta.env.BASE_URL}Project-Images/Dodge-Ball/DodgeBall3.png`,
+      `${import.meta.env.BASE_URL}Project-Images/Eating-Tom/EatingTom1.png`,
+      `${import.meta.env.BASE_URL}Project-Images/Eating-Tom/EatingTom2.png`,
+      `${import.meta.env.BASE_URL}Project-Images/Eating-Tom/EatingTom3.png`,
+      `${import.meta.env.BASE_URL}textures/Purple Nebula/PurpleNebulaSkybox_right1.png`,
+      `${import.meta.env.BASE_URL}textures/Purple Nebula/PurpleNebulaSkybox_left2.png`,
+      `${import.meta.env.BASE_URL}textures/Purple Nebula/PurpleNebulaSkybox_top3.png`,
+      `${import.meta.env.BASE_URL}textures/Purple Nebula/PurpleNebulaSkybox_bottom4.png`,
+      `${import.meta.env.BASE_URL}textures/Purple Nebula/PurpleNebulaSkybox_front5.png`,
+      `${import.meta.env.BASE_URL}textures/Purple Nebula/PurpleNebulaSkybox_back6.png`
     ],
     audio: [
-      '/Sounds/SFX/button-click.mp3',
-      '/Sounds/SFX/icon-click.mp3',
-      '/Sounds/SFX/hover-sound.mp3',
-      '/Sounds/SFX/ui-popup.mp3',
-      '/Sounds/SFX/scroll-animation.mp3',
-      '/Sounds/SFX/planet-click.mp3',
-      '/Sounds/SFX/ambient-music.mp3',
-      '/Sounds/SFX/rocket-moving.mp3'
+      `${import.meta.env.BASE_URL}Sounds/SFX/button-click.mp3`,
+      `${import.meta.env.BASE_URL}Sounds/SFX/icon-click.mp3`,
+      `${import.meta.env.BASE_URL}Sounds/SFX/hover-sound.mp3`,
+      `${import.meta.env.BASE_URL}Sounds/SFX/ui-popup.mp3`,
+      `${import.meta.env.BASE_URL}Sounds/SFX/scroll-animation.mp3`,
+      `${import.meta.env.BASE_URL}Sounds/SFX/planet-click.mp3`,
+      `${import.meta.env.BASE_URL}Sounds/SFX/ambient-music.mp3`,
+      `${import.meta.env.BASE_URL}Sounds/SFX/rocket-moving.mp3`
     ],
     textures: [
-      '/textures/2k_sun.jpg',
-      '/textures/2k_mercury.jpg',
-      '/textures/2k_venus_surface.jpg',
-      '/textures/2k_earth_daymap.jpg',
-      '/textures/2k_mars.jpg'
+      `${import.meta.env.BASE_URL}textures/2k_sun.jpg`,
+      `${import.meta.env.BASE_URL}textures/2k_mercury.jpg`,
+      `${import.meta.env.BASE_URL}textures/2k_venus_surface.jpg`,
+      `${import.meta.env.BASE_URL}textures/2k_earth_daymap.jpg`,
+      `${import.meta.env.BASE_URL}textures/2k_mars.jpg`
     ],
     models: [
-      '/models/Interstellar-Ranger/scene.gltf'
+      `${import.meta.env.BASE_URL}models/Interstellar-Ranger/scene.gltf`
     ]
   };
+  
 
   // Function to simulate scroll events for mobile navigation
   const simulateScroll = (direction) => {
