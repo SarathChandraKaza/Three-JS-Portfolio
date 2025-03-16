@@ -8,15 +8,15 @@ const Skybox = () => {
   useEffect(() => {
     const loader = new CubeTextureLoader();
     // Load the skybox textures
+    const baseUrl = import.meta.env.BASE_URL;
     const skyboxTexture = loader.load([
-      '/textures/Purple Nebula/PurpleNebulaSkybox_right1.png',  // Right
-      '/textures/Purple Nebula/PurpleNebulaSkybox_left2.png',   // Left
-      '/textures/Purple Nebula/PurpleNebulaSkybox_top3.png',    // Top
-      '/textures/Purple Nebula/PurpleNebulaSkybox_bottom4.png', // Bottom
-      '/textures/Purple Nebula/PurpleNebulaSkybox_front5.png',  // Front
-      '/textures/Purple Nebula/PurpleNebulaSkybox_back6.png'    // Back
+      `${baseUrl}textures/PurpleNebulaSkybox_right1.png`,  // Right
+      `${baseUrl}textures/PurpleNebulaSkybox_left2.png`,   // Left
+      `${baseUrl}textures/PurpleNebulaSkybox_top3.png`,    // Top
+      `${baseUrl}textures/PurpleNebulaSkybox_bottom4.png`, // Bottom
+      `${baseUrl}textures/PurpleNebulaSkybox_front5.png`,  // Front
+      `${baseUrl}textures/PurpleNebulaSkybox_back6.png`    // Back
     ]);
-
     scene.background = skyboxTexture;
 
     return () => {
