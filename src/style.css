@@ -688,16 +688,17 @@ h3 {
 }
 
 #email-icon {
-  background: url('/Icons/gmail.png') center/contain no-repeat;
+  background: url('${import.meta.env.BASE_URL}Icons/gmail.png') center/contain no-repeat;
 }
 
 #linkedin-icon {
-  background: url('/Icons/linkedin.png') center/contain no-repeat;
+  background: url('${import.meta.env.BASE_URL}Icons/linkedin.png') center/contain no-repeat;
 }
 
 #github-icon {
-  background: url('/Icons/github.png') center/contain no-repeat;
+  background: url('${import.meta.env.BASE_URL}Icons/github.png') center/contain no-repeat;
 }
+
 
 /* -----------------------------------------------------Tooltip-What is it?-------------------------------------------------------*/
 

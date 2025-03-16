@@ -10,13 +10,14 @@ const Skybox = () => {
     // Load the skybox textures
     const baseUrl = import.meta.env.BASE_URL;
     const skyboxTexture = loader.load([
-      `${baseUrl}textures/PurpleNebulaSkybox_right1.png`,  // Right
-      `${baseUrl}textures/PurpleNebulaSkybox_left2.png`,   // Left
-      `${baseUrl}textures/PurpleNebulaSkybox_top3.png`,    // Top
-      `${baseUrl}textures/PurpleNebulaSkybox_bottom4.png`, // Bottom
-      `${baseUrl}textures/PurpleNebulaSkybox_front5.png`,  // Front
-      `${baseUrl}textures/PurpleNebulaSkybox_back6.png`    // Back
+      `${import.meta.env.BASE_URL}textures/PurpleNebula/PurpleNebulaSkybox_right1.png`,
+      `${import.meta.env.BASE_URL}textures/PurpleNebula/PurpleNebulaSkybox_left2.png`,
+      `${import.meta.env.BASE_URL}textures/PurpleNebula/PurpleNebulaSkybox_top3.png`,
+      `${import.meta.env.BASE_URL}textures/PurpleNebula/PurpleNebulaSkybox_bottom4.png`,
+      `${import.meta.env.BASE_URL}textures/PurpleNebula/PurpleNebulaSkybox_front5.png`,
+      `${import.meta.env.BASE_URL}textures/PurpleNebula/PurpleNebulaSkybox_back6.png`
     ]);
+    
     scene.background = skyboxTexture;
 
     return () => {

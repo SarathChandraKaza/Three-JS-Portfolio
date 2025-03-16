@@ -424,12 +424,12 @@ const Scene = () => {
       `${import.meta.env.BASE_URL}Project-Images/Eating-Tom/EatingTom1.png`,
       `${import.meta.env.BASE_URL}Project-Images/Eating-Tom/EatingTom2.png`,
       `${import.meta.env.BASE_URL}Project-Images/Eating-Tom/EatingTom3.png`,
-      `${import.meta.env.BASE_URL}textures/Purple Nebula/PurpleNebulaSkybox_right1.png`,
-      `${import.meta.env.BASE_URL}textures/Purple Nebula/PurpleNebulaSkybox_left2.png`,
-      `${import.meta.env.BASE_URL}textures/Purple Nebula/PurpleNebulaSkybox_top3.png`,
-      `${import.meta.env.BASE_URL}textures/Purple Nebula/PurpleNebulaSkybox_bottom4.png`,
-      `${import.meta.env.BASE_URL}textures/Purple Nebula/PurpleNebulaSkybox_front5.png`,
-      `${import.meta.env.BASE_URL}textures/Purple Nebula/PurpleNebulaSkybox_back6.png`
+      `${import.meta.env.BASE_URL}textures/PurpleNebula/PurpleNebulaSkybox_right1.png`,
+      `${import.meta.env.BASE_URL}textures/PurpleNebula/PurpleNebulaSkybox_left2.png`,
+      `${import.meta.env.BASE_URL}textures/PurpleNebula/PurpleNebulaSkybox_top3.png`,
+      `${import.meta.env.BASE_URL}textures/PurpleNebula/PurpleNebulaSkybox_bottom4.png`,
+      `${import.meta.env.BASE_URL}textures/PurpleNebula/PurpleNebulaSkybox_front5.png`,
+      `${import.meta.env.BASE_URL}textures/PurpleNebula/PurpleNebulaSkybox_back6.png`
     ],
     audio: [
       `${import.meta.env.BASE_URL}Sounds/SFX/button-click.mp3`,
