@@ -73,7 +73,7 @@
 }
 
 #email-icon {
-  background: url('../../public/Icons/gmail.png') center/contain no-repeat !important;
+  background: url('/Three-JS-Portfolio/Icons/gmail.png') center/contain no-repeat !important;
 }
 
 #linkedin-icon {
