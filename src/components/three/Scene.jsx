@@ -12,10 +12,10 @@ import gsap from 'gsap';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 // Sound Effects
-const buttonClickSound = new Audio('/docs/Sounds/SFX/button-click.mp3');
-const iconClickSound = new Audio('/docs/Sounds/SFX/icon-click.mp3');
-const hoverSound = new Audio('/docs/Sounds/SFX/hover-sound.mp3');
-const planetClickSound = new Audio('/docs/Sounds/SFX/planet-click.mp3');
+const buttonClickSound = new Audio('/Sounds/SFX/button-click.mp3');
+const iconClickSound = new Audio('/Sounds/SFX/icon-click.mp3');
+const hoverSound = new Audio('/Sounds/SFX/hover-sound.mp3');
+const planetClickSound = new Audio('/Sounds/SFX/planet-click.mp3');
 
 // Function to play sound with logging
 const playSound = (audio) => {
@@ -403,52 +403,52 @@ const Scene = () => {
   // Asset URLs
   const assetUrls = {
     images: [
-      '/docs/Icons/gmail.png',
-      '/docs/Icons/linkedin.png',
-      '/docs/Icons/github.png',
-      '/docs/Icons/left.png',
-      '/docs/Icons/right.png',
-      '/docs/Icons/information-button.png',
-      '/docs/Project-Images/Sunday/Sunday1.png',
-      '/docs/Project-Images/VR-School/VRSchool1.png',
-      '/docs/Project-Images/VR-School/VRSchool2.png',
-      '/docs/Project-Images/VR-School/VRSchool3.png',
-      '/docs/Project-Images/VR-School/VRSchool4.png',
-      '/docs/Project-Images/VR-School/VRSchool5.png',
-      '/docs/Project-Images/VR-School/VRSchool6.png',
-      '/docs/Project-Images/VR-School/VRSchool7.png',
-      '/docs/Project-Images/Dodge-Ball/DodgeBall1.png',
-      '/docs/Project-Images/Dodge-Ball/DodgeBall2.png',
-      '/docs/Project-Images/Dodge-Ball/DodgeBall3.png',
-      '/docs/Project-Images/Eating-Tom/EatingTom1.png',
-      '/docs/Project-Images/Eating-Tom/EatingTom2.png',
-      '/docs/Project-Images/Eating-Tom/EatingTom3.png',
-      '/docs/textures/Purple Nebula/PurpleNebulaSkybox_right1.png',
-      '/docs/textures/Purple Nebula/PurpleNebulaSkybox_left2.png',
-      '/docs/textures/Purple Nebula/PurpleNebulaSkybox_top3.png',
-      '/docs/textures/Purple Nebula/PurpleNebulaSkybox_bottom4.png',
-      '/docs/textures/Purple Nebula/PurpleNebulaSkybox_front5.png',
-      '/docs/textures/Purple Nebula/PurpleNebulaSkybox_back6.png'
+      '//Icons/gmail.png',
+      '/Icons/linkedin.png',
+      '/Icons/github.png',
+      '/Icons/left.png',
+      '/Icons/right.png',
+      '/Icons/information-button.png',
+      '/Project-Images/Sunday/Sunday1.png',
+      '/Project-Images/VR-School/VRSchool1.png',
+      '/Project-Images/VR-School/VRSchool2.png',
+      '/Project-Images/VR-School/VRSchool3.png',
+      '/Project-Images/VR-School/VRSchool4.png',
+      '/Project-Images/VR-School/VRSchool5.png',
+      '/Project-Images/VR-School/VRSchool6.png',
+      '/Project-Images/VR-School/VRSchool7.png',
+      '/Project-Images/Dodge-Ball/DodgeBall1.png',
+      '/Project-Images/Dodge-Ball/DodgeBall2.png',
+      '/Project-Images/Dodge-Ball/DodgeBall3.png',
+      '/Project-Images/Eating-Tom/EatingTom1.png',
+      '/Project-Images/Eating-Tom/EatingTom2.png',
+      '/Project-Images/Eating-Tom/EatingTom3.png',
+      '/textures/Purple Nebula/PurpleNebulaSkybox_right1.png',
+      '/textures/Purple Nebula/PurpleNebulaSkybox_left2.png',
+      '/textures/Purple Nebula/PurpleNebulaSkybox_top3.png',
+      '/textures/Purple Nebula/PurpleNebulaSkybox_bottom4.png',
+      '/textures/Purple Nebula/PurpleNebulaSkybox_front5.png',
+      '/textures/Purple Nebula/PurpleNebulaSkybox_back6.png'
     ],
     audio: [
-      '/docs/Sounds/SFX/button-click.mp3',
-      '/docs/Sounds/SFX/icon-click.mp3',
-      '/docs/Sounds/SFX/hover-sound.mp3',
-      '/docs/Sounds/SFX/ui-popup.mp3',
-      '/docs/Sounds/SFX/scroll-animation.mp3',
-      '/docs/Sounds/SFX/planet-click.mp3',
-      '/docs/Sounds/SFX/ambient-music.mp3',
-      '/docs/Sounds/SFX/rocket-moving.mp3'
+      '/Sounds/SFX/button-click.mp3',
+      '/Sounds/SFX/icon-click.mp3',
+      '/Sounds/SFX/hover-sound.mp3',
+      '/Sounds/SFX/ui-popup.mp3',
+      '/Sounds/SFX/scroll-animation.mp3',
+      '/Sounds/SFX/planet-click.mp3',
+      '/Sounds/SFX/ambient-music.mp3',
+      '/Sounds/SFX/rocket-moving.mp3'
     ],
     textures: [
-      '/docs/textures/2k_sun.jpg',
-      '/docs/textures/2k_mercury.jpg',
-      '/docs/textures/2k_venus_surface.jpg',
-      '/docs/textures/2k_earth_daymap.jpg',
-      '/docs/textures/2k_mars.jpg'
+      '/textures/2k_sun.jpg',
+      '/textures/2k_mercury.jpg',
+      '/textures/2k_venus_surface.jpg',
+      '/textures/2k_earth_daymap.jpg',
+      '/textures/2k_mars.jpg'
     ],
     models: [
-      '/docs/models/Interstellar-Ranger/scene.gltf'
+      '/models/Interstellar-Ranger/scene.gltf'
     ]
   };
 
@@ -604,7 +604,7 @@ const Scene = () => {
                             onMouseEnter={() => playSound(hoverSound)}
                             aria-label="Previous image"
                           >
-                            <img src="docs/Icons/left.png" alt="Previous" />
+                            <img src="/Icons/left.png" alt="Previous" />
                           </button>
                           <div className="showcase-indicator">
                             {currentImageIndex + 1} / {currentProject.images.length}
@@ -615,7 +615,7 @@ const Scene = () => {
                             onMouseEnter={() => playSound(hoverSound)}
                             aria-label="Next image"
                           >
-                            <img src="docs/Icons/right.png" alt="Next" />
+                            <img src="/Icons/right.png" alt="Next" />
                           </button>
                         </div>
                       )}
@@ -678,7 +678,7 @@ const Scene = () => {
               }}
             >
               <img 
-                src="docs/Icons/information-button.png" 
+                src="/Icons/information-button.png" 
                 alt="Information"
                 style={{
                   width: window.innerWidth <= 360 ? '18px' : window.innerWidth <= 980 ? '20px' : '24px',

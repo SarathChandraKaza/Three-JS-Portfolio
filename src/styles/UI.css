@@ -73,15 +73,15 @@
 }
 
 #email-icon {
-  background: url('docs/Icons/gmail.png') center/contain no-repeat !important;
+  background: url('/Icons/gmail.png') center/contain no-repeat !important;
 }
 
 #linkedin-icon {
-  background: url('docs/Icons/linkedin.png') center/contain no-repeat !important;
+  background: url('/Icons/linkedin.png') center/contain no-repeat !important;
 }
 
 #github-icon {
-  background: url('docs/Icons/github.png') center/contain no-repeat !important;
+  background: url('/Icons/github.png') center/contain no-repeat !important;
 }
 
 /* Project Panel */

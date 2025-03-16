@@ -688,15 +688,15 @@ h3 {
 }
 
 #email-icon {
-  background: url('docs/Icons/gmail.png') center/contain no-repeat;
+  background: url('/Icons/gmail.png') center/contain no-repeat;
 }
 
 #linkedin-icon {
-  background: url('docs/Icons/linkedin.png') center/contain no-repeat;
+  background: url('/Icons/linkedin.png') center/contain no-repeat;
 }
 
 #github-icon {
-  background: url('docs/Icons/github.png') center/contain no-repeat;
+  background: url('/Icons/github.png') center/contain no-repeat;
 }
 
 /* -----------------------------------------------------Tooltip-What is it?-------------------------------------------------------*/

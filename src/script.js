@@ -610,8 +610,8 @@ const handleClick = (event) => {
       .catch(error => {
         console.error('Error preloading project images:', error);
       });
-  }
-};
+  },
+)};
 
 // Add click event listener
 window.addEventListener("click", handleClick);
@@ -920,4 +920,4 @@ window.addEventListener("resize", () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
-});
+});}
