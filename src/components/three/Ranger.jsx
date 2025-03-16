@@ -4,7 +4,9 @@ import { useFrame } from '@react-three/fiber';
 
 const Ranger = () => {
   const rangerRef = useRef();
-  const { scene } = useGLTF('/models/Interstellar-Ranger/scene.gltf');
+  // const { scene } = useGLTF('/models/Interstellar-Ranger/scene.gltf');
+  const { scene } = useGLTF(`${import.meta.env.BASE_URL}models/Interstellar-Ranger/scene.gltf`);
+
 
   useFrame(() => {
     if (rangerRef.current) {
@@ -33,4 +35,4 @@ const Ranger = () => {
 export default Ranger;
 
 // Preload the model
-useGLTF.preload('/models/Interstellar-Ranger/scene.gltf');
+useGLTF.preload(`${import.meta.env.BASE_URL}models/Interstellar-Ranger/scene.gltf`);
