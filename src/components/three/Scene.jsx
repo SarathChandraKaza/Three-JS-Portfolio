@@ -12,10 +12,11 @@ import gsap from 'gsap';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 // Sound Effects
-const buttonClickSound = new Audio('/Sounds/SFX/button-click.mp3');
-const iconClickSound = new Audio('/Sounds/SFX/icon-click.mp3');
-const hoverSound = new Audio('/Sounds/SFX/hover-sound.mp3');
-const planetClickSound = new Audio('/Sounds/SFX/planet-click.mp3');
+const buttonClickSound = new Audio(`${import.meta.env.BASE_URL}Sounds/SFX/button-click.mp3`);
+const iconClickSound = new Audio(`${import.meta.env.BASE_URL}Sounds/SFX/icon-click.mp3`);
+const hoverSound = new Audio(`${import.meta.env.BASE_URL}Sounds/SFX/hover-sound.mp3`);
+const planetClickSound = new Audio(`${import.meta.env.BASE_URL}Sounds/SFX/planet-click.mp3`);
+
 
 // Function to play sound with logging
 const playSound = (audio) => {
@@ -400,7 +401,7 @@ const Scene = () => {
     }
   }, [introScreenClosed, showProjectUI]);
 
-  
+
   const assetUrls = {
     images: [
       `${import.meta.env.BASE_URL}Icons/gmail.png`,
@@ -605,7 +606,8 @@ const Scene = () => {
                             onMouseEnter={() => playSound(hoverSound)}
                             aria-label="Previous image"
                           >
-                            <img src="/Icons/left.png" alt="Previous" />
+                          <img src={`${import.meta.env.BASE_URL}Icons/left.png`} alt="Previous" />
+
                           </button>
                           <div className="showcase-indicator">
                             {currentImageIndex + 1} / {currentProject.images.length}
@@ -616,7 +618,8 @@ const Scene = () => {
                             onMouseEnter={() => playSound(hoverSound)}
                             aria-label="Next image"
                           >
-                            <img src="/Icons/right.png" alt="Next" />
+                          <img src={`${import.meta.env.BASE_URL}Icons/right.png`} alt="Next" />
+
                           </button>
                         </div>
                       )}
@@ -678,15 +681,16 @@ const Scene = () => {
                 document.body.style.cursor = 'default';
               }}
             >
-              <img 
-                src="/Icons/information-button.png" 
-                alt="Information"
-                style={{
-                  width: window.innerWidth <= 360 ? '18px' : window.innerWidth <= 980 ? '20px' : '24px',
-                  height: 'auto',
-                  opacity: 0.8
-                }}
-              />
+            <img 
+              src={`${import.meta.env.BASE_URL}Icons/information-button.png`} 
+              alt="Information"
+              style={{
+                width: window.innerWidth <= 360 ? '18px' : window.innerWidth <= 980 ? '20px' : '24px',
+                height: 'auto',
+                opacity: 0.8
+              }}
+            />
+
             </div>
           )}
 
