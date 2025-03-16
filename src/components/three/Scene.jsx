@@ -12,10 +12,10 @@ import gsap from 'gsap';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 // Sound Effects
-const buttonClickSound = new Audio('/Sounds/SFX/button-click.mp3');
-const iconClickSound = new Audio('/Sounds/SFX/icon-click.mp3');
-const hoverSound = new Audio('/Sounds/SFX/hover-sound.mp3');
-const planetClickSound = new Audio('/Sounds/SFX/planet-click.mp3');
+const buttonClickSound = new Audio('/docs/Sounds/SFX/button-click.mp3');
+const iconClickSound = new Audio('/docs/Sounds/SFX/icon-click.mp3');
+const hoverSound = new Audio('/docs/Sounds/SFX/hover-sound.mp3');
+const planetClickSound = new Audio('/docs/Sounds/SFX/planet-click.mp3');
 
 // Function to play sound with logging
 const playSound = (audio) => {
@@ -25,37 +25,7 @@ const playSound = (audio) => {
     [hoverSound]: 'Hover Sound',
     [planetClickSound]: 'Planet Click Sound'
   }[audio] || 'Unknown Sound';
-
-  console.log(`Attempting to play: ${audioName} from path: ${audio.src}`);
-  
-  // Check if the audio file is actually loaded
-  if (audio.readyState === 0) {
-    console.warn(`⚠️ Audio file not loaded yet: ${audioName}`);
-    return;
-  }
-  
-  audio.currentTime = 0;
-  audio.play()
-    .then(() => {
-      console.log(`✅ Successfully playing: ${audioName}`);
-    })
-    .catch(err => {
-      console.error(`❌ Error playing ${audioName}:`, err);
-      console.error('Audio source:', audio.src);
-      console.error('Audio ready state:', audio.readyState);
-    });
 };
-
-// Add event listeners to track when audio files are loaded
-[buttonClickSound, iconClickSound, hoverSound, planetClickSound].forEach(audio => {
-  audio.addEventListener('canplaythrough', () => {
-    console.log(`🎵 Audio file loaded successfully: ${audio.src}`);
-  });
-  
-  audio.addEventListener('error', (e) => {
-    console.error(`❌ Error loading audio file ${audio.src}:`, e.target.error);
-  });
-});
 
 // Create a separate component for camera animation
 const CameraController = ({ hasScrolled, showInfoScreen, setHasScrolled, setFocusedPlanetIndex, isInfoScreenVisible, showProjectUI }) => {
@@ -433,53 +403,52 @@ const Scene = () => {
   // Asset URLs
   const assetUrls = {
     images: [
-      '/Three-JS-Portfolio/Icons/gmail.png',
-      '/Three-JS-Portfolio/Icons/linkedin.png',
-      '/Three-JS-Portfolio/Icons/github.png',
-      '/Three-JS-Portfolio/Icons/left.png',
-      '/Three-JS-Portfolio/Icons/right.png',
-      '/Three-JS-Portfolio/Icons/information-button.png',
-      '/Three-JS-Portfolio/Background/beige-background.jpg',
-      '/Three-JS-Portfolio/Project-Images/Sunday/Sunday1.png',
-      '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool1.png',
-      '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool2.png',
-      '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool3.png',
-      '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool4.png',
-      '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool5.png',
-      '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool6.png',
-      '/Three-JS-Portfolio/Project-Images/VR-School/VRSchool7.png',
-      '/Three-JS-Portfolio/Project-Images/Dodge-Ball/DodgeBall1.png',
-      '/Three-JS-Portfolio/Project-Images/Dodge-Ball/DodgeBall2.png',
-      '/Three-JS-Portfolio/Project-Images/Dodge-Ball/DodgeBall3.png',
-      '/Three-JS-Portfolio/Project-Images/Eating-Tom/EatingTom1.png',
-      '/Three-JS-Portfolio/Project-Images/Eating-Tom/EatingTom2.png',
-      '/Three-JS-Portfolio/Project-Images/Eating-Tom/EatingTom3.png',
-      '/Three-JS-Portfolio/textures/Purple Nebula/PurpleNebulaSkybox_right1.png',
-      '/Three-JS-Portfolio/textures/Purple Nebula/PurpleNebulaSkybox_left2.png',
-      '/Three-JS-Portfolio/textures/Purple Nebula/PurpleNebulaSkybox_top3.png',
-      '/Three-JS-Portfolio/textures/Purple Nebula/PurpleNebulaSkybox_bottom4.png',
-      '/Three-JS-Portfolio/textures/Purple Nebula/PurpleNebulaSkybox_front5.png',
-      '/Three-JS-Portfolio/textures/Purple Nebula/PurpleNebulaSkybox_back6.png'
+      '/docs/Icons/gmail.png',
+      '/docs/Icons/linkedin.png',
+      '/docs/Icons/github.png',
+      '/docs/Icons/left.png',
+      '/docs/Icons/right.png',
+      '/docs/Icons/information-button.png',
+      '/docs/Project-Images/Sunday/Sunday1.png',
+      '/docs/Project-Images/VR-School/VRSchool1.png',
+      '/docs/Project-Images/VR-School/VRSchool2.png',
+      '/docs/Project-Images/VR-School/VRSchool3.png',
+      '/docs/Project-Images/VR-School/VRSchool4.png',
+      '/docs/Project-Images/VR-School/VRSchool5.png',
+      '/docs/Project-Images/VR-School/VRSchool6.png',
+      '/docs/Project-Images/VR-School/VRSchool7.png',
+      '/docs/Project-Images/Dodge-Ball/DodgeBall1.png',
+      '/docs/Project-Images/Dodge-Ball/DodgeBall2.png',
+      '/docs/Project-Images/Dodge-Ball/DodgeBall3.png',
+      '/docs/Project-Images/Eating-Tom/EatingTom1.png',
+      '/docs/Project-Images/Eating-Tom/EatingTom2.png',
+      '/docs/Project-Images/Eating-Tom/EatingTom3.png',
+      '/docs/textures/Purple Nebula/PurpleNebulaSkybox_right1.png',
+      '/docs/textures/Purple Nebula/PurpleNebulaSkybox_left2.png',
+      '/docs/textures/Purple Nebula/PurpleNebulaSkybox_top3.png',
+      '/docs/textures/Purple Nebula/PurpleNebulaSkybox_bottom4.png',
+      '/docs/textures/Purple Nebula/PurpleNebulaSkybox_front5.png',
+      '/docs/textures/Purple Nebula/PurpleNebulaSkybox_back6.png'
     ],
     audio: [
-      '/Three-JS-Portfolio/Sounds/SFX/button-click.mp3',
-      '/Three-JS-Portfolio/Sounds/SFX/icon-click.mp3',
-      '/Three-JS-Portfolio/Sounds/SFX/hover-sound.mp3',
-      '/Three-JS-Portfolio/Sounds/SFX/ui-popup.mp3',
-      '/Three-JS-Portfolio/Sounds/SFX/scroll-animation.mp3',
-      '/Three-JS-Portfolio/Sounds/SFX/planet-click.mp3',
-      '/Three-JS-Portfolio/Sounds/SFX/ambient-music.mp3',
-      '/Three-JS-Portfolio/Sounds/SFX/rocket-moving.mp3'
+      '/docs/Sounds/SFX/button-click.mp3',
+      '/docs/Sounds/SFX/icon-click.mp3',
+      '/docs/Sounds/SFX/hover-sound.mp3',
+      '/docs/Sounds/SFX/ui-popup.mp3',
+      '/docs/Sounds/SFX/scroll-animation.mp3',
+      '/docs/Sounds/SFX/planet-click.mp3',
+      '/docs/Sounds/SFX/ambient-music.mp3',
+      '/docs/Sounds/SFX/rocket-moving.mp3'
     ],
     textures: [
-      '/Three-JS-Portfolio/textures/2k_sun.jpg',
-      '/Three-JS-Portfolio/textures/2k_mercury.jpg',
-      '/Three-JS-Portfolio/textures/2k_venus_surface.jpg',
-      '/Three-JS-Portfolio/textures/2k_earth_daymap.jpg',
-      '/Three-JS-Portfolio/textures/2k_mars.jpg'
+      '/docs/textures/2k_sun.jpg',
+      '/docs/textures/2k_mercury.jpg',
+      '/docs/textures/2k_venus_surface.jpg',
+      '/docs/textures/2k_earth_daymap.jpg',
+      '/docs/textures/2k_mars.jpg'
     ],
     models: [
-      '/Three-JS-Portfolio/3D Models/Interstellar Ranger/scene.gltf'
+      '/docs/models/Interstellar-Ranger/scene.gltf'
     ]
   };
 
@@ -635,7 +604,7 @@ const Scene = () => {
                             onMouseEnter={() => playSound(hoverSound)}
                             aria-label="Previous image"
                           >
-                            <img src="/Icons/left.png" alt="Previous" />
+                            <img src="docs/Icons/left.png" alt="Previous" />
                           </button>
                           <div className="showcase-indicator">
                             {currentImageIndex + 1} / {currentProject.images.length}
@@ -646,7 +615,7 @@ const Scene = () => {
                             onMouseEnter={() => playSound(hoverSound)}
                             aria-label="Next image"
                           >
-                            <img src="/Icons/right.png" alt="Next" />
+                            <img src="docs/Icons/right.png" alt="Next" />
                           </button>
                         </div>
                       )}
@@ -709,7 +678,7 @@ const Scene = () => {
               }}
             >
               <img 
-                src="/Icons/information-button.png" 
+                src="docs/Icons/information-button.png" 
                 alt="Information"
                 style={{
                   width: window.innerWidth <= 360 ? '18px' : window.innerWidth <= 980 ? '20px' : '24px',
