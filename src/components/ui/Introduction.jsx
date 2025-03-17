@@ -14,7 +14,7 @@ const Introduction = ({ onClose }) => {
       <p>
         Hi, I'm <span style={{ fontSize: '1.1em', fontWeight: 'bold' }}>
           Sarath Chandra
-        </span>, a passionate XR developer with three years of experience creating 
+        </span>, an XR developer with two years of experience creating 
         immersive experiences using Unity and C#. I invite you to explore my works, 
         and feel free to reach out for any further discussions.
       </p>
