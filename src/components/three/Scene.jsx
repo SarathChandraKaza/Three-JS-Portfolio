@@ -28,11 +28,13 @@ const playSound = (audio) => {
   }[audio] || 'Unknown Sound';
 };
 
+const totalNumberOfPlanetsAndProjects = 6;
+
 // Create a separate component for camera animation
 const CameraController = ({ hasScrolled, showInfoScreen, setHasScrolled, setFocusedPlanetIndex, isInfoScreenVisible, showProjectUI }) => {
   const { camera } = useThree();
   const isAnimating = useRef(false);
-  const currentPlanetIndex = useRef(0); // Start at first planet (index 0)
+  const currentPlanetIndex = useRef(0); 
   const isBirdsEyeView = useRef(true); // Start in birds-eye view
 
   useEffect(() => {
@@ -50,13 +52,12 @@ const CameraController = ({ hasScrolled, showInfoScreen, setHasScrolled, setFocu
 
       if (scrollAmount < 0) { // Scrolling backward
         if (isBirdsEyeView.current) {
-          // From birds-eye view, go to Mars
           isBirdsEyeView.current = false;
-          currentPlanetIndex.current = 4; // Mars
-          setFocusedPlanetIndex(0); // Mars is index 0 in the planets array
-        } else if (currentPlanetIndex.current > 1) { // If not at Mercury
+          currentPlanetIndex.current = totalNumberOfPlanetsAndProjects;
+          setFocusedPlanetIndex(0); 
+        } else if (currentPlanetIndex.current > 1) { 
           currentPlanetIndex.current--;
-          setFocusedPlanetIndex(4 - currentPlanetIndex.current); // Convert to array index
+          setFocusedPlanetIndex(totalNumberOfPlanetsAndProjects - currentPlanetIndex.current); // Convert to array index
         } else if (currentPlanetIndex.current === 1) { // At Mercury, go to birds-eye view
           isBirdsEyeView.current = true;
           setFocusedPlanetIndex(null);
@@ -66,12 +67,12 @@ const CameraController = ({ hasScrolled, showInfoScreen, setHasScrolled, setFocu
           // Do nothing when scrolling forward in birds-eye view
           isAnimating.current = false;
           return;
-        } else if (currentPlanetIndex.current === 4) { // At Mars, go to birds-eye view
+        } else if (currentPlanetIndex.current === totalNumberOfPlanetsAndProjects) { // At Mars, go to birds-eye view
           isBirdsEyeView.current = true;
           setFocusedPlanetIndex(null);
-        } else if (currentPlanetIndex.current < 4) { // If not at Mars
+        } else if (currentPlanetIndex.current < totalNumberOfPlanetsAndProjects) { // If not at Mars
           currentPlanetIndex.current++;
-          setFocusedPlanetIndex(4 - currentPlanetIndex.current); // Convert to array index
+          setFocusedPlanetIndex(totalNumberOfPlanetsAndProjects - currentPlanetIndex.current); // Convert to array index
         }
       }
 
@@ -163,9 +164,10 @@ const PlanetInteraction = ({ planet, index, focusedPlanetIndex, setCurrentProjec
   }, []);
 
   const handleClick = () => {
-    if (index === focusedPlanetIndex && index !== 4) {
+    if (index === focusedPlanetIndex && index !== totalNumberOfPlanetsAndProjects) {
       playSound(planetClickSound);
-      
+  console.log("Index:", index);
+  console.log("Focused:", focusedPlanetIndex);
       // Only move camera slightly up
       const planetDistance = index * 25;
       gsap.to(camera.position, {
@@ -190,7 +192,7 @@ const PlanetInteraction = ({ planet, index, focusedPlanetIndex, setCurrentProjec
     <Planet 
       {...planet}
       onClick={handleClick}
-      isClickable={index === focusedPlanetIndex && index !== 4}
+      isClickable={index === focusedPlanetIndex && index !==totalNumberOfPlanetsAndProjects}
       index={index}
     />
   );
