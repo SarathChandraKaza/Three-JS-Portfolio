@@ -423,9 +423,15 @@ const Scene = () => {
       `${import.meta.env.BASE_URL}Project-Images/Dodge-Ball/DodgeBall1.png`,
       `${import.meta.env.BASE_URL}Project-Images/Dodge-Ball/DodgeBall2.png`,
       `${import.meta.env.BASE_URL}Project-Images/Dodge-Ball/DodgeBall3.png`,
-      `${import.meta.env.BASE_URL}Project-Images/Eating-Tom/EatingTom1.png`,
-      `${import.meta.env.BASE_URL}Project-Images/Eating-Tom/EatingTom2.png`,
-      `${import.meta.env.BASE_URL}Project-Images/Eating-Tom/EatingTom3.png`,
+      `${import.meta.env.BASE_URL}Project-Images/Crossroads/Crossroads1.png`,
+      `${import.meta.env.BASE_URL}Project-Images/Crossroads/Crossroads2.png`,
+      `${import.meta.env.BASE_URL}Project-Images/Crossroads/Crossroads3.png`,
+      `${import.meta.env.BASE_URL}Project-Images/Crossroads/Crossroads4.png`,
+      `${import.meta.env.BASE_URL}Project-Images/Crossroads/Crossroads5.png`,
+      `${import.meta.env.BASE_URL}Project-Images/Crime-Scene/CrimeScene1.png`,
+      `${import.meta.env.BASE_URL}Project-Images/Crime-Scene/CrimeScene2.png`,
+      `${import.meta.env.BASE_URL}Project-Images/Cockpit/Cockpit1.png`,
+      `${import.meta.env.BASE_URL}Project-Images/Cockpit/Cockpit2.png`,
       `${import.meta.env.BASE_URL}textures/PurpleNebula/PurpleNebulaSkybox_right1.png`,
       `${import.meta.env.BASE_URL}textures/PurpleNebula/PurpleNebulaSkybox_left2.png`,
       `${import.meta.env.BASE_URL}textures/PurpleNebula/PurpleNebulaSkybox_top3.png`,
@@ -448,7 +454,9 @@ const Scene = () => {
       `${import.meta.env.BASE_URL}textures/2k_mercury.jpg`,
       `${import.meta.env.BASE_URL}textures/2k_venus_surface.jpg`,
       `${import.meta.env.BASE_URL}textures/2k_earth_daymap.jpg`,
-      `${import.meta.env.BASE_URL}textures/2k_mars.jpg`
+      `${import.meta.env.BASE_URL}textures/2k_mars.jpg`,
+      `${import.meta.env.BASE_URL}textures/2k_uranus.jpg`,
+      `${import.meta.env.BASE_URL}textures/2k_jupiter.jpg`
     ],
     models: [
       `${import.meta.env.BASE_URL}models/Interstellar-Ranger/scene.gltf`
