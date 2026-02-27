@@ -7,11 +7,15 @@ export const planets = [
     projectData: { 
       projectName: "Crossroads",
       time: "2026",
-      description: "A branching 360° VR narrative experience featuring real-time decision logic, seamless video transitions, and optimized playback for Meta Quest 3.",
+      description: "A branching 360° VR narrative experience featuring real time decision logic, seamless video transitions, and optimized playback for Meta Quest 3.",
       technologies: "Unity, Meta Quest 3, 360 Video Pipeline, Twine Logic System",
       links: "https://www.meta.com/en-gb/experiences/crossroads/24759322267081080/",
       images: [
         `${import.meta.env.BASE_URL}Project-Images/Crossroads/Crossroads1.png`,
+        `${import.meta.env.BASE_URL}Project-Images/Crossroads/Crossroads2.png`,
+        `${import.meta.env.BASE_URL}Project-Images/Crossroads/Crossroads3.png`,
+        `${import.meta.env.BASE_URL}Project-Images/Crossroads/Crossroads4.png`,
+        `${import.meta.env.BASE_URL}Project-Images/Crossroads/Crossroads5.png`,
       ],
     }
   },
@@ -22,7 +26,7 @@ export const planets = [
     distance: 125,
     texturePath: `${import.meta.env.BASE_URL}textures/2k_jupiter.jpg`,
     projectData: { 
-      projectName: "Crime Scene",
+      projectName: "Crime Scene VR",
       time: "2024",
       description: "A multiplayer VR investigation simulation where users analyze crime scenes and submit reports to instructors via Mirror networking and REST APIs.",
       technologies: "Unity, Mirror Multiplayer, REST API, MySQL",
@@ -42,7 +46,7 @@ export const planets = [
     projectData: { 
       projectName: "Cockpit VR",
       time: "2024",
-      description: "A VR flight simulation where users perform structured pre-flight validation checks before takeoff, implementing rule based interaction logic.",
+      description: "A VR flight simulation where users perform structured pre flight validation checks before takeoff, implementing rule based interaction logic.",
       technologies: "Unity, XR Interaction Toolkit, Finite State Machine",
       links: "https://youtu.be/_iM7F6KqUNU?si=EZmwXB9ab0MtNlxP",
       images: [
